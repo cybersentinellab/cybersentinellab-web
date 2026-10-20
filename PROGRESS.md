@@ -1,7 +1,7 @@
 # PROGRESS
 
 ## Current phase
-Phase 0 — awaiting CSL's choice of design direction (A or B). Phase 1 scaffold done.
+Phase 3 — hero animations
 
 ## Decisions (from CSL, 20 Oct 2026)
 - Hosting: Cloudflare Pages; DNS moves from GoDaddy to Cloudflare; M365 email records preserved
@@ -24,12 +24,16 @@ Phase 0 — awaiting CSL's choice of design direction (A or B). Phase 1 scaffold
 - GitHub: repo github.com/cybersentinellab/cybersentinellab-web created; Claude needs push access (pending)
 - Partner/client logo files: higher-res versions would help (currently cropping from the profile PDF).
 
+- Services Google Sheet: not shared with the Google account connected to Claude (permission denied). Please share it (Viewer) with the connected account, or publish it. Using the services from the company profile meanwhile.
+
 ## Done
 - Plan written
 - Logo assets: white wordmark + transparent icon (design/assets). Clean SVG trace planned for Phase 2
 - Design directions rendered: design/out-*.png (A Command Center, B Sentinel Editorial)
 
 - Phase 1: Astro 7 + React + Motion + MDX + sitemap + RSS installed; base layout; build passes
+- Phase 2: theme tokens (src/styles/global.css), Header (mobile menu), Footer, Base layout (SEO meta, OG/Twitter, JSON-LD, breadcrumbs, WhatsApp button, scroll reveal, CF analytics via PUBLIC_CF_BEACON), Icon set, traced SVG logos + favicon, content collections config
+- 11 service pages' content written (src/content/services) from the company profile, clubbed: OT+IoT+IoMT; pen test; assessment+vuln mgmt; TI+brand protection; EDR/NDR; zero trust; cloud; GRC; IR+forensics; training; infra+software
 
 ## Notes
 - Contact form email: Cloudflare Email Routing would take over MX and break M365, so the form will send through Microsoft Graph (M365 app registration, Mail.Send). Setup in README.

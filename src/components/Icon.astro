@@ -1,0 +1,47 @@
+---
+// Lightweight stroke icons (24px grid). Usage: <Icon name="shield" />
+interface Props { name: string; size?: number; class?: string }
+const { name, size = 24, class: cls } = Astro.props;
+const P: Record<string, string> = {
+  shield: 'M12 3l8 3v6c0 5-3.4 8.4-8 9.8C7.4 20.4 4 17 4 12V6z',
+  shieldcheck: 'M12 3l8 3v6c0 5-3.4 8.4-8 9.8C7.4 20.4 4 17 4 12V6zM8.5 12l2.5 2.5 4.5-5',
+  search: 'M10.5 4a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM15.5 15.5L20 20',
+  target: 'M12 3a9 9 0 110 18 9 9 0 010-18zM12 7.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM12 11.5v1',
+  radar: 'M12 3a9 9 0 109 9M12 7.5a4.5 4.5 0 104.5 4.5M12 12l6.5-6.5',
+  eye: 'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12zM12 9.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5z',
+  file: 'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4',
+  pulse: 'M3 12h4l2.5-6 5 12 2.5-6h4',
+  nodes: 'M12 9a3 3 0 110 6 3 3 0 010-6zM5 4.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM19 4.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM5 16.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM19 16.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM6.2 7l3.6 3M17.8 7l-3.6 3M6.2 17l3.6-3M17.8 17l-3.6-3',
+  cloud: 'M7 18a4.5 4.5 0 01-.6-9A6 6 0 0117.9 9.5 4.3 4.3 0 0117.5 18z',
+  key: 'M8 10a4 4 0 110 .01M11.5 12H21v3M18 12v3',
+  lock: 'M5.5 11h13v10h-13zM8 11V7.5a4 4 0 018 0V11M12 15v2',
+  factory: 'M3 21V10l5 3V10l5 3V7l8 4v10zM7 17h2M12 17h2M17 17h2',
+  chip: 'M7 7h10v10H7zM10 10h4v4h-4zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4',
+  graduation: 'M2 9l10-5 10 5-10 5zM6 11v5c3.5 2.5 8.5 2.5 12 0v-5M22 9v6',
+  code: 'M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16',
+  building: 'M4 21V5l8-2v18M12 8h8v13M8 8v.01M8 12v.01M8 16v.01M16 12v.01M16 16v.01M2 21h20',
+  landmark: 'M3 21h18M4 10h16M12 3l9 5H3zM6 10v8M10 10v8M14 10v8M18 10v8',
+  bank: 'M3 21h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M2 10l10-6 10 6z',
+  heart: 'M12 20s-8-4.8-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 9c0 6.2-8 11-8 11zM8 12h2l1-2 2 4 1-2h2',
+  bolt: 'M13 2L5 13h6l-1 9 8-11h-6z',
+  plane: 'M10.5 13.5L3 11l1.5-2 7 1 4-5.5c1-1.2 3-1.2 3 .5s-1 2.5-2 3.5L11 13l1 7-2 1.5z',
+  briefcase: 'M3 8h18v12H3zM9 8V5h6v3M3 13h18',
+  store: 'M4 10v11h16V10M3 6l2-3h14l2 3v2a3 3 0 01-6 0 3 3 0 01-6 0 3 3 0 01-6 0zM10 21v-5h4v5',
+  globe: 'M12 3a9 9 0 110 18 9 9 0 010-18zM3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z',
+  users: 'M9 11a3.5 3.5 0 110-7 3.5 3.5 0 010 7zM2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 4.5a3.5 3.5 0 010 6.5M18 14.8c2 .7 3.3 2.5 3.5 5.2',
+  server: 'M4 4h16v6H4zM4 14h16v6H4zM8 7h.01M8 17h.01',
+  arrow: 'M5 12h14M13 6l6 6-6 6',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
+  mail: 'M3 5h18v14H3zM3 6l9 7 9-7',
+  phone: 'M5 3h4l2 5-2.5 1.5a11 11 0 005 5L15 12l5 2v4a2 2 0 01-2 2A16 16 0 013 5a2 2 0 012-2z',
+  pin: 'M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21zM12 7a2.5 2.5 0 110 5 2.5 2.5 0 010-5z',
+  linkedin: 'M4 9h3.5v11H4zM5.75 3.5a2 2 0 110 4 2 2 0 010-4zM10 9h3.3v1.6c.5-.9 1.7-1.9 3.5-1.9 3.6 0 4.2 2.3 4.2 5.4V20h-3.5v-5.2c0-1.3 0-2.9-1.8-2.9s-2.1 1.4-2.1 2.8V20H10z',
+  whatsapp: 'M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3zM8.8 7.8c.3-.3.7-.3.9 0l1 2c.1.3 0 .6-.2.8l-.5.6c.6 1.3 1.6 2.3 2.9 2.9l.6-.5c.2-.2.5-.3.8-.2l2 1c.3.2.3.6 0 .9-.6.9-1.7 1.4-2.8 1-2.7-.9-4.8-3-5.7-5.7-.4-1.1.1-2.2 1-2.8z',
+  menu: 'M4 7h16M4 12h16M4 17h16',
+  close: 'M6 6l12 12M18 6L6 18',
+  plus: 'M12 5v14M5 12h14',
+};
+const d = P[name] ?? P.shield;
+const filled = name === 'linkedin' || name === 'whatsapp';
+---
+<svg class={cls} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" fill={filled ? 'currentColor' : 'none'} stroke={filled ? 'none' : 'currentColor'} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={d} fill-rule={filled ? 'evenodd' : undefined} /></svg>

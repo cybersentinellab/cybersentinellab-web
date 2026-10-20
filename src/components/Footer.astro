@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import { site, offices, nav } from '../data/site';
+import Icon from './Icon.astro';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <img src="/images/logo-white.svg" alt="Cyber Sentinel Lab" width="210" height="36" loading="lazy" />
+        <p class="slogan">Your Shield in the <span class="s">Digital World</span></p>
+        <div class="social">
+          <a href={site.linkedin} target="_blank" rel="noopener" aria-label="Cyber Sentinel Lab on LinkedIn"><Icon name="linkedin" size={20} /></a>
+          <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><Icon name="whatsapp" size={20} /></a>
+          <a href={`mailto:${site.email}`} aria-label="Email us"><Icon name="mail" size={20} /></a>
+        </div>
+      </div>
+      <div class="col">
+        <h2>Company</h2>
+        <ul role="list">
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </div>
+      <div class="col wide">
+        <h2>Services</h2>
+        <ul role="list">
+          {services.map((s) => <li><a href={`/services/${s.id}`}>{s.data.title}</a></li>)}
+        </ul>
+      </div>
+      <div class="col">
+        <h2>Offices</h2>
+        <ul role="list" class="offices">
+          {offices.map((o) => (
+            <li><strong>{o.region}</strong><span>{o.address.join(', ')}</span><a href={`mailto:${o.email}`}>{o.email}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <p>© {year} {site.legalName}. All rights reserved.</p>
+      <p class="legal"><a href="/privacy-policy">Privacy policy</a><a href="/terms">Terms of use</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { border-top: 1px solid var(--line); padding: 80px 0 36px; background: linear-gradient(180deg, var(--bg), #04050a); position: relative; }
+  .ftr::before { content: ''; position: absolute; top: -1px; left: 0; width: 220px; height: 2px; background: var(--tri); }
+  .top { display: grid; grid-template-columns: 1.4fr 0.8fr 1.4fr 1.4fr; gap: 48px; }
+  .brand img { height: 36px; width: auto; }
+  .slogan { font-size: 1.35rem; margin: 22px 0 26px; letter-spacing: -0.02em; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--muted); transition: color 0.2s, border-color 0.2s; }
+  .social a:hover { color: var(--accent); border-color: var(--accent); }
+  h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); font-weight: 500; margin-bottom: 20px; }
+  .col ul { display: grid; gap: 11px; font-size: 0.92rem; color: #c3c9d6; }
+  .col.wide ul { grid-template-columns: 1fr; }
+  .col a:hover { color: var(--accent); }
+  .offices li { display: grid; gap: 2px; }
+  .offices strong { font-weight: 500; color: var(--text); }
+  .offices span { color: var(--muted); font-size: 0.85rem; }
+  .offices a { font-size: 0.85rem; }
+  .bottom { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 64px; padding-top: 26px; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .legal { display: flex; gap: 24px; }
+  .legal a:hover { color: var(--text); }
+  @media (max-width: 1000px) { .top { grid-template-columns: 1fr 1fr; } .brand { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .top { grid-template-columns: 1fr; } }
+</style>

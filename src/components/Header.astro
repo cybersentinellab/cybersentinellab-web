@@ -1,0 +1,68 @@
+---
+import { nav } from '../data/site';
+import Icon from './Icon.astro';
+const path = Astro.url.pathname;
+---
+<header class="hdr" data-hdr>
+  <div class="wrap bar">
+    <a href="/" class="logo" aria-label="Cyber Sentinel Lab — home">
+      <img src="/images/logo-white.svg" alt="Cyber Sentinel Lab" width="196" height="34" />
+    </a>
+    <nav aria-label="Main">
+      <ul role="list" id="menu" class="links">
+        {nav.map((n) => (
+          <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+        <li class="m-cta"><a href="/contact" class="btn btn-accent">Talk to an expert</a></li>
+      </ul>
+    </nav>
+    <a href="/contact" class="btn btn-light cta">Get protected</a>
+    <button class="burger" aria-controls="menu" aria-expanded="false" aria-label="Open menu">
+      <Icon name="menu" class="i-open" /><Icon name="close" class="i-close" />
+    </button>
+  </div>
+</header>
+
+<style>
+  .hdr { position: fixed; inset: 0 0 auto; z-index: 50; transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
+  .hdr.scrolled, .hdr.open { background: rgba(6, 7, 12, 0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-color: var(--line); }
+  .bar { display: flex; align-items: center; gap: 36px; height: 80px; }
+  .logo img { height: 34px; width: auto; }
+  nav { margin-left: auto; }
+  .links { display: flex; gap: 32px; font-size: 0.93rem; color: #c9ceda; list-style: none; }
+  .links a:not(.btn):hover, .links a[aria-current] { color: var(--text); }
+  .links a[aria-current] { box-shadow: 0 2px 0 var(--accent); }
+  .m-cta, .burger { display: none; }
+  .burger { background: none; border: 1px solid var(--line-2); border-radius: 12px; width: 44px; height: 44px; place-items: center; cursor: pointer; }
+  .i-close { display: none; }
+  @media (max-width: 960px) {
+    .bar { height: 68px; }
+    .logo img { height: 28px; }
+    .cta { display: none; }
+    .burger { display: grid; margin-left: auto; }
+    nav { position: fixed; inset: 68px 0 0; background: var(--bg); padding: 28px var(--gutter); transform: translateX(100%); transition: transform 0.3s ease; visibility: hidden; }
+    .open nav { transform: none; visibility: visible; }
+    .links { flex-direction: column; gap: 0; font-size: 1.4rem; }
+    .links li { border-bottom: 1px solid var(--line); }
+    .links a:not(.btn) { display: block; padding: 18px 0; }
+    .links a[aria-current] { box-shadow: none; color: var(--accent); }
+    .m-cta { display: block; border: 0 !important; padding-top: 28px; }
+    .m-cta .btn { width: 100%; }
+    .open .i-open { display: none; }
+    .open .i-close { display: block; }
+  }
+</style>
+
+<script>
+  const h = document.querySelector('[data-hdr]') as HTMLElement;
+  const b = h.querySelector('.burger') as HTMLButtonElement;
+  const onScroll = () => h.classList.toggle('scrolled', scrollY > 10);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  b.addEventListener('click', () => {
+    const open = h.classList.toggle('open');
+    b.setAttribute('aria-expanded', String(open));
+    b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+</script>
