@@ -1,7 +1,7 @@
 # PROGRESS
 
 ## Current phase
-Phase 9 — SEO / AI-SEO
+All 11 phases built. Waiting for CSL: Cloudflare Pages setup (README §1) to get the preview URL, then review.
 
 ## Decisions (from CSL, 20 Oct 2026)
 - Hosting: Cloudflare Pages; DNS moves from GoDaddy to Cloudflare; M365 email records preserved
@@ -39,6 +39,16 @@ Phase 9 — SEO / AI-SEO
 - Phase 6: Decap CMS at /admin (editorial workflow; collections blog, articles, news, case studies, services, team, testimonials); GitHub OAuth via Pages Functions /api/auth + /api/callback
 - Phase 7: Insights list (search + type filter), post pages, tag pages, RSS; 3 starter blog posts as drafts (draft: true — visible on preview builds only)
 - Phase 8: /api/contact — honeypot + Turnstile + Microsoft Graph sendMail; tested locally with mocks
+- Phase 9: robots.txt (AI crawlers allowed), /llms.txt (auto), sitemap, RSS, JSON-LD, _headers (CSP, HSTS, caching), OG image
+- Phase 10: Lighthouse (mobile, local) 100/100/100/100 on home, services, service, about, contact, industry, insights, post (SEO on draft posts is lower only because drafts are noindex)
+- Phase 11: README with Cloudflare Pages, env vars, CMS OAuth, editors, branch protection, M365 mail, Turnstile, analytics, DNS move and launch steps
+
+## Next (needs CSL)
+1. Connect repo to Cloudflare Pages → preview URL (README §1)
+2. Share the services Google Sheet with the connected Google account → update services
+3. Create GitHub OAuth app + env vars (README §3), M365 app (README §4), Turnstile (README §5)
+4. Review copy, then legal review of privacy/terms templates
+5. Optional: alternative colour schemes (tokens in src/styles/global.css)
 
 ## Notes
 - Contact form email: Cloudflare Email Routing would take over MX and break M365, so the form will send through Microsoft Graph (M365 app registration, Mail.Send). Setup in README.
