@@ -26,3 +26,8 @@ Phase 0 — Design directions (awaiting CSL choice)
 
 ## Done
 - Plan written
+- Logo assets: white wordmark + transparent icon (design/assets). Clean SVG trace planned for Phase 2
+- Design directions rendered: design/out-*.png (A Command Center, B Sentinel Editorial)
+
+## Notes
+- Contact form email: Cloudflare Email Routing would take over MX and break M365, so the form will send through Microsoft Graph (M365 app registration, Mail.Send). Setup in README.
