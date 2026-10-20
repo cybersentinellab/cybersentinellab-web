@@ -20,8 +20,8 @@ Phase 0 — Design directions (awaiting CSL choice)
 - 3 starter blog posts as drafts
 
 ## Questions for CSL
-- Denmark postcode: 9400 (profile PDF) or 9430 (brief)? Using 9400 for now.
-- GitHub repo: create an empty private repo (e.g. `cybersentinellab-web`) and share its name so code can be pushed.
+- (resolved) Denmark postcode is 9400
+- GitHub: repo github.com/cybersentinellab/cybersentinellab-web created; Claude needs push access (pending)
 - Partner/client logo files: higher-res versions would help (currently cropping from the profile PDF).
 
 ## Done
