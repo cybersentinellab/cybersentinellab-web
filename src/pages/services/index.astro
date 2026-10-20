@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../data/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  { t: 'Assess', a: 'First', ids: ['penetration-testing', 'security-assessment', 'grc-advisory'] },
+  { t: 'Protect', a: 'Proactively', ids: ['endpoint-network-detection-response', 'zero-trust-identity-security', 'ot-iot-iomt-security', 'cloud-security', 'threat-intelligence-brand-protection', 'security-awareness-training', 'infrastructure-software-development'] },
+  { t: 'Respond', a: 'Effectively', ids: ['incident-response-forensics'] },
+];
+const listSchema = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'Cyber Sentinel Lab services',
+  itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.data.title, url: `${site.url}/services/${s.id}` })),
+};
+const crumbs = [{ name: 'Services', href: '/services' }];
+---
+<Base title="Cybersecurity Services in Dubai & UAE" description="End-to-end cybersecurity services from Cyber Sentinel Lab: penetration testing, threat intelligence, EDR/NDR, Zero Trust, OT and IoMT security, cloud, GRC, incident response and training." crumbs={crumbs} schema={[listSchema]}>
+  <PageHero title="End-to-end <em>cybersecurity</em> services" lead="From GRC advisory and cloud security to awareness training and secure software, our services keep your business secure and compliant — organised around how we work: assess, protect, respond." crumbs={crumbs} />
+
+  {groups.map((g) => (
+    <section class="section tight grp">
+      <div class="wrap">
+        <SectionHead eyebrow={`${g.t} ${g.a}`} title={`${g.t} <em>${g.a}</em>`} />
+        <div class="grid g3">
+          {g.ids.map((id) => services.find((s) => s.id === id)).filter(Boolean).map((s) => (
+            <a class="card hover top svc" href={`/services/${s!.id}`} data-reveal>
+              <span class="ic"><Icon name={s!.data.icon} size={26} /></span>
+              <h2>{s!.data.title}</h2>
+              <p>{s!.data.summary}</p>
+              <span class="go">Learn more <span class="arr">→</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaBand title="Not sure where to <em>start?</em>" text="A short call with our team will show which services matter most for your risks, sector and regulations." />
+</Base>
+
+<style>
+  .grp:first-of-type { padding-top: var(--section); }
+  .svc { display: flex; flex-direction: column; gap: 14px; }
+  .ic { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; color: var(--accent); border: 1px solid rgba(79, 195, 255, 0.3); background: rgba(79, 195, 255, 0.06); margin-bottom: 8px; }
+  h2 { font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.2; }
+  p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .go { font-size: 0.9rem; color: var(--accent); margin-top: 10px; }
+  .svc:hover .arr { transform: translateX(3px); display: inline-block; }
+</style>

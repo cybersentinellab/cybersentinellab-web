@@ -1,0 +1,37 @@
+---
+// Grid of logo tiles (default) or an auto-scrolling marquee strip.
+interface Logo { name: string; src: string }
+interface Props { logos: Logo[]; variant?: 'grid' | 'marquee' }
+const { logos, variant = 'grid' } = Astro.props;
+---
+{variant === 'grid' ? (
+  <ul role="list" class="grid-logos">
+    {logos.map((l) => (
+      <li class="tile" title={l.name}><img src={l.src} alt={l.name} loading="lazy" decoding="async" /></li>
+    ))}
+  </ul>
+) : (
+  <div class="marquee" aria-label="Selected clients">
+    <ul role="list" class="track">
+      {[...logos, ...logos].map((l, i) => (
+        <li class="tile sm" aria-hidden={i >= logos.length ? 'true' : undefined}>
+          <img src={l.src} alt={i >= logos.length ? '' : l.name} loading="lazy" decoding="async" />
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+<style>
+  .grid-logos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .tile { background: #f4f6fa; border-radius: 14px; height: 92px; display: grid; place-items: center; padding: 14px 18px; transition: transform 0.25s, box-shadow 0.25s; }
+  .tile img { max-height: 62px; max-width: 100%; width: auto; object-fit: contain; filter: grayscale(1) contrast(1.1); opacity: 0.8; transition: filter 0.3s, opacity 0.3s; }
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -12px rgba(79, 195, 255, 0.5); }
+  .tile:hover img { filter: none; opacity: 1; }
+  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .track { list-style: none; display: flex; gap: 14px; width: max-content; animation: scroll 60s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .tile.sm { width: 170px; height: 76px; flex: none; }
+  .tile.sm img { max-height: 50px; }
+  @keyframes scroll { to { transform: translateX(calc(-50% - 7px)); } }
+  @media (prefers-reduced-motion: reduce) { .track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .track li[aria-hidden] { display: none; } }
+</style>

@@ -1,0 +1,12 @@
+---
+import Base from './Base.astro';
+import PageHero from '../components/PageHero.astro';
+const { frontmatter } = Astro.props;
+const href = Astro.url.pathname.replace(/\/$/, '');
+const crumbs = [{ name: frontmatter.title, href }];
+const updated = new Date(frontmatter.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={frontmatter.title} description={frontmatter.description} crumbs={crumbs}>
+  <PageHero title={frontmatter.title} lead={`Last updated ${updated}`} crumbs={crumbs} />
+  <section class="section tight"><div class="wrap"><article class="prose"><slot /></article></div></section>
+</Base>

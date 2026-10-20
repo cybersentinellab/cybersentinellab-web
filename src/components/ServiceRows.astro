@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from './Icon.astro';
+interface Props { limit?: number; only?: string[] }
+const { limit, only } = Astro.props;
+let services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+if (only) services = only.map((s) => services.find((x) => x.id === s)!).filter(Boolean);
+if (limit) services = services.slice(0, limit);
+---
+<ul role="list" class="rows">
+  {services.map((s, i) => (
+    <li data-reveal>
+      <a class="row" href={`/services/${s.id}`}>
+        <span class="n">{String(i + 1).padStart(2, '0')}</span>
+        <span class="ic"><Icon name={s.data.icon} /></span>
+        <h3>{s.data.title}</h3>
+        <p>{s.data.summary}</p>
+        <span class="ar" aria-hidden="true"><Icon name="arrow" size={18} /></span>
+      </a>
+    </li>
+  ))}
+</ul>
+<style>
+  .rows { list-style: none; border-top: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 48px 44px 1fr 1.1fr 48px; align-items: center; gap: 26px; padding: 30px 20px; margin-inline: -20px; border-bottom: 1px solid var(--line); border-radius: 14px; transition: background 0.3s; }
+  .n { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .ic { color: var(--muted); transition: color 0.3s; }
+  h3 { font-size: clamp(1.3rem, 2vw, 1.75rem); transition: color 0.3s; }
+  p { color: var(--muted); line-height: 1.6; font-size: 0.97rem; }
+  .ar { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--muted); transition: all 0.3s; }
+  .row:hover { background: linear-gradient(90deg, rgba(79, 195, 255, 0.07), transparent); }
+  .row:hover h3, .row:hover .ic { color: var(--accent); }
+  .row:hover .ar { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); transform: rotate(-45deg); }
+  @media (max-width: 860px) {
+    .row { grid-template-columns: 36px 1fr 40px; gap: 8px 16px; padding: 24px 0; margin: 0; }
+    .n { display: none; }
+    .ic { grid-row: span 2; align-self: start; padding-top: 4px; }
+    h3 { grid-column: 2; }
+    p { grid-column: 2; }
+    .ar { grid-column: 3; grid-row: 1 / span 2; width: 38px; height: 38px; }
+  }
+</style>

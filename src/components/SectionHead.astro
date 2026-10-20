@@ -1,0 +1,18 @@
+---
+// <SectionHead eyebrow="Services" title="What we <em>protect</em> you from." text="..." split />
+// Wrap accent words in <em> — they render in the italic serif accent.
+interface Props { eyebrow?: string; title: string; text?: string; split?: boolean; level?: 'h1' | 'h2' }
+const { eyebrow, title, text, split, level = 'h2' } = Astro.props;
+const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
+const H = level;
+---
+<div class:list={['shead', { split }]} data-reveal>
+  <div>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <H class={level === 'h1' ? 'h1 t' : 'h2 t'} set:html={html} />
+  </div>
+  {text && <p class="lead">{text}</p>}
+</div>
+<style>
+  .t { margin-top: 18px; }
+</style>

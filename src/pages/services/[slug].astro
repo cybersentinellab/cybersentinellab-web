@@ -1,0 +1,118 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import ServiceRows from '../../components/ServiceRows.astro';
+import { serviceSchema, faqSchema } from '../../data/schema';
+import { industries } from '../../data/industries';
+
+export async function getStaticPaths() {
+  const all = await getCollection('services');
+  return all.map((s) => ({ params: { slug: s.id }, props: { s, all } }));
+}
+const { s, all } = Astro.props;
+const d = s.data;
+const { Content } = await render(s);
+const titleHtml = d.titleAccent && d.title.endsWith(d.titleAccent) ? d.title.slice(0, -d.titleAccent.length) + `<em>${d.titleAccent}</em>` : d.title;
+const roman = ['i.', 'ii.', 'iii.', 'iv.', 'v.', 'vi.', 'vii.', 'viii.'];
+const related = all.filter((x) => x.id !== s.id).sort((a, b) => Math.abs(a.data.order - d.order) - Math.abs(b.data.order - d.order)).slice(0, 3).map((x) => x.id);
+const inds = industries.filter((i) => i.services.includes(s.id));
+const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: `/services/${s.id}` }];
+---
+<Base title={d.seoTitle ?? d.title} description={d.metaDescription ?? d.summary} crumbs={crumbs} schema={[serviceSchema({ title: d.title, summary: d.summary, slug: s.id }), faqSchema(d.faqs)]}>
+  <PageHero title={titleHtml} lead={d.intro} crumbs={crumbs}>
+    <div class="ctas"><a class="btn btn-accent" href={`/contact?service=${s.id}`}>Request a consultation</a><a class="btn btn-ghost" href="/contact">Talk to an expert <span class="arr">→</span></a></div>
+    <div slot="aside" class="vis" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="sweep"></div><div class="core"><Icon name={d.icon} size={44} /></div></div>
+  </PageHero>
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead eyebrow="What we cover" title="What's <em>included.</em>" />
+      <div class="feat">
+        {d.features.map((f, i) => (
+          <div data-reveal><i class="s">{roman[i]}</i><h3>{f.title}</h3><p>{f.text}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {d.steps.length > 0 && (
+    <section class="section tight">
+      <div class="wrap">
+        <SectionHead eyebrow="How it works" title={`${d.steps.length} steps, <em>no surprises.</em>`} />
+        <ol class="flow">
+          {d.steps.map((st) => <li data-reveal><b>{st.title}</b><span>{st.text}</span></li>)}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {d.outcomes.length > 0 && (
+    <section class="section tight">
+      <div class="wrap out" data-reveal>
+        <div><p class="eyebrow">What you get</p><h2 class="h2 t">Clear outcomes, <span class="s">measurable</span> risk reduction.</h2></div>
+        <ul role="list">{d.outcomes.map((o) => <li><Icon name="check" size={20} />{o}</li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <section class="wrap prose-wrap"><div class="prose"><Content /></div></section>
+
+  <Faq faqs={d.faqs} />
+
+  {inds.length > 0 && (
+    <section class="section tight">
+      <div class="wrap">
+        <p class="eyebrow">Industries we protect</p>
+        <ul role="list" class="chips">{inds.map((i) => <li><a href={`/industries/${i.slug}`}><Icon name={i.icon} size={18} />{i.title}</a></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead eyebrow="Related services" title="Strengthen your <em>shield.</em>" />
+      <ServiceRows only={related} />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+  .vis { position: relative; aspect-ratio: 1; max-width: 440px; width: 100%; justify-self: end; border-radius: 28px; border: 1px solid var(--line); background: radial-gradient(circle at 50% 50%, rgba(79, 195, 255, 0.14), transparent 65%), var(--bg-2); overflow: hidden; }
+  .ring { position: absolute; inset: 0; margin: auto; border-radius: 50%; border: 1px solid rgba(79, 195, 255, 0.22); }
+  .r1 { width: 30%; height: 30%; } .r2 { width: 58%; height: 58%; } .r3 { width: 86%; height: 86%; }
+  .sweep { position: absolute; inset: 7%; border-radius: 50%; background: conic-gradient(from 0deg, rgba(79, 195, 255, 0.35), transparent 22%); animation: spin 5s linear infinite; }
+  .core { position: absolute; inset: 0; margin: auto; width: 92px; height: 92px; border-radius: 24px; display: grid; place-items: center; background: var(--bg); border: 1px solid var(--accent); color: var(--accent); box-shadow: 0 0 40px var(--accent-glow); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 900px) { .vis { display: none; } }
+  .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .feat > div { background: var(--bg); padding: clamp(26px, 3vw, 38px); }
+  .feat i { display: block; font-size: 1.4rem; margin-bottom: 20px; }
+  .feat h3 { font-size: 1.25rem; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .feat p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+  .flow { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: 1px solid var(--line); counter-reset: f; }
+  .flow li { position: relative; padding: 32px 24px 0 0; counter-increment: f; }
+  .flow li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+  .flow b { display: block; font-size: 1.2rem; font-weight: 500; margin-bottom: 8px; }
+  .flow b::before { content: '0' counter(f) ' '; color: var(--muted); font-weight: 400; font-size: 0.85rem; margin-right: 6px; }
+  .flow span { color: var(--muted); font-size: 0.95rem; }
+  .out { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; background: var(--bg-2); border: 1px solid var(--line); border-radius: 28px; padding: clamp(32px, 5vw, 64px); }
+  .out .t { margin-top: 18px; }
+  .out ul { display: grid; gap: 16px; }
+  .out li { display: flex; gap: 14px; align-items: flex-start; font-size: 1.05rem; }
+  .out li :global(svg) { color: var(--accent); flex: none; margin-top: 2px; }
+  @media (max-width: 860px) { .out { grid-template-columns: 1fr; gap: 30px; } }
+  .prose-wrap:has(.prose:empty) { display: none; }
+  .prose-wrap { padding-bottom: var(--section); }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid var(--line-2); border-radius: 999px; transition: border-color 0.2s, color 0.2s; }
+  .chips a:hover { border-color: var(--accent); color: var(--accent); }
+  .chips :global(svg) { color: var(--accent); }
+</style>

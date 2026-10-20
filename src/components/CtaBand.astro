@@ -1,0 +1,28 @@
+---
+interface Props { title?: string; text?: string; button?: string; href?: string }
+const {
+  title = 'Find your weak spots <em>first.</em>',
+  text = 'Talk to a Cyber Sentinel Lab specialist about your security priorities — no obligation.',
+  button = 'Book a consultation',
+  href = '/contact',
+} = Astro.props;
+const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
+---
+<section class="section">
+  <div class="wrap">
+    <div class="band" data-reveal>
+      <h2 class="h2" set:html={html} />
+      <p class="lead">{text}</p>
+      <div class="acts">
+        <a class="btn btn-accent" href={href}>{button}</a>
+        <a class="btn btn-ghost" href="tel:+971558817003">Call +971 55 881 7003</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .band { position: relative; overflow: hidden; border-radius: 28px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 80px); text-align: center; background: radial-gradient(ellipse at 50% 0, #123a63, #0a1222 70%); border: 1px solid var(--line); }
+  .band::before { content: ''; position: absolute; inset: 0 0 auto; height: 3px; background: var(--tri); }
+  .lead { margin: 18px auto 32px; }
+  .acts { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>

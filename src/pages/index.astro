@@ -1,7 +1,146 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ServiceRows from '../components/ServiceRows.astro';
+import LogoWall from '../components/LogoWall.astro';
+import PostCard from '../components/PostCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { clients, partners } from '../data/logos';
+import { industries } from '../data/industries';
+import { getPosts } from '../lib/posts';
+import { site } from '../data/site';
+
+const posts = (await getPosts()).slice(0, 3);
+const approach = [
+  { n: '01', t: 'Assess', a: 'First', p: 'We start by understanding your business, systems and risks. In-depth assessments and penetration testing find vulnerabilities before attackers can exploit them.' },
+  { n: '02', t: 'Protect', a: 'Proactively', p: 'Using proven tools and strategies, we design security measures tailored to you — strengthening defences and keeping you compliant with industry standards.' },
+  { n: '03', t: 'Respond', a: 'Effectively', p: 'If threats arise, our experts act fast to contain, resolve and recover, with clear remediation steps that minimise damage and keep your business running.' },
+];
+const regions = [
+  { r: 'United Arab Emirates', d: 'Headquarters in Dubai, serving government and enterprise across the Emirates.' },
+  { r: 'GCC', d: 'Supporting organisations across the Gulf with regional expertise and partners.' },
+  { r: 'Europe', d: 'A presence in Denmark through Cyber Sentinel, bringing European standards and reach.' },
+];
 ---
-<Base title="Cyber Sentinel Lab | Your Shield in the Digital World" description="Cybersecurity services in Dubai, the GCC and Europe.">
+<Base title={`${site.name} | Your Shield in the Digital World`} description="Cyber Sentinel Lab is a Dubai cybersecurity company providing penetration testing, threat intelligence, GRC advisory, incident response and cloud security across the UAE, GCC and Europe.">
   <Hero />
+
+  <section class="trust" aria-label="Clients">
+    <div class="wrap">
+      <p class="eyebrow">Trusted by organisations across the UAE</p>
+      <LogoWall logos={clients} variant="marquee" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <SectionHead split eyebrow="About CSL" title="Security that <em>assesses</em>, protects and <em>responds</em> — before it matters." text="Cyber Sentinel Lab delivers end-to-end cybersecurity and risk management that strengthens business resilience and ensures compliance with global standards. Our expert team keeps your digital assets secure, resilient and future-ready." />
+      <div class="nums">
+        <div data-reveal><b><span data-count="25">25</span><sup>+</sup></b><span>Years of combined expertise</span></div>
+        <div data-reveal><b><span data-count="30">30</span><sup>+</sup></b><span>Client references — and growing…</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead split eyebrow="Services" title="What we <em>protect you</em> from." text="From offensive testing to governance and 24/7 response — specialist services that work as one shield." />
+      <ServiceRows />
+      <p class="more"><a class="btn btn-ghost" href="/services">All services <span class="arr">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead eyebrow="Our approach" title="Three steps. <em>One shield.</em>" />
+      <div class="grid g3">
+        {approach.map((s) => (
+          <div class="card top ap" data-reveal>
+            <b>{s.n}</b>
+            <h3 class="h3">{s.t} <span class="s">{s.a}</span></h3>
+            <p class="muted">{s.p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead split eyebrow="Industries" title="Built for <em>critical</em> sectors." text="Government, finance, healthcare, energy and more — each with its own threats, regulations and stakes." />
+      <ul role="list" class="grid g4 inds">
+        {industries.slice(0, 8).map((i) => (
+          <li data-reveal><a class="card hover ind" href={`/industries/${i.slug}`}><Icon name={i.icon} size={26} /><span>{i.title}</span></a></li>
+        ))}
+      </ul>
+      <p class="more"><a class="btn btn-ghost" href="/industries">All industries <span class="arr">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      <SectionHead split eyebrow="Strategic partnerships" title="Global expertise. <em>Local presence.</em>" text="We collaborate with leading technology providers to deliver solutions that keep businesses ahead of cyber threats — across Europe, the GCC and the UAE." />
+      <div class="grid g3 regions">
+        {regions.map((r) => (
+          <div class="reg" data-reveal><Icon name="globe" /><h3>{r.r}</h3><p class="muted">{r.d}</p></div>
+        ))}
+      </div>
+      <LogoWall logos={partners.slice(0, 12)} />
+      <p class="more"><a class="btn btn-ghost" href="/about#partners">All partners <span class="arr">→</span></a></p>
+    </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section class="section tight">
+      <div class="wrap">
+        <SectionHead split eyebrow="Insights" title="Latest from the <em>Lab</em>." text="Analysis, guidance and news from our security specialists." />
+        <div class="grid g3">{posts.map((p) => <PostCard post={p} />)}</div>
+        <p class="more"><a class="btn btn-ghost" href="/insights">All insights <span class="arr">→</span></a></p>
+      </div>
+    </section>
+  )}
+
+  <CtaBand />
 </Base>
+
+<style>
+  .trust { padding: 40px 0 10px; }
+  .trust .eyebrow { margin-bottom: 22px; }
+  .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--line); padding-top: 50px; }
+  .nums b { display: block; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(5rem, 12vw, 9.5rem); line-height: 0.9; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .nums sup { font-size: 0.45em; color: var(--accent); vertical-align: top; line-height: 1.5; }
+  .nums span:not([data-count]) { display: block; color: var(--muted); margin-top: 12px; }
+  .more { margin-top: 36px; }
+  .ap b { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 4.5rem; line-height: 1; color: #2a3146; }
+  .ap h3 { margin: 22px 0 12px; }
+  .inds { list-style: none; }
+  .ind { display: flex; flex-direction: column; gap: 26px; height: 100%; font-weight: 500; font-size: 1.08rem; letter-spacing: -0.01em; }
+  .ind :global(svg) { color: var(--accent); }
+  .regions { margin-bottom: 48px; }
+  .reg { border-top: 1px solid var(--line-2); padding-top: 24px; }
+  .reg :global(svg) { color: var(--accent); }
+  .reg h3 { font-size: 1.35rem; margin: 18px 0 8px; letter-spacing: -0.02em; }
+  @media (max-width: 600px) { .nums { grid-template-columns: 1fr; gap: 30px; } }
+</style>
+
+<script>
+  // Animated stat counters
+  const els = document.querySelectorAll<HTMLElement>('[data-count]');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target as HTMLElement, to = +el.dataset.count!, t0 = performance.now();
+      const tick = (now: number) => {
+        const k = Math.min(1, (now - t0) / 1600), v = Math.round(to * (1 - (1 - k) ** 3));
+        el.textContent = String(v);
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      el.textContent = '0';
+      requestAnimationFrame(tick);
+    }), { threshold: 0.6 });
+    els.forEach((el) => io.observe(el));
+  }
+</script>

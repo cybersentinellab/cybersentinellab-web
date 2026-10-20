@@ -26,6 +26,7 @@ const path = Astro.url.pathname;
 <style>
   .hdr { position: fixed; inset: 0 0 auto; z-index: 50; transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
   .hdr.scrolled, .hdr.open { background: rgba(6, 7, 12, 0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-color: var(--line); }
+  .hdr.open { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   .bar { display: flex; align-items: center; gap: 36px; height: 80px; }
   .logo img { height: 34px; width: auto; }
   nav { margin-left: auto; }
