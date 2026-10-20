@@ -55,7 +55,7 @@ export const scene: Scene = {
     halo.addColorStop(0, rgba(P.accent, 0.18)); halo.addColorStop(1, rgba(P.accent, 0));
     ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, R * 1.3, 0, 7); ctx.fill();
     const sg = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.4, R * 0.1, cx, cy, R);
-    sg.addColorStop(0, '#163e72'); sg.addColorStop(1, '#060f22');
+    sg.addColorStop(0, rgba(P.accent, 0.28)); sg.addColorStop(0.5, P.deep); sg.addColorStop(1, '#05070d');
     ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fill();
     ctx.strokeStyle = rgba(P.accent, 0.5); ctx.lineWidth = 1.2; ctx.stroke();
     // dots
