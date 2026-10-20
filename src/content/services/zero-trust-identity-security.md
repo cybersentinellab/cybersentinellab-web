@@ -1,4 +1,5 @@
 ---
+slug: zero-trust-identity-security
 title: Zero Trust Identity Security
 titleAccent: Identity Security
 order: 5

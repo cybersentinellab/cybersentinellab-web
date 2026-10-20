@@ -1,4 +1,5 @@
 ---
+slug: security-assessment
 title: Security Assessment & Vulnerability Management
 titleAccent: Vulnerability Management
 order: 2

@@ -1,0 +1,18 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getPosts, slugify, type Post } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((t) => ({ params: { tag: slugify(t) }, props: { t, list: posts.filter((p) => p.data.tags.includes(t)) } }));
+}
+const { t, list } = Astro.props as { t: string; list: Post[] };
+const crumbs = [{ name: 'Insights', href: '/insights' }, { name: t, href: `/insights/tags/${slugify(t)}` }];
+---
+<Base title={`${t} — Insights`} description={`Cyber Sentinel Lab insights on ${t}.`} crumbs={crumbs}>
+  <PageHero title={`<em>${t}</em>`} lead={`${list.length} ${list.length === 1 ? 'article' : 'articles'} on this topic.`} crumbs={crumbs} />
+  <section class="section tight"><div class="wrap grid g3">{list.map((p) => <PostCard post={p} />)}</div></section>
+</Base>

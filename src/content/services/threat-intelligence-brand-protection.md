@@ -1,4 +1,5 @@
 ---
+slug: threat-intelligence-brand-protection
 title: Threat Intelligence & Brand Protection
 titleAccent: Brand Protection
 order: 3

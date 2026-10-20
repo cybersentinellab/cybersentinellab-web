@@ -1,4 +1,5 @@
 ---
+slug: incident-response-forensics
 title: Incident Response & Forensics
 titleAccent: Forensics
 order: 9

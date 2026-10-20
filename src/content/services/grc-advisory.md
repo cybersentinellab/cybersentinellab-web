@@ -1,4 +1,5 @@
 ---
+slug: grc-advisory
 title: GRC Advisory
 titleAccent: Advisory
 order: 8

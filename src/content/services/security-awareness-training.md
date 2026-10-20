@@ -1,4 +1,5 @@
 ---
+slug: security-awareness-training
 title: Security Training & Awareness
 titleAccent: Awareness
 order: 10

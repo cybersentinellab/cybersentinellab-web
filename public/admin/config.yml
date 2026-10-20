@@ -1,0 +1,486 @@
+# Decap CMS — https://decapcms.org/docs/configuration-options/
+backend:
+  name: github
+  repo: cybersentinellab/cybersentinellab-web
+  branch: main
+  auth_endpoint: api/auth
+  commit_messages:
+    create: Create {{collection}} “{{slug}}”
+    update: Update {{collection}} “{{slug}}”
+    delete: Delete {{collection}} “{{slug}}”
+    uploadMedia: Upload “{{path}}”
+    deleteMedia: Delete “{{path}}”
+publish_mode: editorial_workflow
+site_url: https://cybersentinellab.com
+display_url: https://cybersentinellab.com
+logo_url: /images/logo-color.svg
+media_folder: src/assets/uploads
+public_folder: ../../assets/uploads
+collections:
+- name: blog
+  label: Blog posts
+  folder: src/content/blog
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  summary: '{{title}} — {{date | date("YYYY-MM-DD")}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug (URL)
+    name: slug
+    widget: string
+    pattern:
+    - ^[a-z0-9]+(?:-[a-z0-9]+)*$
+    - Lowercase letters, numbers and hyphens only
+    hint: e.g. ransomware-readiness-checklist
+  - label: Publish date
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD MMM YYYY
+    time_format: false
+  - label: Author
+    name: author
+    widget: string
+    default: Cyber Sentinel Lab
+  - label: Cover image
+    name: cover
+    widget: image
+    required: false
+    hint: Landscape, at least 1600×900 px
+  - label: Cover image alt text
+    name: coverAlt
+    widget: string
+    required: false
+    hint: Describe the image for screen readers
+  - label: Excerpt
+    name: excerpt
+    widget: text
+    hint: 1–2 sentences shown on cards and in search results
+  - label: Tags
+    name: tags
+    widget: list
+    default: []
+    required: false
+  - label: Body
+    name: body
+    widget: markdown
+  - label: SEO title
+    name: seoTitle
+    widget: string
+    required: false
+    hint: Optional. Defaults to the title. Keep under 60 characters.
+  - label: Meta description
+    name: metaDescription
+    widget: text
+    required: false
+    hint: Optional. Defaults to the excerpt. Keep under 155 characters.
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: articles
+  label: Articles
+  folder: src/content/articles
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  summary: '{{title}} — {{date | date("YYYY-MM-DD")}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug (URL)
+    name: slug
+    widget: string
+    pattern:
+    - ^[a-z0-9]+(?:-[a-z0-9]+)*$
+    - Lowercase letters, numbers and hyphens only
+    hint: e.g. ransomware-readiness-checklist
+  - label: Publish date
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD MMM YYYY
+    time_format: false
+  - label: Author
+    name: author
+    widget: string
+    default: Cyber Sentinel Lab
+  - label: Cover image
+    name: cover
+    widget: image
+    required: false
+    hint: Landscape, at least 1600×900 px
+  - label: Cover image alt text
+    name: coverAlt
+    widget: string
+    required: false
+    hint: Describe the image for screen readers
+  - label: Excerpt
+    name: excerpt
+    widget: text
+    hint: 1–2 sentences shown on cards and in search results
+  - label: Tags
+    name: tags
+    widget: list
+    default: []
+    required: false
+  - label: Body
+    name: body
+    widget: markdown
+  - label: SEO title
+    name: seoTitle
+    widget: string
+    required: false
+    hint: Optional. Defaults to the title. Keep under 60 characters.
+  - label: Meta description
+    name: metaDescription
+    widget: text
+    required: false
+    hint: Optional. Defaults to the excerpt. Keep under 155 characters.
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: news
+  label: News
+  folder: src/content/news
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  summary: '{{title}} — {{date | date("YYYY-MM-DD")}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug (URL)
+    name: slug
+    widget: string
+    pattern:
+    - ^[a-z0-9]+(?:-[a-z0-9]+)*$
+    - Lowercase letters, numbers and hyphens only
+    hint: e.g. ransomware-readiness-checklist
+  - label: Publish date
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD MMM YYYY
+    time_format: false
+  - label: Author
+    name: author
+    widget: string
+    default: Cyber Sentinel Lab
+  - label: Cover image
+    name: cover
+    widget: image
+    required: false
+    hint: Landscape, at least 1600×900 px
+  - label: Cover image alt text
+    name: coverAlt
+    widget: string
+    required: false
+    hint: Describe the image for screen readers
+  - label: Excerpt
+    name: excerpt
+    widget: text
+    hint: 1–2 sentences shown on cards and in search results
+  - label: Tags
+    name: tags
+    widget: list
+    default: []
+    required: false
+  - label: Body
+    name: body
+    widget: markdown
+  - label: SEO title
+    name: seoTitle
+    widget: string
+    required: false
+    hint: Optional. Defaults to the title. Keep under 60 characters.
+  - label: Meta description
+    name: metaDescription
+    widget: text
+    required: false
+    hint: Optional. Defaults to the excerpt. Keep under 155 characters.
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: caseStudies
+  label: Case studies
+  folder: src/content/case-studies
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  summary: '{{title}} — {{date | date("YYYY-MM-DD")}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug (URL)
+    name: slug
+    widget: string
+    pattern:
+    - ^[a-z0-9]+(?:-[a-z0-9]+)*$
+    - Lowercase letters, numbers and hyphens only
+    hint: e.g. ransomware-readiness-checklist
+  - label: Publish date
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD MMM YYYY
+    time_format: false
+  - label: Author
+    name: author
+    widget: string
+    default: Cyber Sentinel Lab
+  - label: Cover image
+    name: cover
+    widget: image
+    required: false
+    hint: Landscape, at least 1600×900 px
+  - label: Cover image alt text
+    name: coverAlt
+    widget: string
+    required: false
+    hint: Describe the image for screen readers
+  - label: Excerpt
+    name: excerpt
+    widget: text
+    hint: 1–2 sentences shown on cards and in search results
+  - label: Tags
+    name: tags
+    widget: list
+    default: []
+    required: false
+  - label: Client (optional)
+    name: client
+    widget: string
+    required: false
+  - label: Industry
+    name: industry
+    widget: string
+    required: false
+  - label: Body
+    name: body
+    widget: markdown
+  - label: SEO title
+    name: seoTitle
+    widget: string
+    required: false
+    hint: Optional. Defaults to the title. Keep under 60 characters.
+  - label: Meta description
+    name: metaDescription
+    widget: text
+    required: false
+    hint: Optional. Defaults to the excerpt. Keep under 155 characters.
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: services
+  label: Services
+  folder: src/content/services
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  summary: '{{order}}. {{title}}'
+  sortable_fields:
+  - order
+  - title
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug (URL)
+    name: slug
+    widget: string
+    hint: Changing this changes the page URL
+  - label: Italic accent (last words of the title)
+    name: titleAccent
+    widget: string
+    required: false
+  - label: Order
+    name: order
+    widget: number
+    value_type: int
+    default: 99
+  - label: Icon
+    name: icon
+    widget: select
+    options:
+    - shield
+    - shieldcheck
+    - target
+    - search
+    - radar
+    - eye
+    - file
+    - pulse
+    - nodes
+    - cloud
+    - key
+    - lock
+    - factory
+    - chip
+    - users
+    - code
+    - server
+    - globe
+    default: shield
+  - label: Summary (cards)
+    name: summary
+    widget: text
+  - label: Intro (page header)
+    name: intro
+    widget: text
+  - label: Tags
+    name: tags
+    widget: list
+    required: false
+  - label: What is included
+    name: features
+    widget: list
+    fields:
+    - label: Title
+      name: title
+      widget: string
+    - label: Text
+      name: text
+      widget: text
+  - label: Process steps
+    name: steps
+    widget: list
+    required: false
+    fields:
+    - label: Title
+      name: title
+      widget: string
+    - label: Text
+      name: text
+      widget: text
+  - label: Outcomes
+    name: outcomes
+    widget: list
+    required: false
+  - label: FAQs
+    name: faqs
+    widget: list
+    fields:
+    - label: Question
+      name: q
+      widget: string
+    - label: Answer
+      name: a
+      widget: text
+    hint: Write answers that make sense on their own — AI search engines quote them.
+  - label: Extra content (optional)
+    name: body
+    widget: markdown
+    required: false
+  - label: SEO title
+    name: seoTitle
+    widget: string
+    required: false
+  - label: Meta description
+    name: metaDescription
+    widget: text
+    required: false
+- name: team
+  label: Team members
+  folder: src/content/team
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Name
+    name: title
+    widget: string
+  - label: Slug
+    name: slug
+    widget: string
+  - label: Role
+    name: role
+    widget: string
+  - label: Order
+    name: order
+    widget: number
+    value_type: int
+    default: 99
+  - label: Photo
+    name: photo
+    widget: image
+    required: false
+  - label: LinkedIn URL
+    name: linkedin
+    widget: string
+    required: false
+  - label: Short bio
+    name: excerpt
+    widget: text
+    required: false
+  - label: Bio
+    name: body
+    widget: markdown
+    required: false
+- name: testimonials
+  label: Testimonials
+  folder: src/content/testimonials
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Person name
+    name: title
+    widget: string
+  - label: Slug
+    name: slug
+    widget: string
+  - label: Role
+    name: role
+    widget: string
+    required: false
+  - label: Company
+    name: company
+    widget: string
+    required: false
+  - label: Quote
+    name: quote
+    widget: text
+  - label: Date
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    time_format: false
+    required: false
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false

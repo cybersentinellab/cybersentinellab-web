@@ -1,0 +1,71 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import PostCard from '../../../components/PostCard.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import Icon from '../../../components/Icon.astro';
+import { getPosts, kindMeta, postUrl, fmtDate, slugify, type Kind, type Post } from '../../../lib/posts';
+import { articleSchema } from '../../../data/schema';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((p) => ({ params: { kind: kindMeta[p.collection as Kind].path, slug: p.id }, props: { p, posts } }));
+}
+const { p, posts } = Astro.props as { p: Post; posts: Post[] };
+const d = p.data;
+const { Content } = await render(p);
+const words = (p.body ?? '').split(/\s+/).length;
+const mins = Math.max(1, Math.ceil(words / 200));
+const url = new URL(postUrl(p), Astro.site).href;
+const meta = kindMeta[p.collection as Kind];
+const crumbs = [{ name: 'Insights', href: '/insights' }, { name: d.title, href: postUrl(p) }];
+const related = posts.filter((x) => x.id !== p.id).map((x) => ({ x, s: x.data.tags.filter((t) => d.tags.includes(t)).length })).sort((a, b) => b.s - a.s).slice(0, 3).map((r) => r.x);
+const share = encodeURIComponent(url);
+---
+<Base title={d.seoTitle ?? d.title} description={d.metaDescription ?? d.excerpt} type="article" image={d.cover?.src} crumbs={crumbs} noindex={d.draft}
+  schema={[articleSchema({ title: d.title, description: d.excerpt, url, date: d.date, author: d.author, image: d.cover ? new URL(d.cover.src, Astro.site).href : undefined })]}>
+  <article>
+    <header class="phero ah">
+      <div class="wrap narrow">
+        <nav aria-label="Breadcrumb" class="crumbs"><a href="/">Home</a><span>/</span><a href="/insights">Insights</a><span>/</span><span aria-current="page">{meta.label}</span></nav>
+        {d.draft && <p class="draft">Draft — visible on preview only</p>}
+        <h1 class="h1 t">{d.title}</h1>
+        <p class="lead">{d.excerpt}</p>
+        <p class="meta"><span>{d.author}</span><span>·</span><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time><span>·</span><span>{mins} min read</span></p>
+      </div>
+    </header>
+    {d.cover && <div class="wrap narrow cov"><Image src={d.cover} alt={d.coverAlt ?? ''} widths={[720, 1200]} sizes="(max-width: 800px) 100vw, 800px" loading="eager" /></div>}
+    <div class="wrap narrow body">
+      <div class="prose"><Content /></div>
+      <footer class="foot">
+        {d.tags.length > 0 && <p class="tags">{d.tags.map((t) => <a class="tag" href={`/insights/tags/${slugify(t)}`}>{t}</a>)}</p>}
+        <p class="share">Share:
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${share}`} target="_blank" rel="noopener" aria-label="Share on LinkedIn"><Icon name="linkedin" size={18} /></a>
+          <a href={`https://wa.me/?text=${share}`} target="_blank" rel="noopener" aria-label="Share on WhatsApp"><Icon name="whatsapp" size={18} /></a>
+          <a href={`mailto:?subject=${encodeURIComponent(d.title)}&body=${share}`} aria-label="Share by email"><Icon name="mail" size={18} /></a>
+        </p>
+      </footer>
+    </div>
+  </article>
+  {related.length > 0 && (
+    <section class="section tight"><div class="wrap"><p class="eyebrow">Keep reading</p><div class="grid g3 rel">{related.map((r) => <PostCard post={r} />)}</div></div></section>
+  )}
+  <CtaBand />
+</Base>
+<style>
+  .narrow { max-width: 860px; }
+  .ah { padding-bottom: 50px; }
+  .t { margin: 22px 0; font-size: clamp(2.2rem, 5vw, 3.75rem); line-height: 1.05; }
+  .draft { margin-top: 18px; display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid #ffc636; color: #ffc636; font-size: 0.8rem; }
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; margin-top: 26px; }
+  .cov :global(img) { border-radius: 20px; width: 100%; height: auto; }
+  .body { padding-top: 40px; padding-bottom: 40px; }
+  .prose { font-size: 1.08rem; max-width: none; }
+  .foot { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .share { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 0.9rem; }
+  .share a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; }
+  .share a:hover { color: var(--accent); border-color: var(--accent); }
+  .rel { margin-top: 24px; }
+</style>

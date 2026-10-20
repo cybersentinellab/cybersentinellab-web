@@ -1,4 +1,5 @@
 ---
+slug: penetration-testing
 title: Penetration Testing
 titleAccent: Testing
 order: 1

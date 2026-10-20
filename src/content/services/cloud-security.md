@@ -1,4 +1,5 @@
 ---
+slug: cloud-security
 title: Cloud Security & Solutions
 titleAccent: Solutions
 order: 7

@@ -1,4 +1,5 @@
 ---
+slug: endpoint-network-detection-response
 title: Endpoint & Network Detection and Response
 titleAccent: Detection and Response
 order: 4

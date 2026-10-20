@@ -1,4 +1,5 @@
 ---
+slug: ot-iot-iomt-security
 title: OT, IoT & IoMT Security
 titleAccent: IoMT Security
 order: 6

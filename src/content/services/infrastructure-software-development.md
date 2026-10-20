@@ -1,4 +1,5 @@
 ---
+slug: infrastructure-software-development
 title: Infrastructure, Integration & Software Development
 titleAccent: Software Development
 order: 11

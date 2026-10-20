@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Content Manager | Cyber Sentinel Lab</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+</head>
+<body>
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="https://unpkg.com/decap-cms@^3.1.0/dist/decap-cms.js"></script>
+  <script>
+    // OAuth runs through this site's own /api/auth function (works on preview URLs and the live domain)
+    CMS.init({ config: { backend: { base_url: location.origin } } });
+    CMS.registerPreviewStyle('/admin/preview.css');
+  </script>
+</body>
+</html>
