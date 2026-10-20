@@ -1,0 +1,60 @@
+---
+// Home hero: text renders instantly; one of 4 canvas scenes is chosen at random and
+// lazy-loaded after first paint. Add ?hero=dome|globe|network|fortress to force one.
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap t">
+    <p class="eyebrow center">Cybersecurity · Dubai · GCC · Europe</p>
+    <h1 id="hero-title" class="h1">Your Shield in the <span class="s">Digital World</span></h1>
+    <p class="lead">Protecting governments and enterprises with penetration testing, threat intelligence, compliance and round-the-clock incident response.</p>
+    <div class="ctas">
+      <a href="/contact" class="btn btn-accent">Book a security assessment</a>
+      <a href="/services" class="btn btn-ghost">Our services <span class="arr">→</span></a>
+    </div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <canvas data-hero></canvas>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: max(100svh, 760px); background: radial-gradient(ellipse 70% 55% at 50% 100%, var(--deep) 0%, transparent 70%), var(--bg); }
+  .t { position: relative; z-index: 2; text-align: center; padding-top: clamp(112px, 12vw, 136px); }
+  .center { justify-content: center; }
+  .h1 { margin: 20px auto; max-width: 15ch; }
+  .lead { margin: 0 auto; max-width: 600px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 36px; }
+  .stage { position: relative; flex: 1; min-height: 340px; max-height: 620px; margin-top: -40px; }
+  @media (max-width: 600px) { .hero { min-height: 0; } .stage { flex: none; height: 320px; } }
+  .stage::after { content: ''; position: absolute; inset: auto 0 0; height: 1px; background: var(--line); }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+  @media (max-width: 600px) { .ctas .btn { width: 100%; } }
+</style>
+
+<script>
+  import { animate } from 'motion/mini';
+  import { run } from './hero/core';
+
+  const scenes = {
+    dome: () => import('./hero/dome'),
+    globe: () => import('./hero/globe'),
+    network: () => import('./hero/network'),
+    fortress: () => import('./hero/fortress'),
+  } as const;
+  type Name = keyof typeof scenes;
+
+  const canvas = document.querySelector('[data-hero]') as HTMLCanvasElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const names = Object.keys(scenes) as Name[];
+  const forced = new URLSearchParams(location.search).get('hero') as Name | null;
+  const pick: Name = forced && forced in scenes ? forced : names[Math.floor(Math.random() * names.length)];
+
+  const start = async () => {
+    const { scene } = await scenes[pick]();
+    canvas.dataset.scene = pick;
+    run(canvas, scene, reduced);
+    if (reduced) canvas.style.opacity = '1';
+    else animate(canvas, { opacity: [0, 1] }, { duration: 1.2, ease: 'ease-out' });
+  };
+  ('requestIdleCallback' in window ? requestIdleCallback : (f: () => void) => setTimeout(f, 200))(() => void start());
+</script>

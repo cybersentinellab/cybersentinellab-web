@@ -34,7 +34,7 @@ const path = Astro.url.pathname;
   .links a[aria-current] { box-shadow: 0 2px 0 var(--accent); }
   .m-cta, .burger { display: none; }
   .burger { background: none; border: 1px solid var(--line-2); border-radius: 12px; width: 44px; height: 44px; place-items: center; cursor: pointer; }
-  .i-close { display: none; }
+  .burger :global(.i-close) { display: none; }
   @media (max-width: 960px) {
     .bar { height: 68px; }
     .logo img { height: 28px; }
@@ -48,8 +48,8 @@ const path = Astro.url.pathname;
     .links a[aria-current] { box-shadow: none; color: var(--accent); }
     .m-cta { display: block; border: 0 !important; padding-top: 28px; }
     .m-cta .btn { width: 100%; }
-    .open .i-open { display: none; }
-    .open .i-close { display: block; }
+    .open :global(.i-open) { display: none; }
+    .open :global(.i-close) { display: block; }
   }
 </style>
 
