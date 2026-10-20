@@ -68,6 +68,7 @@ h1, h2, h3, h4 { font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; 
 .prose > * + * { margin-top: 1.1em; }
 .prose h2 { font-size: 1.8rem; margin-top: 2em; color: var(--text); }
 .prose h3 { font-size: 1.35rem; margin-top: 1.6em; color: var(--text); }
+.chk a, .lnk { text-decoration: underline; text-underline-offset: 3px; }
 .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .prose ul, .prose ol { padding-left: 1.3em; }
 .prose li + li { margin-top: 0.4em; }
