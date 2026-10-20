@@ -1,7 +1,7 @@
 # PROGRESS
 
 ## Current phase
-Phase 0 — Design directions (awaiting CSL choice)
+Phase 0 — awaiting CSL's choice of design direction (A or B). Phase 1 scaffold done.
 
 ## Decisions (from CSL, 20 Oct 2026)
 - Hosting: Cloudflare Pages; DNS moves from GoDaddy to Cloudflare; M365 email records preserved
@@ -28,6 +28,8 @@ Phase 0 — Design directions (awaiting CSL choice)
 - Plan written
 - Logo assets: white wordmark + transparent icon (design/assets). Clean SVG trace planned for Phase 2
 - Design directions rendered: design/out-*.png (A Command Center, B Sentinel Editorial)
+
+- Phase 1: Astro 7 + React + Motion + MDX + sitemap + RSS installed; base layout; build passes
 
 ## Notes
 - Contact form email: Cloudflare Email Routing would take over MX and break M365, so the form will send through Microsoft Graph (M365 app registration, Mail.Send). Setup in README.
