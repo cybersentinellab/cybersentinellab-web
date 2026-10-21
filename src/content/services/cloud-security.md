@@ -2,7 +2,7 @@
 slug: cloud-security
 title: Cloud Security & Solutions
 titleAccent: Solutions
-order: 7
+order: 8
 icon: cloud
 summary: Secure, scalable cloud — from architecture and migration to DevOps and compliance on AWS, Azure and Microsoft 365.
 intro: We help organisations use the cloud with confidence. From readiness assessment and migration to ongoing security management, we build cloud environments that are secure, scalable and future-ready.
@@ -47,4 +47,5 @@ faqs:
   a: It is the continuous checking of your cloud settings against best practices and compliance rules, so risky misconfigurations are found and fixed quickly.
 seoTitle: Cloud Security & Solutions in Dubai & UAE
 metaDescription: Secure, scalable cloud — from architecture and migration to DevOps and compliance on AWS, Azure and Microsoft 365.
+phase: protect
 ---

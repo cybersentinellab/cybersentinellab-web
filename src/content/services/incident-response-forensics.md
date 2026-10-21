@@ -2,7 +2,7 @@
 slug: incident-response-forensics
 title: Incident Response & Forensics
 titleAccent: Forensics
-order: 9
+order: 10
 icon: pulse
 summary: 24/7 rapid response to contain, investigate and recover from cyber incidents — with clear root-cause answers.
 intro: When a cyberattack occurs, every second counts. Our incident response and digital forensics team helps you detect, contain and recover from breaches, identifies the root cause, preserves evidence and recommends how to prevent a repeat.
@@ -46,4 +46,5 @@ faqs:
   a: Cyber Sentinel Lab provides 24/7 rapid response. Contact us by phone or WhatsApp for urgent incidents.
 seoTitle: Incident Response & Forensics in Dubai & UAE
 metaDescription: 24/7 rapid response to contain, investigate and recover from cyber incidents — with clear root-cause answers.
+phase: respond
 ---

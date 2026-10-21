@@ -1,37 +1,32 @@
 ---
-// Grid of logo tiles (default) or an auto-scrolling marquee strip.
+// Logos shown in their original colours on white.
 interface Logo { name: string; src: string }
 interface Props { logos: Logo[]; variant?: 'grid' | 'marquee' }
 const { logos, variant = 'grid' } = Astro.props;
 ---
 {variant === 'grid' ? (
-  <ul role="list" class="grid-logos">
-    {logos.map((l) => (
-      <li class="tile" title={l.name}><img src={l.src} alt={l.name} loading="lazy" decoding="async" /></li>
-    ))}
+  <ul role="list" class="wall">
+    {logos.map((l) => <li title={l.name}><img src={l.src} alt={l.name} loading="lazy" decoding="async" /></li>)}
   </ul>
 ) : (
-  <div class="marquee" aria-label="Selected clients">
+  <div class="marquee">
     <ul role="list" class="track">
       {[...logos, ...logos].map((l, i) => (
-        <li class="tile sm" aria-hidden={i >= logos.length ? 'true' : undefined}>
-          <img src={l.src} alt={i >= logos.length ? '' : l.name} loading="lazy" decoding="async" />
-        </li>
+        <li aria-hidden={i >= logos.length ? 'true' : undefined}><img src={l.src} alt={i >= logos.length ? '' : l.name} loading="lazy" decoding="async" /></li>
       ))}
     </ul>
   </div>
 )}
 <style>
-  .grid-logos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-  .tile { background: #f4f6fa; border-radius: 14px; height: 92px; display: grid; place-items: center; padding: 14px 18px; transition: transform 0.25s, box-shadow 0.25s; }
-  .tile img { max-height: 62px; max-width: 100%; width: auto; object-fit: contain; filter: grayscale(1) contrast(1.1); opacity: 0.8; transition: filter 0.3s, opacity 0.3s; }
-  .tile:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -12px rgba(79, 195, 255, 0.5); }
-  .tile:hover img { filter: none; opacity: 1; }
-  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-  .track { list-style: none; display: flex; gap: 14px; width: max-content; animation: scroll 60s linear infinite; }
+  .wall { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); background: var(--surface); }
+  @media (max-width: 600px) { .wall { grid-template-columns: repeat(3, 1fr); } .wall li { height: 80px !important; padding: 10px !important; } .wall img { max-height: 40px !important; } }
+  .wall li { height: 110px; display: grid; place-items: center; padding: 18px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .wall img { max-height: 58px; max-width: 100%; width: auto; object-fit: contain; }
+  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  .track { list-style: none; display: flex; align-items: center; gap: 56px; width: max-content; animation: scroll 70s linear infinite; }
   .marquee:hover .track { animation-play-state: paused; }
-  .tile.sm { width: 170px; height: 76px; flex: none; }
-  .tile.sm img { max-height: 50px; }
-  @keyframes scroll { to { transform: translateX(calc(-50% - 7px)); } }
-  @media (prefers-reduced-motion: reduce) { .track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .track li[aria-hidden] { display: none; } }
+  .track li { flex: none; height: 64px; display: grid; place-items: center; }
+  .track img { max-height: 52px; max-width: 170px; width: auto; object-fit: contain; }
+  @keyframes scroll { to { transform: translateX(calc(-50% - 28px)); } }
+  @media (prefers-reduced-motion: reduce) { .track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; row-gap: 24px; } .track li[aria-hidden] { display: none; } }
 </style>

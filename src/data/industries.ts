@@ -12,19 +12,19 @@ export const industries: Industry[] = [
     slug: 'government', title: 'Government & Public Sector', icon: 'landmark',
     summary: 'Protecting citizen data, critical public services and national infrastructure against advanced, often state-backed threats.',
     challenges: ['Targeted attacks and espionage', 'Large, complex legacy estates', 'Strict national security and data rules', 'Public trust and continuity of services'],
-    services: ['penetration-testing', 'grc-advisory', 'threat-intelligence-brand-protection', 'incident-response-forensics'],
+    services: ['penetration-testing', 'compliance-risk-advisory', 'threat-intelligence-brand-protection', 'incident-response-forensics'],
   },
   {
     slug: 'banking-finance', title: 'Banking & Finance', icon: 'bank',
     summary: 'Securing payments, customer accounts and trading systems while meeting demanding financial regulations.',
     challenges: ['Fraud, phishing and account takeover', 'PCI DSS and regulator requirements', 'Third-party and fintech integrations', 'Zero tolerance for downtime'],
-    services: ['penetration-testing', 'zero-trust-identity-security', 'grc-advisory', 'threat-intelligence-brand-protection'],
+    services: ['penetration-testing', 'zero-trust-identity-security', 'compliance-risk-advisory', 'threat-intelligence-brand-protection', 'fintech-mobility'],
   },
   {
     slug: 'healthcare', title: 'Healthcare & Life Sciences', icon: 'heart',
     summary: 'Keeping patient data private and connected medical devices safe, so care is never interrupted.',
     challenges: ['Sensitive patient records', 'Unsecured IoMT and medical devices', 'Ransomware targeting hospitals', 'HIPAA-style privacy obligations'],
-    services: ['ot-iot-iomt-security', 'endpoint-network-detection-response', 'grc-advisory', 'security-awareness-training'],
+    services: ['ot-iot-iomt-security', 'endpoint-network-detection-response', 'compliance-risk-advisory', 'security-awareness-training'],
   },
   {
     slug: 'energy-critical-infrastructure', title: 'Energy, Utilities & Critical Infrastructure', icon: 'bolt',
@@ -54,13 +54,13 @@ export const industries: Industry[] = [
     slug: 'retail-hospitality', title: 'Retail, Hospitality & Consumer Brands', icon: 'store',
     summary: 'Protecting customer data, online stores and brand reputation from fraud and impersonation.',
     challenges: ['Payment card data', 'Fake websites and social accounts', 'E-commerce and app security', 'Seasonal peaks and promotions'],
-    services: ['threat-intelligence-brand-protection', 'penetration-testing', 'grc-advisory', 'cloud-security'],
+    services: ['threat-intelligence-brand-protection', 'penetration-testing', 'compliance-risk-advisory', 'cloud-security'],
   },
   {
     slug: 'enterprise', title: 'Enterprise', icon: 'building',
     summary: 'End-to-end security programmes for large organisations operating across regions and clouds.',
     challenges: ['Hybrid and multi-cloud estates', 'Identity sprawl', 'Regulation across many countries', 'Board-level risk reporting'],
-    services: ['grc-advisory', 'zero-trust-identity-security', 'cloud-security', 'endpoint-network-detection-response'],
+    services: ['compliance-risk-advisory', 'zero-trust-identity-security', 'cloud-security', 'endpoint-network-detection-response'],
   },
   {
     slug: 'small-business', title: 'Small & Medium Businesses', icon: 'briefcase',

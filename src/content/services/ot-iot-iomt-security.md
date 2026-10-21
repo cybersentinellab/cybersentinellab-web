@@ -2,7 +2,7 @@
 slug: ot-iot-iomt-security
 title: OT, IoT & IoMT Security
 titleAccent: IoMT Security
-order: 6
+order: 7
 icon: factory
 summary: Unified protection for industrial control systems, connected devices and medical technology.
 intro: As operational and information technologies converge, new attack surfaces emerge. We protect industrial control systems, IoT and Internet of Medical Things devices alongside your business infrastructure — securing critical operations while staying compliant.
@@ -47,4 +47,5 @@ faqs:
   a: Many IoT devices ship with default passwords, outdated firmware and no monitoring. Once compromised, they can give attackers a route into the wider network.
 seoTitle: OT, IoT & IoMT Security in Dubai & UAE
 metaDescription: Unified protection for industrial control systems, connected devices and medical technology.
+phase: protect
 ---

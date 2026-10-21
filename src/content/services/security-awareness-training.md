@@ -2,7 +2,7 @@
 slug: security-awareness-training
 title: Security Training & Awareness
 titleAccent: Awareness
-order: 10
+order: 9
 icon: users
 summary: Build a cyber-aware culture where every employee becomes the first line of defence.
 intro: Our Security Training & Awareness Program educates teams on modern threats and practical defence. It goes beyond theory, equipping people with the skills to recognise, report and contain cyber risks.
@@ -20,7 +20,7 @@ features:
 - title: Incident response training
   text: What to do — and who to call — when something goes wrong.
 - title: Continuous learning
-  text: Regular updates as new threats emerge.
+  text: Regular updates as new threats emerge, on proven platforms such as KnowBe4.
 steps:
 - title: Baseline
   text: Measure current awareness.
@@ -45,4 +45,5 @@ faqs:
   a: Yes. Content is adapted to your industry, roles and the threats you actually face, including dedicated sessions for executives and IT teams.
 seoTitle: Security Training & Awareness in Dubai & UAE
 metaDescription: Build a cyber-aware culture where every employee becomes the first line of defence.
+phase: protect
 ---

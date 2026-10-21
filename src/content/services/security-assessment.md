@@ -5,7 +5,7 @@ titleAccent: Vulnerability Management
 order: 2
 icon: search
 summary: A clear picture of your risk across infrastructure, applications and processes — and a plan to reduce it.
-intro: We uncover vulnerabilities across your IT infrastructure through risk analysis, vulnerability scanning and targeted testing, then help you prioritise and close them.
+intro: We uncover vulnerabilities across your IT infrastructure through penetration testing, risk analysis, vulnerability scanning and compliance checks, then help you prioritise and close them.
 tags:
 - Assessment
 features:
@@ -45,4 +45,5 @@ faqs:
   a: Start with a broad security assessment. It shows where your biggest risks are, so later investments such as penetration testing or new tools are targeted where they matter most.
 seoTitle: Security Assessment & Vulnerability Management in Dubai & UAE
 metaDescription: A clear picture of your risk across infrastructure, applications and processes — and a plan to reduce it.
+phase: assess
 ---

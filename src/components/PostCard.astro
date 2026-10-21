@@ -5,22 +5,21 @@ interface Props { post: Post }
 const { post } = Astro.props;
 const d = post.data;
 ---
-<a class="card hover pc" href={postUrl(post)} data-reveal>
-  <div class="cover">
-    {d.cover ? <Image src={d.cover} alt={d.coverAlt ?? ''} widths={[400, 720]} sizes="(max-width: 700px) 100vw, 400px" /> : <div class="ph" aria-hidden="true"><span class="s">{kindMeta[post.collection as Kind].label}</span></div>}
-  </div>
-  <div class="meta"><span class="tag">{kindMeta[post.collection as Kind].label}</span><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.draft && <span class="tag dr">Draft</span>}</div>
+<a class="pc" href={postUrl(post)}>
+  {d.cover && <div class="cover"><Image src={d.cover} alt={d.coverAlt ?? ''} widths={[400, 720]} sizes="(max-width: 700px) 100vw, 400px" /></div>}
+  <p class="meta">{kindMeta[post.collection as Kind].label}, <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.draft && <span class="dr">Draft</span>}</p>
   <h3>{d.title}</h3>
-  <p>{d.excerpt}</p>
+  <p class="ex">{d.excerpt}</p>
+  <span class="more">Read the article</span>
 </a>
 <style>
-  .pc { padding: 0; display: flex; flex-direction: column; }
-  .cover { aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-3); }
-  .cover :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
-  .pc:hover .cover :global(img) { transform: scale(1.04); }
-  .ph { height: 100%; display: grid; place-items: center; font-size: 2.4rem; background: radial-gradient(ellipse at 30% 20%, var(--deep), transparent 70%), repeating-linear-gradient(90deg, transparent 0 39px, var(--line) 39px 40px); }
-  .meta { display: flex; align-items: center; gap: 12px; padding: 22px 26px 0; font-size: 0.83rem; color: var(--muted); }
-  .dr { border-color: #ffc636; color: #ffc636; }
-  h3 { font-size: 1.3rem; letter-spacing: -0.02em; padding: 14px 26px 0; line-height: 1.25; }
-  p { color: var(--muted); font-size: 0.95rem; padding: 10px 26px 28px; line-height: 1.6; }
+  .pc { display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 2px solid var(--ink); height: 100%; }
+  .cover { aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--r-md); margin-bottom: 8px; }
+  .cover :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .meta { font-size: 0.88rem; color: var(--muted); display: flex; gap: 10px; align-items: center; }
+  .dr { padding: 1px 8px; border-radius: var(--r-sm); background: var(--assess); color: var(--ink); font-size: 0.78rem; font-weight: 600; }
+  h3 { font-stretch: 112%; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+  .ex { color: var(--ink-2); font-size: 0.98rem; flex: 1; }
+  .more { font-weight: 600; color: var(--green-ink); }
+  .pc:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 </style>

@@ -35,6 +35,7 @@ const services = defineCollection({
       titleAccent: z.string().optional(), // word(s) shown in italic serif
       order: z.number().default(99),
       icon: z.string().default('shield'),
+      phase: z.enum(['assess', 'protect', 'respond', 'technology']).default('protect'),
       summary: z.string(),
       intro: z.string(),
       date: z.coerce.date().optional(),

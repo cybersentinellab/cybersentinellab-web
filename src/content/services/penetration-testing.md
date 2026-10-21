@@ -48,4 +48,5 @@ faqs:
   a: 'A vulnerability scan uses automated tools to list known weaknesses. A penetration test goes further: skilled testers chain weaknesses together and attempt to exploit them, showing what an attacker could actually achieve.'
 seoTitle: Penetration Testing in Dubai & UAE
 metaDescription: Real-world attack simulation across web, mobile, network and cloud — finding weaknesses before attackers do.
+phase: assess
 ---

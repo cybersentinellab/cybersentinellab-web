@@ -2,7 +2,7 @@
 slug: endpoint-network-detection-response
 title: Endpoint & Network Detection and Response
 titleAccent: Detection and Response
-order: 4
+order: 5
 icon: radar
 summary: Real-time detection and response for threats across endpoints and networks, with full visibility.
 intro: Our EDR and NDR solutions deliver real-time detection and rapid response across endpoints and networks. With leading tools and expert monitoring, you gain full visibility and continuous protection of your critical assets.
@@ -46,4 +46,5 @@ faqs:
   a: Yes. Alongside deployment, we provide expert monitoring and response so threats are investigated and contained quickly.
 seoTitle: Endpoint & Network Detection and Response in Dubai & UAE
 metaDescription: Real-time detection and response for threats across endpoints and networks, with full visibility.
+phase: protect
 ---

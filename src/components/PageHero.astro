@@ -1,8 +1,9 @@
 ---
 interface Crumb { name: string; href: string }
-interface Props { title: string; lead?: string; crumbs: Crumb[]; eyebrow?: string }
-const { title, lead, crumbs, eyebrow } = Astro.props;
-const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
+interface Props { title: string; lead?: string; crumbs: Crumb[]; eyebrow?: string; phase?: 'assess' | 'protect' | 'respond' | 'technology' }
+const { title, lead, crumbs, phase } = Astro.props;
+const plain = title.replace(/<\/?em>/g, '');
+const phaseLabel = { assess: 'Assess', protect: 'Protect', respond: 'Respond', technology: 'Technology' } as const;
 ---
 <header class="phero">
   <div class="wrap g">
@@ -11,8 +12,8 @@ const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
         <a href="/">Home</a>
         {crumbs.map((c, i) => <><span aria-hidden="true">/</span>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.href}>{c.name}</a>}</>)}
       </nav>
-      {eyebrow && <p class="eyebrow e">{eyebrow}</p>}
-      <h1 class="h1 t" set:html={html} />
+      {phase && <p class="phase"><i class={`ph ph-${phase}`}></i>{phaseLabel[phase]}</p>}
+      <h1 class="h1 t">{plain}</h1>
       {lead && <p class="lead">{lead}</p>}
       <slot />
     </div>
@@ -20,9 +21,9 @@ const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
   </div>
 </header>
 <style>
-  .g { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center; }
+  .g { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: end; }
   .g:not(:has(> :nth-child(2))) { grid-template-columns: 1fr; }
-  .e { margin-top: 26px; }
-  .t { margin: 22px 0; font-size: clamp(2.6rem, 6vw, 5.25rem); max-width: 18ch; }
+  .phase { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; font-weight: 600; font-size: 0.95rem; }
+  .t { margin: 22px 0 24px; max-width: 16ch; }
   @media (max-width: 900px) { .g { grid-template-columns: 1fr; } }
 </style>

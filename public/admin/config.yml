@@ -351,7 +351,13 @@ collections:
     - code
     - server
     - globe
+    - bank
     default: shield
+  - label: Phase (triangle colour)
+    name: phase
+    widget: select
+    options: [assess, protect, respond, technology]
+    default: protect
   - label: Summary (cards)
     name: summary
     widget: text

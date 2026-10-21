@@ -1,28 +1,37 @@
 ---
 interface Props { title?: string; text?: string; button?: string; href?: string }
 const {
-  title = 'Find your weak spots <em>first.</em>',
-  text = 'Talk to a Cyber Sentinel Lab specialist about your security priorities — no obligation.',
+  title = 'Know where you stand.',
+  text = 'Book a consultation with our specialists. We will look at your risks, your sector and your regulations, and tell you plainly what to fix first.',
   button = 'Book a consultation',
   href = '/contact',
 } = Astro.props;
-const html = title.replace(/<em>(.*?)<\/em>/g, '<span class="s">$1</span>');
 ---
-<section class="section">
-  <div class="wrap">
-    <div class="band" data-reveal>
-      <h2 class="h2" set:html={html} />
-      <p class="lead">{text}</p>
+<section class="cta">
+  <div class="wrap in">
+    <svg class="tri" viewBox="0 0 120 104" aria-hidden="true">
+      <path d="M60 4 L116 100 L4 100 Z" fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="round" />
+    </svg>
+    <div>
+      <h2 class="h2">{title.replace(/<\/?em>/g, '')}</h2>
+      <p>{text}</p>
       <div class="acts">
-        <a class="btn btn-accent" href={href}>{button}</a>
-        <a class="btn btn-ghost" href="tel:+971558817003">Call +971 55 881 7003</a>
+        <a class="btn btn-light-inv" href={href}>{button}</a>
+        <a class="btn btn-line" href="tel:+971558817003">Call +971 55 881 7003</a>
       </div>
     </div>
   </div>
 </section>
 <style>
-  .band { position: relative; overflow: hidden; border-radius: 28px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 80px); text-align: center; background: radial-gradient(ellipse at 50% 0, #123a63, #0a1222 70%); border: 1px solid var(--line); }
-  .band::before { content: ''; position: absolute; inset: 0 0 auto; height: 3px; background: var(--tri); }
-  .lead { margin: 18px auto 32px; }
-  .acts { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta { background: var(--green-ink); color: #fff; padding-block: clamp(64px, 8vw, 110px); overflow: hidden; }
+  .in { position: relative; display: grid; grid-template-columns: auto 1fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
+  .tri { width: clamp(90px, 14vw, 200px); color: rgba(255, 255, 255, 0.25); }
+  .h2 { color: #fff; }
+  p { color: rgba(255, 255, 255, 0.85); font-size: 1.15rem; max-width: 56ch; margin: 18px 0 30px; }
+  .acts { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-light-inv { background: #fff; color: var(--ink); }
+  .btn-light-inv:hover { background: var(--assess); }
+  .btn-line { border-color: rgba(255, 255, 255, 0.7); color: #fff; }
+  .btn-line:hover { background: #fff; color: var(--ink); }
+  @media (max-width: 700px) { .in { grid-template-columns: 1fr; } .tri { display: none; } }
 </style>
