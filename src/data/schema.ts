@@ -26,7 +26,7 @@ export const orgSchema = {
       name: `${site.name} — Dubai`,
       parentOrganization: { '@id': `${site.url}/#org` },
       url: site.url,
-      image: `${site.url}/images/og-default.png`,
+      image: `${site.url}/images/og-default.jpg`,
       email: hq.email,
       telephone: hq.phones?.[0],
       address: {

@@ -122,9 +122,10 @@ The current website keeps working during this step.
 ## 8. Launch: point cybersentinellab.com to the new site
 
 1. Go to **Workers & Pages → cybersentinellab-web → Settings → Domains & Routes → Add → Custom domain**. Add `cybersentinellab.com`, then add `www.cybersentinellab.com`. Cloudflare creates the DNS records for you.
-2. Go to **Rules → Redirect Rules** and add a rule that redirects `www` to the apex domain (301).
-3. Update the GitHub OAuth app callback URL to `https://cybersentinellab.com/api/callback`.
-4. In **Google Search Console**, add the domain and submit `https://cybersentinellab.com/sitemap-index.xml`.
+2. Add the build variable `SITE_URL` = `https://cybersentinellab.com` and redeploy. This switches share images, canonical links and the sitemap to the real domain, and lets Google index the site (the preview is hidden from search).
+3. Go to **Rules → Redirect Rules** and add a rule that redirects `www` to the apex domain (301).
+4. Update the GitHub OAuth app callback URL to `https://cybersentinellab.com/api/callback`.
+5. In **Google Search Console**, add the domain and submit `https://cybersentinellab.com/sitemap-index.xml`.
 
 ---
 

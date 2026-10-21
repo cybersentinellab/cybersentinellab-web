@@ -18,7 +18,7 @@ interface Props {
   crumbs?: Crumb[];
   noindex?: boolean;
 }
-const { title, description, image = '/images/og-default.png', type = 'website', schema = [], crumbs, noindex } = Astro.props;
+const { title, description, image = '/images/og-default.jpg', type = 'website', schema = [], crumbs, noindex } = Astro.props;
 const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 const fullTitle = Astro.url.pathname === '/' ? title : `${title} | ${site.name}`;
@@ -33,6 +33,7 @@ if (crumbs?.length) {
   });
 }
 const beacon = import.meta.env.PUBLIC_CF_BEACON;
+const isPreview = Astro.site?.hostname !== 'cybersentinellab.com'; // keep preview out of Google
 ---
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -42,7 +43,7 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {(noindex || isPreview) && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#06070c" />
@@ -52,6 +53,9 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cyber Sentinel Lab — Your Shield in the Digital World" />
     <meta property="og:locale" content="en_AE" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
