@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
-import SectionHead from '../../components/SectionHead.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
@@ -17,57 +16,60 @@ export async function getStaticPaths() {
 const { s, all } = Astro.props;
 const d = s.data;
 const { Content } = await render(s);
-const titleHtml = d.titleAccent && d.title.endsWith(d.titleAccent) ? d.title.slice(0, -d.titleAccent.length) + `<em>${d.titleAccent}</em>` : d.title;
-const roman = ['i.', 'ii.', 'iii.', 'iv.', 'v.', 'vi.', 'vii.', 'viii.'];
-const related = all.filter((x) => x.id !== s.id).sort((a, b) => Math.abs(a.data.order - d.order) - Math.abs(b.data.order - d.order)).slice(0, 3).map((x) => x.id);
+const related = all.filter((x) => x.id !== s.id && x.data.phase === d.phase).slice(0, 3).map((x) => x.id);
+const relatedIds = related.length >= 2 ? related : all.filter((x) => x.id !== s.id).sort((a, b) => Math.abs(a.data.order - d.order) - Math.abs(b.data.order - d.order)).slice(0, 3).map((x) => x.id);
 const inds = industries.filter((i) => i.services.includes(s.id));
 const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: `/services/${s.id}` }];
 ---
 <Base title={d.seoTitle ?? d.title} description={d.metaDescription ?? d.summary} crumbs={crumbs} schema={[serviceSchema({ title: d.title, summary: d.summary, slug: s.id }), faqSchema(d.faqs)]}>
-  <PageHero title={titleHtml} lead={d.intro} crumbs={crumbs}>
-    <div class="ctas"><a class="btn btn-accent" href={`/contact?service=${s.id}`}>Request a consultation</a><a class="btn btn-ghost" href="/contact">Talk to an expert <span class="arr">→</span></a></div>
-    <div slot="aside" class="vis" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="sweep"></div><div class="core"><Icon name={d.icon} size={44} /></div></div>
+  <PageHero title={d.title} lead={d.intro} crumbs={crumbs} phase={d.phase}>
+    <div class="ctas">
+      <a class="btn btn-primary" href={`/contact?service=${s.id}`}>Book a consultation</a>
+      <a class="btn btn-ghost" href="#faq-h">Read the FAQ</a>
+    </div>
   </PageHero>
 
-  <section class="section tight">
-    <div class="wrap">
-      <SectionHead eyebrow="What we cover" title="What's <em>included.</em>" />
-      <div class="feat">
-        {d.features.map((f, i) => (
-          <div data-reveal><i class="s">{roman[i]}</i><h3>{f.title}</h3><p>{f.text}</p></div>
+  <section class="section">
+    <div class="wrap cover">
+      <h2 class="h2">What's included</h2>
+      <ul role="list" class="feat">
+        {d.features.map((f) => (
+          <li><h3>{f.title}</h3><p>{f.text}</p></li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
   {d.steps.length > 0 && (
     <section class="section tight">
       <div class="wrap">
-        <SectionHead eyebrow="How it works" title={`${d.steps.length} steps, <em>no surprises.</em>`} />
-        <ol class="flow">
-          {d.steps.map((st) => <li data-reveal><b>{st.title}</b><span>{st.text}</span></li>)}
+        <h2 class="h2 sh">How we work</h2>
+        <ol class="flow" role="list">
+          {d.steps.map((st, i) => (
+            <li><span class="n">Step {i + 1}</span><h3>{st.title}</h3><p>{st.text}</p></li>
+          ))}
         </ol>
       </div>
     </section>
   )}
 
   {d.outcomes.length > 0 && (
-    <section class="section tight">
-      <div class="wrap out" data-reveal>
-        <div><p class="eyebrow">What you get</p><h2 class="h2 t">Clear outcomes, <span class="s">measurable</span> risk reduction.</h2></div>
-        <ul role="list">{d.outcomes.map((o) => <li><Icon name="check" size={20} />{o}</li>)}</ul>
+    <section class="section band-white">
+      <div class="wrap out">
+        <h2 class="h2">What you get</h2>
+        <ul role="list">{d.outcomes.map((o) => <li><Icon name="check" size={22} />{o}</li>)}</ul>
       </div>
     </section>
   )}
 
-  <section class="wrap prose-wrap"><div class="prose"><Content /></div></section>
+  <div class="wrap prose-wrap"><div class="prose"><Content /></div></div>
 
-  <Faq faqs={d.faqs} />
+  <div class="faq-wrap"><Faq faqs={d.faqs} /></div>
 
   {inds.length > 0 && (
     <section class="section tight">
       <div class="wrap">
-        <p class="eyebrow">Industries we protect</p>
+        <h2 class="h3 sh">Sectors where this matters most</h2>
         <ul role="list" class="chips">{inds.map((i) => <li><a href={`/industries/${i.slug}`}><Icon name={i.icon} size={18} />{i.title}</a></li>)}</ul>
       </div>
     </section>
@@ -75,8 +77,8 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
 
   <section class="section tight">
     <div class="wrap">
-      <SectionHead eyebrow="Related services" title="Strengthen your <em>shield.</em>" />
-      <ServiceRows only={related} />
+      <h2 class="h2 sh">Related services</h2>
+      <ServiceRows only={relatedIds} />
     </div>
   </section>
 
@@ -84,35 +86,33 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
 </Base>
 
 <style>
-  .ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-  .vis { position: relative; aspect-ratio: 1; max-width: 440px; width: 100%; justify-self: end; border-radius: 28px; border: 1px solid var(--line); background: radial-gradient(circle at 50% 50%, rgba(79, 195, 255, 0.14), transparent 65%), var(--bg-2); overflow: hidden; }
-  .ring { position: absolute; inset: 0; margin: auto; border-radius: 50%; border: 1px solid rgba(79, 195, 255, 0.22); }
-  .r1 { width: 30%; height: 30%; } .r2 { width: 58%; height: 58%; } .r3 { width: 86%; height: 86%; }
-  .sweep { position: absolute; inset: 7%; border-radius: 50%; background: conic-gradient(from 0deg, rgba(79, 195, 255, 0.35), transparent 22%); animation: spin 5s linear infinite; }
-  .core { position: absolute; inset: 0; margin: auto; width: 92px; height: 92px; border-radius: 24px; display: grid; place-items: center; background: var(--bg); border: 1px solid var(--accent); color: var(--accent); box-shadow: 0 0 40px var(--accent-glow); }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @media (max-width: 900px) { .vis { display: none; } }
-  .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-  .feat > div { background: var(--bg); padding: clamp(26px, 3vw, 38px); }
-  .feat i { display: block; font-size: 1.4rem; margin-bottom: 20px; }
-  .feat h3 { font-size: 1.25rem; letter-spacing: -0.02em; margin-bottom: 10px; }
-  .feat p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
-  .flow { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: 1px solid var(--line); counter-reset: f; }
-  .flow li { position: relative; padding: 32px 24px 0 0; counter-increment: f; }
-  .flow li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
-  .flow b { display: block; font-size: 1.2rem; font-weight: 500; margin-bottom: 8px; }
-  .flow b::before { content: '0' counter(f) ' '; color: var(--muted); font-weight: 400; font-size: 0.85rem; margin-right: 6px; }
-  .flow span { color: var(--muted); font-size: 0.95rem; }
-  .out { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; background: var(--bg-2); border: 1px solid var(--line); border-radius: 28px; padding: clamp(32px, 5vw, 64px); }
-  .out .t { margin-top: 18px; }
-  .out ul { display: grid; gap: 16px; }
-  .out li { display: flex; gap: 14px; align-items: flex-start; font-size: 1.05rem; }
-  .out li :global(svg) { color: var(--accent); flex: none; margin-top: 2px; }
-  @media (max-width: 860px) { .out { grid-template-columns: 1fr; gap: 30px; } }
+  .ctas { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .cover { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .feat { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }
+  .feat li { padding: 24px 24px 26px 0; border-bottom: 1px solid var(--line); }
+  .feat li:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--line); }
+  .feat h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .feat p { color: var(--ink-2); font-size: 0.98rem; }
+  @media (max-width: 900px) { .cover { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .feat { grid-template-columns: 1fr; } .feat li:nth-child(even) { padding-left: 0; border-left: 0; } }
+  .sh { margin-bottom: clamp(28px, 4vw, 48px); }
+  .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; counter-reset: f; }
+  .flow li { position: relative; padding: 26px 22px 0 0; border-top: 2px solid var(--ink); }
+  .flow li::before { content: ''; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; background: var(--green); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .n { font-size: 0.85rem; color: var(--muted); }
+  .flow h3 { font-stretch: 115%; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin: 6px 0 8px; }
+  .flow p { color: var(--ink-2); font-size: 0.98rem; }
+  .out { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .out ul { display: grid; gap: 18px; }
+  .out li { display: flex; gap: 14px; align-items: flex-start; font-stretch: 110%; font-size: clamp(1.15rem, 1.8vw, 1.45rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
+  .out li :global(svg) { color: var(--green); flex: none; margin-top: 3px; }
+  @media (max-width: 900px) { .out { grid-template-columns: 1fr; } }
   .prose-wrap:has(.prose:empty) { display: none; }
-  .prose-wrap { padding-bottom: var(--section); }
-  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid var(--line-2); border-radius: 999px; transition: border-color 0.2s, color 0.2s; }
-  .chips a:hover { border-color: var(--accent); color: var(--accent); }
-  .chips :global(svg) { color: var(--accent); }
+  .prose-wrap { padding-block: var(--section) 0; }
+  .faq-wrap { padding-top: var(--section); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border: 1.5px solid var(--ink); border-radius: var(--r-sm); font-weight: 600; }
+  .chips a:hover { background: var(--ink); color: #fff; }
+  .chips :global(svg) { color: var(--green); }
+  .chips a:hover :global(svg) { color: #fff; }
 </style>

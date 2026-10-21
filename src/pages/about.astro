@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import SectionHead from '../components/SectionHead.astro';
 import LogoWall from '../components/LogoWall.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
@@ -11,44 +10,47 @@ import { offices } from '../data/site';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
 const crumbs = [{ name: 'About', href: '/about' }];
-const pillars = [
-  { k: 'Mission', icon: 'target', p: 'To provide end-to-end cybersecurity and risk management services that strengthen business resilience and ensure compliance with global standards. By combining expert knowledge, advanced technologies and client-focused strategies, we create long-term value and help organisations thrive securely in the digital era.' },
-  { k: 'Vision', icon: 'eye', p: 'To become a trusted global leader in cybersecurity by delivering innovative, reliable and future-ready solutions — empowering organisations to embrace digital transformation with confidence, knowing their assets, data and operations are safeguarded.' },
-  { k: 'Strategy', icon: 'users', p: 'Our team brings together highly skilled cybersecurity experts with years of industry experience. Their combined expertise ensures innovative, reliable and future-ready solutions for every client.' },
-  { k: 'Innovation', icon: 'radar', p: 'We assess your digital operations, risk landscape and compliance needs in depth, working side by side with you to identify strengths, weaknesses, opportunities and threats — so your business stays secure.' },
-];
 const approach = [
-  ['Assess', 'First', 'We begin by understanding your business, systems and potential risks. Through in-depth assessments and penetration testing, we identify vulnerabilities before attackers can exploit them.'],
-  ['Protect', 'Proactively', 'Using advanced tools and proven strategies, we design tailored security measures. Our proactive approach strengthens your defences and ensures compliance with industry standards.'],
-  ['Respond', 'Effectively', 'If threats arise, our experts act fast to contain, resolve and recover. With clear remediation steps, we help you minimise damage and maintain business continuity.'],
+  { k: 'assess', t: 'Assess first', p: 'We begin by understanding your business, systems and potential risks. In-depth assessments and penetration testing find vulnerabilities before attackers can exploit them.' },
+  { k: 'protect', t: 'Protect proactively', p: 'Using proven tools and strategies, we design security measures tailored to you, strengthening your defences and keeping you compliant with industry standards.' },
+  { k: 'respond', t: 'Respond effectively', p: 'If threats arise, our experts act fast to contain, resolve and recover. Clear remediation steps minimise damage and keep your business running.' },
 ];
 ---
 <Base title="About Us" description="Cyber Sentinel Lab is a Dubai-headquartered cybersecurity firm with 25+ years of combined expertise, offices in the UAE, Denmark and India, and strategic technology partnerships across Europe, the GCC and the UAE." crumbs={crumbs}>
-  <PageHero title="Your shield in the <em>digital world</em>" lead="At Cyber Sentinel Lab, we protect businesses and governments from evolving cyber threats with advanced penetration testing, threat intelligence and incident response — keeping digital assets secure, resilient and future-ready." crumbs={crumbs}>
-    <div class="nums">
-      <div><b>25<sup>+</sup></b><span>Years of combined expertise</span></div>
-      <div><b>30<sup>+</sup></b><span>Client references — and growing…</span></div>
-    </div>
-  </PageHero>
+  <PageHero title="About Cyber Sentinel Lab" lead="We protect businesses and governments from evolving cyber threats with penetration testing, threat intelligence, compliance and incident response, so their digital assets stay secure, resilient and ready for what comes next." crumbs={crumbs} />
 
-  <section class="section tight">
-    <div class="wrap grid g2">
-      {pillars.map((p) => (
-        <div class="card top pil" data-reveal>
-          <Icon name={p.icon} size={28} />
-          <h2 class="h3">Our <span class="s">{p.k}</span></h2>
-          <p class="muted">{p.p}</p>
-        </div>
-      ))}
+  <section class="section">
+    <div class="wrap mv">
+      <div>
+        <h2 class="h3">Our mission</h2>
+        <p class="big">To provide end-to-end cybersecurity and risk management services that strengthen business resilience and ensure compliance with global standards.</p>
+        <p class="muted">By combining expert knowledge, advanced technologies and client-focused strategies, we create long-term value and help organisations thrive securely in the digital era.</p>
+      </div>
+      <div>
+        <h2 class="h3">Our vision</h2>
+        <p class="big">To become a trusted global leader in cybersecurity through innovative, reliable and future-ready solutions.</p>
+        <p class="muted">We want organisations to embrace digital transformation with confidence, knowing their assets, data and operations are safeguarded.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section tight">
-    <div class="wrap">
-      <SectionHead eyebrow="Our approach" title="Assess. Protect. <em>Respond.</em>" />
-      <ol class="appr">
-        {approach.map(([t, a, p], i) => (
-          <li data-reveal><span class="n s">0{i + 1}</span><h3 class="h3">{t} <span class="s">{a}</span></h3><p class="muted">{p}</p></li>
+  <section class="section band-white">
+    <div class="wrap facts">
+      <p><strong>25+ years</strong> of combined expertise across our team of cybersecurity specialists.</p>
+      <p><strong>30+ clients</strong> across government, aviation, ports, healthcare, education and enterprise, and growing.</p>
+      <p><strong>3 offices</strong> in Dubai, Denmark and India, serving the UAE, the GCC and Europe.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two">
+      <div>
+        <h2 class="h2">How we work</h2>
+        <p class="lead sub">Our strategy is simple: understand you deeply, then work side by side with you. We assess your operations, risk landscape and compliance needs, and identify your strengths, weaknesses, opportunities and threats.</p>
+      </div>
+      <ol role="list" class="appr">
+        {approach.map((a) => (
+          <li><i class={`ph ph-${a.k}`} aria-hidden="true"></i><div><h3>{a.t}</h3><p>{a.p}</p></div></li>
         ))}
       </ol>
     </div>
@@ -56,14 +58,20 @@ const approach = [
 
   <section class="section tight" id="partners">
     <div class="wrap">
-      <SectionHead split eyebrow="Strategic partnerships" title="Strong partnerships, <em>stronger</em> security." text="By collaborating with leading technology providers and trusted organisations, we deliver innovative solutions that keep businesses ahead of cyber threats. Our partnerships extend across Europe, the GCC and the UAE — global expertise with a local presence." />
+      <div class="shead split">
+        <h2 class="h2">Strategic partnerships</h2>
+        <p class="lead">We collaborate with leading technology providers and trusted organisations across Europe, the GCC and the UAE, bringing global expertise with a local presence.</p>
+      </div>
       <LogoWall logos={partners} />
     </div>
   </section>
 
   <section class="section tight" id="clients">
     <div class="wrap">
-      <SectionHead split eyebrow="Client references" title="30+ clients <em>and growing.</em>" text="We work closely with organisations driven by bold objectives, helping them build, implement and continuously enhance their cyber defence capabilities." />
+      <div class="shead split">
+        <h2 class="h2">Client references</h2>
+        <p class="lead">We work closely with organisations driven by bold objectives, helping them build, implement and continuously improve their cyber defences.</p>
+      </div>
       <LogoWall logos={clients} />
     </div>
   </section>
@@ -71,10 +79,10 @@ const approach = [
   {team.length > 0 && (
     <section class="section tight">
       <div class="wrap">
-        <SectionHead eyebrow="Leadership" title="The people behind <em>the shield.</em>" />
+        <h2 class="h2 sh">Leadership</h2>
         <ul role="list" class="grid g4 team">
           {team.map((m) => (
-            <li class="card" data-reveal>
+            <li>
               {m.data.photo && <img src={m.data.photo.src} alt={m.data.title} loading="lazy" width="320" height="320" />}
               <h3>{m.data.title}</h3><p class="muted">{m.data.role}</p>
               {m.data.linkedin && <a href={m.data.linkedin} target="_blank" rel="noopener" aria-label={`${m.data.title} on LinkedIn`}><Icon name="linkedin" size={18} /></a>}
@@ -87,17 +95,17 @@ const approach = [
 
   <section class="section tight">
     <div class="wrap">
-      <SectionHead eyebrow="Our offices" title="UAE · Europe · <em>India</em>" />
-      <div class="grid g3">
+      <h2 class="h2 sh">Our offices</h2>
+      <ul role="list" class="offices">
         {offices.map((o) => (
-          <div class="card off" data-reveal>
-            <p class="eyebrow">{o.label}</p>
-            <h3 class="h3">{o.region}</h3>
-            <p class="muted">{o.company && <>{o.company}<br /></>}{o.address.map((l) => <>{l}<br /></>)}</p>
+          <li>
+            <p class="muted">{o.label}</p>
+            <h3>{o.region}</h3>
+            <p>{o.company && <>{o.company}<br /></>}{o.address.map((l) => <>{l}<br /></>)}</p>
             <a href={`mailto:${o.email}`}>{o.email}</a>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -105,18 +113,29 @@ const approach = [
 </Base>
 
 <style>
-  .nums { display: flex; gap: 48px; margin-top: 40px; flex-wrap: wrap; }
-  .nums b { display: block; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 4.5rem; line-height: 1; }
-  .nums sup { color: var(--accent); font-size: 0.5em; vertical-align: top; }
-  .nums span { color: var(--muted); font-size: 0.9rem; }
-  .pil { display: flex; flex-direction: column; gap: 16px; }
-  .pil :global(svg) { color: var(--accent); }
-  .appr { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 40px; border-top: 1px solid var(--line); padding-top: 40px; }
-  .appr .n { font-size: 3.5rem; color: #2a3146; display: block; line-height: 1; margin-bottom: 18px; }
-  .appr h3 { margin-bottom: 12px; }
-  .team { list-style: none; }
-  .team img { border-radius: 14px; aspect-ratio: 1; object-fit: cover; margin-bottom: 18px; }
+  .mv { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); }
+  .mv > div { display: grid; gap: 16px; align-content: start; padding-top: 20px; border-top: 2px solid var(--ink); }
+  .big { font-stretch: 110%; font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+  @media (max-width: 800px) { .mv { grid-template-columns: 1fr; } }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); }
+  .facts p { font-size: 1.1rem; color: var(--ink-2); line-height: 1.45; }
+  .facts strong { display: block; font-stretch: 125%; font-weight: 700; font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.04em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+  @media (max-width: 760px) { .facts { grid-template-columns: 1fr; } }
+  .two { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .sub { margin-top: 18px; }
+  .appr { border-top: 2px solid var(--ink); }
+  .appr li { display: grid; grid-template-columns: 30px 1fr; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .appr .ph { width: 22px; height: 22px; margin-top: 4px; }
+  .appr h3 { font-stretch: 115%; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .appr p { color: var(--ink-2); }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+  .sh { margin-bottom: clamp(24px, 4vw, 44px); }
+  .team img { border-radius: var(--r-md); aspect-ratio: 1; object-fit: cover; margin-bottom: 14px; }
   .team h3 { font-size: 1.15rem; }
-  .off { display: flex; flex-direction: column; gap: 12px; }
-  .off a { color: var(--accent); }
+  .offices { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); }
+  .offices li { display: grid; gap: 8px; align-content: start; padding: 22px 24px 0 0; }
+  .offices h3 { font-stretch: 115%; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .offices p:not(.muted) { color: var(--ink-2); }
+  .offices a { color: var(--green-ink); font-weight: 500; }
+  @media (max-width: 760px) { .offices { grid-template-columns: 1fr; } .offices li { padding-bottom: 22px; border-bottom: 1px solid var(--line); } }
 </style>

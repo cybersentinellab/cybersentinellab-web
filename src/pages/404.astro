@@ -4,15 +4,14 @@ import Base from '../layouts/Base.astro';
 <Base title="Page not found" description="The page you are looking for could not be found." noindex>
   <section class="nf">
     <div class="wrap">
-      <p class="eyebrow">Error 404</p>
-      <h1 class="h1">This page is <span class="s">off the map.</span></h1>
-      <p class="lead">It may have moved, or the link may be out of date. Try one of these instead.</p>
-      <div class="acts"><a class="btn btn-accent" href="/">Back to home</a><a class="btn btn-ghost" href="/services">Our services</a><a class="btn btn-ghost" href="/contact">Contact us</a></div>
+            <h1 class="h1">We could not find that page.</h1>
+      <p class="lead">The link may be out of date, or the page may have moved. These pages can help you find what you need.</p>
+      <div class="acts"><a class="btn btn-primary" href="/">Go to the home page</a><a class="btn btn-ghost" href="/services">Our services</a><a class="btn btn-ghost" href="/contact">Contact us</a></div>
     </div>
   </section>
 </Base>
 <style>
-  .nf { min-height: 80vh; display: grid; align-items: center; padding: 140px 0 80px; background: radial-gradient(ellipse 60% 60% at 70% 30%, var(--deep), transparent 70%); }
+  .nf { min-height: 80vh; display: grid; align-items: center; padding: 140px 0 80px;  }
   .h1 { margin: 22px 0; max-width: 14ch; }
   .acts { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 </style>

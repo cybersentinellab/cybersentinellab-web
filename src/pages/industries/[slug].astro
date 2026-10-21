@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
-import SectionHead from '../../components/SectionHead.astro';
 import ServiceRows from '../../components/ServiceRows.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
@@ -12,29 +11,29 @@ export function getStaticPaths() {
 }
 const { i } = Astro.props as { i: Industry };
 const crumbs = [{ name: 'Industries', href: '/industries' }, { name: i.title, href: `/industries/${i.slug}` }];
-const others = industries.filter((x) => x.slug !== i.slug).slice(0, 6);
+const others = industries.filter((x) => x.slug !== i.slug);
 ---
 <Base title={`Cybersecurity for ${i.title}`} description={i.summary} crumbs={crumbs}>
-  <PageHero title={`${i.title.split(' ')[0]} <em>${i.title.split(' ').slice(1).join(' ') || 'security'}</em>`} lead={i.summary} crumbs={crumbs}>
-    <div class="ctas"><a class="btn btn-accent" href="/contact">Discuss your requirements</a></div>
+  <PageHero title={i.title} lead={i.summary} crumbs={crumbs}>
+    <div class="ctas"><a class="btn btn-primary" href="/contact">Discuss your requirements</a></div>
   </PageHero>
-  <section class="section tight">
-    <div class="wrap">
-      <SectionHead eyebrow="The challenge" title="What keeps <em>security teams</em> busy." />
-      <ul role="list" class="grid g4 ch">
-        {i.challenges.map((c) => <li class="card" data-reveal><Icon name="target" /><span>{c}</span></li>)}
+  <section class="section">
+    <div class="wrap two">
+      <h2 class="h2">The challenges we see</h2>
+      <ul role="list" class="ch">
+        {i.challenges.map((c) => <li><Icon name="target" size={22} /><span>{c}</span></li>)}
       </ul>
     </div>
   </section>
   <section class="section tight">
     <div class="wrap">
-      <SectionHead eyebrow="How we help" title="Services for <em>your sector.</em>" />
+      <h2 class="h2 sh">How we help</h2>
       <ServiceRows only={i.services} />
     </div>
   </section>
   <section class="section tight">
     <div class="wrap">
-      <p class="eyebrow">Other industries</p>
+      <h2 class="h3 sh">Other sectors</h2>
       <ul role="list" class="chips">{others.map((o) => <li><a href={`/industries/${o.slug}`}><Icon name={o.icon} size={18} />{o.title}</a></li>)}</ul>
     </div>
   </section>
@@ -42,11 +41,16 @@ const others = industries.filter((x) => x.slug !== i.slug).slice(0, 6);
 </Base>
 <style>
   .ctas { margin-top: 30px; }
-  .ch { list-style: none; }
-  .ch li { display: flex; flex-direction: column; gap: 22px; font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; }
-  .ch :global(svg) { color: var(--threat); }
-  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid var(--line-2); border-radius: 999px; }
-  .chips a:hover { border-color: var(--accent); color: var(--accent); }
-  .chips :global(svg) { color: var(--accent); }
+  .two { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .ch { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }
+  .ch li { display: flex; gap: 14px; align-items: flex-start; padding: 22px 20px 22px 0; border-bottom: 1px solid var(--line); font-stretch: 110%; font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; line-height: 1.3; }
+  .ch :global(svg) { color: var(--respond); flex: none; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .ch { grid-template-columns: 1fr; } }
+  .sh { margin-bottom: clamp(24px, 4vw, 44px); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border: 1.5px solid var(--ink); border-radius: var(--r-sm); font-weight: 600; }
+  .chips a:hover { background: var(--ink); color: #fff; }
+  .chips :global(svg) { color: var(--green); }
+  .chips a:hover :global(svg) { color: #fff; }
 </style>

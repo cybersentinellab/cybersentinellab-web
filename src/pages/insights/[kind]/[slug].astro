@@ -28,11 +28,11 @@ const share = encodeURIComponent(url);
   <article>
     <header class="phero ah">
       <div class="wrap narrow">
-        <nav aria-label="Breadcrumb" class="crumbs"><a href="/">Home</a><span>/</span><a href="/insights">Insights</a><span>/</span><span aria-current="page">{meta.label}</span></nav>
+        <nav aria-label="Breadcrumb" class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/insights">Insights</a><span aria-hidden="true">/</span><span aria-current="page">{meta.label}</span></nav>
         {d.draft && <p class="draft">Draft — visible on preview only</p>}
         <h1 class="h1 t">{d.title}</h1>
         <p class="lead">{d.excerpt}</p>
-        <p class="meta"><span>{d.author}</span><span>·</span><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time><span>·</span><span>{mins} min read</span></p>
+        <p class="meta"><span>By {d.author}</span><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time><span>{mins} min read</span></p>
       </div>
     </header>
     {d.cover && <div class="wrap narrow cov"><Image src={d.cover} alt={d.coverAlt ?? ''} widths={[720, 1200]} sizes="(max-width: 800px) 100vw, 800px" loading="eager" /></div>}
@@ -49,23 +49,23 @@ const share = encodeURIComponent(url);
     </div>
   </article>
   {related.length > 0 && (
-    <section class="section tight"><div class="wrap"><p class="eyebrow">Keep reading</p><div class="grid g3 rel">{related.map((r) => <PostCard post={r} />)}</div></div></section>
+    <section class="section tight"><div class="wrap"><h2 class="h2">Keep reading</h2><div class="grid g3 rel">{related.map((r) => <PostCard post={r} />)}</div></div></section>
   )}
   <CtaBand />
 </Base>
 <style>
   .narrow { max-width: 860px; }
   .ah { padding-bottom: 50px; }
-  .t { margin: 22px 0; font-size: clamp(2.2rem, 5vw, 3.75rem); line-height: 1.05; }
-  .draft { margin-top: 18px; display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid #ffc636; color: #ffc636; font-size: 0.8rem; }
-  .meta { display: flex; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; margin-top: 26px; }
-  .cov :global(img) { border-radius: 20px; width: 100%; height: auto; }
+  .t { margin: 22px 0; font-size: clamp(2.1rem, 4.6vw, 3.6rem); line-height: 1; }
+  .draft { margin-top: 18px; display: inline-block; padding: 3px 10px; border-radius: var(--r-sm); background: var(--assess); color: var(--ink); font-size: 0.85rem; font-weight: 600; }
+  .meta { display: flex; gap: 22px; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; margin-top: 26px; }
+  .cov :global(img) { border-radius: var(--r-md); width: 100%; height: auto; }
   .body { padding-top: 40px; padding-bottom: 40px; }
   .prose { font-size: 1.08rem; max-width: none; }
-  .foot { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .foot { margin-top: 56px; padding-top: 28px; border-top: 2px solid var(--ink); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
   .tags { display: flex; gap: 8px; flex-wrap: wrap; }
   .share { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 0.9rem; }
-  .share a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; }
-  .share a:hover { color: var(--accent); border-color: var(--accent); }
-  .rel { margin-top: 24px; }
+  .share a { width: 40px; height: 40px; border-radius: var(--r-sm); border: 1.5px solid var(--ink); display: grid; place-items: center; }
+  .share a:hover { background: var(--ink); color: #fff; }
+  .rel { margin-top: 32px; gap: 36px; }
 </style>

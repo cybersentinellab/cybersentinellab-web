@@ -7,17 +7,16 @@ import { industries } from '../../data/industries';
 const crumbs = [{ name: 'Industries', href: '/industries' }];
 ---
 <Base title="Industries We Protect" description="Cybersecurity for government, banking, healthcare, energy and critical infrastructure, aviation and ports, education, manufacturing, retail, enterprise and SMEs in the UAE, GCC and Europe." crumbs={crumbs}>
-  <PageHero title="Security for <em>every</em> sector" lead="Each industry faces its own threats, regulations and stakes. We tailor assessments, controls and response to the realities of your sector." crumbs={crumbs} />
-  <section class="section tight">
+  <PageHero title="Sectors we protect" lead="Each sector faces its own threats, regulations and stakes. We shape assessments, controls and response around the realities of yours." crumbs={crumbs} />
+  <section class="section">
     <div class="wrap">
-      <ul role="list" class="grid g2 list">
-        {industries.map((i, n) => (
-          <li data-reveal>
-            <a class="card hover top ind" href={`/industries/${i.slug}`}>
-              <div class="hd"><span class="ic"><Icon name={i.icon} size={26} /></span><span class="n">{String(n + 1).padStart(2, '0')}</span></div>
+      <ul role="list" class="list">
+        {industries.map((i) => (
+          <li>
+            <a href={`/industries/${i.slug}`}>
+              <Icon name={i.icon} size={28} />
               <h2>{i.title}</h2>
               <p>{i.summary}</p>
-              <span class="go">Explore <span class="arr">→</span></span>
             </a>
           </li>
         ))}
@@ -27,12 +26,11 @@ const crumbs = [{ name: 'Industries', href: '/industries' }];
   <CtaBand />
 </Base>
 <style>
-  .list { list-style: none; }
-  .ind { display: flex; flex-direction: column; gap: 14px; height: 100%; }
-  .hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .ic { color: var(--accent); }
-  .n { color: var(--muted); font-size: 0.85rem; }
-  h2 { font-size: 1.6rem; letter-spacing: -0.025em; }
-  p { color: var(--muted); flex: 1; }
-  .go { color: var(--accent); font-size: 0.9rem; }
+  .list { border-top: 2px solid var(--ink); }
+  .list a { display: grid; grid-template-columns: 44px 1fr 1.1fr; gap: 24px; align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--line); }
+  .list a :global(svg) { color: var(--green); align-self: center; }
+  h2 { font-stretch: 120%; font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+  p { color: var(--ink-2); }
+  .list a:hover h2 { color: var(--green-ink); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  @media (max-width: 800px) { .list a { grid-template-columns: 34px 1fr; gap: 10px 14px; } p { grid-column: 2; } }
 </style>
