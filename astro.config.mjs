@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   // Preview URL until launch. At launch set build variable SITE_URL=https://cybersentinellab.com
-  site: process.env.SITE_URL || 'https://cybersentinellab-web.cybersentinellab.workers.dev',
+  site: process.env.SITE_URL || 'https://cybersentinellab-web-v2.cybersentinellab.workers.dev',
   trailingSlash: 'never',
   build: { format: 'directory' },
   integrations: [react(), mdx(), sitemap({ filter: (p) => !p.includes('/admin') })],
