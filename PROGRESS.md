@@ -1,7 +1,18 @@
 # PROGRESS
 
 ## Current phase
-All 11 phases built. Waiting for CSL: Cloudflare Pages setup (README §1) to get the preview URL, then review.
+v2 (branch `v2`, Worker `cybersentinellab-web-v2`) — new design built, awaiting CSL review. v1 frozen on branch `v1` (= `main`).
+
+## v2 — "Perimeter" design (21 Oct 2026)
+- Light theme so the logo is used exactly as supplied (green wordmark + tri-colour triangle)
+- Palette from the logo: green #40870a (+ #2f6a05 for text/buttons), triangle yellow/pink/red mapped to Assess/Protect/Respond; cool paper #f3f6f2, ink #13221a
+- One typeface: Archivo variable (125% width bold for display, 100% for reading)
+- Hero: the logo triangle as a live perimeter (canvas, src/components/hero/perimeter.ts); threats are caught on the segment they hit. One hero instead of four random ones (single strong idea)
+- Services regrouped by phase (new `phase` field): Assess / Protect / Respond / Technology
+- Services updated from Google Sheet: GRC → Compliance & Risk Advisory (+UAE IA); infra split into Infrastructure & Technology Services (+hardware, POS, cameras, CCTV AI) and Software & Brand Development; new IT Services & Licensing (Microsoft licensing, Copilot, Acronis, 1Password) and Fintech & Mobility Solutions. Zero Trust and OT/IoT/IoMT kept. 14 services total
+- Lighthouse (local): 100/100/100/100 with SITE_URL set to production (preview is noindex by design)
+
+Previous (v1) status: All 11 phases built. Waiting for CSL: Cloudflare Pages setup (README §1) to get the preview URL, then review.
 
 ## Decisions (from CSL, 20 Oct 2026)
 - Hosting: Cloudflare Pages; DNS moves from GoDaddy to Cloudflare; M365 email records preserved

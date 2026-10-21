@@ -80,10 +80,10 @@ export const scene: Scene = {
     band = Math.max(10, size * 0.07);
     // assets: a dot grid clipped to the inner triangle
     assets = [];
-    const step = Math.max(12, size / 17);
+    const step = Math.max(11, size / 24);
     for (let y = A.y; y < B.y; y += step) for (let x = B.x; x < C.x; x += step) {
       const p = { x, y };
-      const inner = { x: G.x + (x - G.x) / 0.6, y: G.y + (y - G.y) / 0.6 };
+      const inner = { x: G.x + (x - G.x) / 0.74, y: G.y + (y - G.y) / 0.74 };
       if (inside(inner)) assets.push({ ...p, ph: Math.random() * 6.28, hot: Math.random() < 0.12 });
     }
     threats = []; bursts = []; spawn = 0.8; flash = [0, 0, 0];
