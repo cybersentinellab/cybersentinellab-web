@@ -5,42 +5,47 @@ The website for **cybersentinellab.com**. It is a fast static site with a free c
 | Part | What it is |
 |---|---|
 | Site | [Astro](https://astro.build) static site, with React/Motion only where animation is needed |
-| Hosting | Cloudflare Pages (free), which rebuilds automatically on every change to `main` |
+| Hosting | Cloudflare Workers with static assets (free), which rebuilds automatically on every change to `main` (config: `wrangler.jsonc`) |
 | CMS | [Decap CMS](https://decapcms.org) at `/admin`, using a GitHub sign-in and an editorial workflow |
-| Contact form | Cloudflare Pages Function, protected by Turnstile and a honeypot, which sends through Microsoft 365 |
+| Contact form | Worker route `/api/contact`, protected by Turnstile and a honeypot, which sends through Microsoft 365 |
 | Analytics | Cloudflare Web Analytics, which uses no cookies |
 
 ---
 
-## 1. Put the site online (Cloudflare Pages)
+## 1. Put the site online (Cloudflare Workers)
 
 1. Create a free account at **dash.cloudflare.com**.
-2. Go to **Workers & Pages → Create → Pages → Connect to Git**, authorise GitHub, and pick **cybersentinellab/cybersentinellab-web**.
-3. Enter these build settings:
-   - Framework preset: **Astro**
+2. Go to **Workers & Pages → Create → Import a repository** and pick **cybersentinellab/cybersentinellab-web**. Use these settings:
+   - Project name: `cybersentinellab-web` (must match `name` in `wrangler.jsonc`)
    - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Environment variable: `NODE_VERSION` = `22`
-4. Click **Save and Deploy**. After about 2 minutes the site is live at `https://<project>.pages.dev`.
-   - This is your **preview URL**. Share it for review before the domain is switched.
-   - Every other branch or pull request gets its own preview URL.
-   - Draft posts are shown on preview branches and hidden on `main`.
+   - Deploy command: `npx wrangler deploy`
+3. Deploy. The site goes live at `https://cybersentinellab-web.<account>.workers.dev`. This is your **preview URL**.
+   - Every push to `main` redeploys automatically.
+   - Draft posts are shown on non-`main` branch builds and hidden on `main`.
 
-## 2. Environment variables
+## 2. Variables
 
-Set these in **Pages → Settings → Variables and secrets**. Add each one to **Production** (and to Preview where you want it there too).
+Cloudflare has two places for variables. Both are under **Workers & Pages → cybersentinellab-web → Settings**.
+
+**Build variables** (Settings → Build → *Variables and secrets*). These are used when the site is built:
+
+| Name | Value |
+|---|---|
+| `NODE_VERSION` | `22` |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (step 5) |
+| `PUBLIC_CF_BEACON` | Web Analytics token (step 6) |
+
+**Runtime variables** (Settings → *Variables and secrets*). These are used by the contact form and CMS sign-in. Choose type **Secret** for the secrets.
 
 | Name | Used for | Where to get it |
 |---|---|---|
-| `NODE_VERSION` | Build | `22` |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | CMS sign-in | Step 3 |
-| `PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET` | Contact-form spam protection | Step 5 |
+| `TURNSTILE_SECRET` | Contact-form spam check | Step 5 |
 | `MS_TENANT_ID` / `MS_CLIENT_ID` / `MS_CLIENT_SECRET` | Sending form emails through Microsoft 365 | Step 4 |
 | `MAIL_FROM` | M365 mailbox the form sends from, e.g. `info@cybersentinellab.com` | — |
 | `MAIL_TO` | (Optional) Where enquiries arrive. Defaults to `MAIL_FROM` | — |
-| `PUBLIC_CF_BEACON` | Web Analytics token | Step 6 |
 
-Mark the secrets (`*_SECRET`) as **Encrypted**. After changing variables, go to **Deployments → Retry deployment** so they take effect.
+After changing **build** variables, go to **Deployments** and redeploy (or push a change). **Runtime** variables apply as soon as you save them.
 
 ## 3. Content manager (CMS) sign-in
 
@@ -50,9 +55,9 @@ The CMS lives at **`/admin`**, and editors sign in with their own GitHub account
    - Application name: `CSL Website CMS`
    - Homepage URL: `https://cybersentinellab.com`
    - Authorization callback URL: `https://cybersentinellab.com/api/callback`
-     - Before the domain is switched, use `https://<project>.pages.dev/api/callback` instead, and change it at launch.
+     - Before the domain is switched, use `https://cybersentinellab-web.<account>.workers.dev/api/callback` instead, and change it at launch.
 2. Copy the **Client ID**. Then generate a **Client secret** and copy it too.
-3. In Cloudflare, add both as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`, then redeploy.
+3. In Cloudflare, add both as runtime variables `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 4. Open `https://<your-site>/admin` and click **Login with GitHub**.
 
 ### Adding editors
@@ -85,16 +90,16 @@ Cloudflare's own email sending would require moving your MX records away from Mi
    ```powershell
    New-ApplicationAccessPolicy -AppId <MS_CLIENT_ID> -PolicyScopeGroupId info@cybersentinellab.com -AccessRight RestrictAccess -Description "Website form"
    ```
-6. Set `MAIL_FROM` to that mailbox, then redeploy. Submit a test enquiry on `/contact`.
+6. Set `MAIL_FROM` to that mailbox. Submit a test enquiry on `/contact`.
 
 ## 5. Spam protection (Turnstile)
 
-1. In Cloudflare, go to **Turnstile → Add widget**. Name it `CSL website` and add hostnames `cybersentinellab.com` and `<project>.pages.dev`. Choose the **Managed** mode.
-2. Copy the **Site key** into `PUBLIC_TURNSTILE_SITE_KEY`, and the **Secret key** into `TURNSTILE_SECRET`. Then redeploy.
+1. In Cloudflare, go to **Turnstile → Add widget**. Name it `CSL website` and add hostnames `cybersentinellab.com` and `cybersentinellab-web.<account>.workers.dev`. Choose the **Managed** mode.
+2. Copy the **Site key** into the build variable `PUBLIC_TURNSTILE_SITE_KEY`, and the **Secret key** into the runtime secret `TURNSTILE_SECRET`. Then redeploy.
 
 ## 6. Analytics
 
-Go to **Cloudflare → Analytics & Logs → Web Analytics → Add a site**. Choose the manual JS snippet and copy the `token` value into `PUBLIC_CF_BEACON`. No cookie banner is needed.
+Go to **Cloudflare → Analytics & Logs → Web Analytics → Add a site**. Choose the manual JS snippet and copy the `token` value into the build variable `PUBLIC_CF_BEACON`, then redeploy. No cookie banner is needed.
 
 ## 7. Move DNS from GoDaddy to Cloudflare (keeping Microsoft 365 email)
 
@@ -116,7 +121,7 @@ The current website keeps working during this step.
 
 ## 8. Launch: point cybersentinellab.com to the new site
 
-1. Go to **Pages → your project → Custom domains → Set up a domain**. Add `cybersentinellab.com`, then add `www.cybersentinellab.com`. Cloudflare creates the DNS records for you.
+1. Go to **Workers & Pages → cybersentinellab-web → Settings → Domains & Routes → Add → Custom domain**. Add `cybersentinellab.com`, then add `www.cybersentinellab.com`. Cloudflare creates the DNS records for you.
 2. Go to **Rules → Redirect Rules** and add a rule that redirects `www` to the apex domain (301).
 3. Update the GitHub OAuth app callback URL to `https://cybersentinellab.com/api/callback`.
 4. In **Google Search Console**, add the domain and submit `https://cybersentinellab.com/sitemap-index.xml`.

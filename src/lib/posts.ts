@@ -5,7 +5,7 @@ export type Post = CollectionEntry<Kind>;
 
 // Drafts are visible on preview builds (non-main branches) and when SHOW_DRAFTS=1.
 const showDrafts =
-  process.env.SHOW_DRAFTS === '1' || (!!process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || import.meta.env.DEV;
+  process.env.SHOW_DRAFTS === '1' || (!!(process.env.CF_PAGES_BRANCH || process.env.WORKERS_CI_BRANCH) && (process.env.CF_PAGES_BRANCH || process.env.WORKERS_CI_BRANCH) !== 'main') || import.meta.env.DEV;
 
 export const kindMeta: Record<Kind, { label: string; path: string }> = {
   blog: { label: 'Blog', path: 'blog' },

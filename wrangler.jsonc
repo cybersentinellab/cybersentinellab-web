@@ -1,0 +1,15 @@
+// Cloudflare Workers config: serves the built site from ./dist and runs /api/* (contact form, CMS sign-in).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cybersentinellab-web",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": { "enabled": true }
+}
