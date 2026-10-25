@@ -1,6 +1,24 @@
 # PROGRESS
 
 ## Current phase
+v3 (branch `v3`) — team feedback incorporated, awaiting review. Preview: https://v3.cybersentinellab-web-v2.pages.dev
+Reference versions (frozen): v1 = branch `v1`/`main` → cybersentinellab-web.cybersentinellab.workers.dev; v2 = branch `v2` → cybersentinellab-web-v2.pages.dev
+
+## v3 — team feedback (25 Oct 2026)
+- Positioning: "Cybersecurity & Business Technology Solutions"; headline "Protect your business. Simplify your operations."; CTAs Explore our solutions / Discuss your requirement; "CSL" used prominently
+- Six solution areas from the Google Sheet (src/data/areas.ts; service field `area`): Cybersecurity & Digital Risk (core) · Fraud, Risk & Compliance · Payments & Reconciliation · Smart Infrastructure & Automation · Cloud Solutions · IT Services & Software Development
+- New pages: /solutions, /solutions/[area] (problem → how CSL helps → benefits), /partners, /careers (+jobs CMS), /events (+events CMS, .ics, Event schema; noindex while empty)
+- New services: KYC/KYB onboarding checks, fraud prevention, AML transaction monitoring, payment reconciliation, parking/access/ticketing, Microsoft 365 Copilot. OT folded into Smart Infrastructure (no standalone page). Zero Trust kept under Cybersecurity
+- Service pages: The challenge, delivery note (fields `delivery`, `partners` — shown once filled in), case studies linked via `services`
+- Delivery model graphic (requirements → assess → coordinate partners → deliver locally); lead industries tabs (healthcare, hospitality & retail, financial services, infrastructure)
+- Nav: Solutions · Industries · Partners · About CSL · Insights · Contact. Redirects for old URLs in public/_redirects
+- Not adopted (see feedback review PDF): change of tech stack, new palette, GA4
+
+## Questions for CSL (v3)
+- Mark each service as delivered directly / via partner / both, with partner names (CMS fields `delivery`, `partners`)
+- Confirm wording of the new fraud, AML, KYC, payment and parking pages, and the goAML mention
+- Real security certifications/credentials to display (none shown until confirmed)
+
 v2 (branch `v2`, Worker `cybersentinellab-web-v2`) — new design built, awaiting CSL review. v1 frozen on branch `v1` (= `main`).
 
 ## v2 — "Perimeter" design (21 Oct 2026)
