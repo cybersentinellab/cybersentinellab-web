@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+const all = (await getCollection('events')).filter((e) => !e.data.draft).sort((a, b) => a.data.start.valueOf() - b.data.start.valueOf());
+const now = Date.now();
+const upcoming = all.filter((e) => (e.data.end ?? e.data.start).valueOf() >= now);
+const past = all.filter((e) => (e.data.end ?? e.data.start).valueOf() < now).reverse();
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+// "Add to calendar" as a downloadable .ics data link
+const ics = (e: (typeof all)[number]) => {
+  const z = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const end = e.data.end ?? new Date(e.data.start.valueOf() + 2 * 3600e3);
+  const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//CSL//Events//EN', 'BEGIN:VEVENT', `UID:${e.id}@cybersentinellab.com`, `DTSTAMP:${z(new Date())}`, `DTSTART:${z(e.data.start)}`, `DTEND:${z(end)}`, `SUMMARY:${e.data.title}`, `LOCATION:${e.data.location}`, `DESCRIPTION:${e.data.summary}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(body);
+};
+const crumbs = [{ name: 'Events', href: '/events' }];
+const schema = upcoming.map((e) => ({ '@context': 'https://schema.org', '@type': 'Event', name: e.data.title, startDate: e.data.start.toISOString(), endDate: e.data.end?.toISOString(), description: e.data.summary, eventAttendanceMode: e.data.format === 'Online' ? 'https://schema.org/OnlineEventAttendanceMode' : e.data.format === 'Hybrid' ? 'https://schema.org/MixedEventAttendanceMode' : 'https://schema.org/OfflineEventAttendanceMode', location: { '@type': 'Place', name: e.data.location }, organizer: { '@type': 'Organization', name: 'Cyber Sentinel Lab', url: 'https://cybersentinellab.com' } }));
+---
+<Base title="Events & Webinars" description="Upcoming events, webinars, bootcamps and roundtables from Cyber Sentinel Lab." crumbs={crumbs} schema={schema} noindex={all.length === 0}>
+  <PageHero title="Events & webinars" lead="Roundtables, webinars and bootcamps on the security and technology topics that matter to your organisation." crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap">
+      <h2 class="h2 sh">Upcoming</h2>
+      {upcoming.length ? (
+        <ul role="list" class="ev">
+          {upcoming.map((e) => (
+            <li>
+              <time datetime={e.data.start.toISOString()}>{fmt(e.data.start)}</time>
+              <div><h3>{e.data.title}</h3><p class="meta">{e.data.format}, {e.data.location}</p><p>{e.data.summary}</p></div>
+              <div class="acts">
+                {e.data.registerUrl && <a class="btn btn-primary" href={e.data.registerUrl} target="_blank" rel="noopener">Register</a>}
+                <a class="btn btn-ghost" href={ics(e)} download={`${e.id}.ics`}>Add to calendar</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : <p class="lead">No events are scheduled right now. Follow CSL on LinkedIn to hear about the next one.</p>}
+      {past.length > 0 && (
+        <>
+          <h2 class="h3 sh past">Past events</h2>
+          <ul role="list" class="ev pastl">{past.map((e) => <li><time datetime={e.data.start.toISOString()}>{fmt(e.data.start)}</time><div><h3>{e.data.title}</h3><p class="meta">{e.data.location}</p></div></li>)}</ul>
+        </>
+      )}
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .sh { margin-bottom: 28px; }
+  .past { margin-top: 56px; }
+  .ev { border-top: 2px solid var(--ink); }
+  .ev li { display: grid; grid-template-columns: 200px 1fr auto; gap: 24px; align-items: start; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  time { font-weight: 700; color: var(--green-ink); }
+  .ev h3 { font-stretch: 115%; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 0.92rem; margin: 4px 0 8px; }
+  .acts { display: flex; flex-direction: column; gap: 8px; }
+  .pastl li { grid-template-columns: 200px 1fr; }
+  @media (max-width: 760px) { .ev li, .pastl li { grid-template-columns: 1fr; gap: 10px; } .acts { flex-direction: row; flex-wrap: wrap; } }
+</style>

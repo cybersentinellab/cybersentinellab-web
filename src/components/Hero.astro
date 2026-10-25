@@ -4,13 +4,14 @@ import { site } from '../data/site';
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap grid-h">
     <div class="copy">
-      <h1 id="hero-title" class="display">Your shield in the digital world.</h1>
-      <p class="lead">Cyber Sentinel Lab protects governments and enterprises across the UAE, the GCC and Europe. We find your weaknesses before attackers do, keep your defences strong, and respond fast when something happens.</p>
+      <p class="kicker">{site.descriptor}</p>
+      <h1 id="hero-title" class="display">Protect your business. Simplify your operations.</h1>
+      <p class="lead">CSL brings together specialist technology solutions and partners to help organisations strengthen security, improve payment visibility, manage risk and automate operations. We work closely with you to understand your requirements and coordinate the right expertise, from evaluation through implementation.</p>
       <div class="ctas">
-        <a href="/contact" class="btn btn-primary">Book a consultation</a>
-        <a href="/services" class="btn btn-ghost">Explore services</a>
+        <a href="/solutions" class="btn btn-primary">Explore our solutions</a>
+        <a href="/contact" class="btn btn-ghost">Discuss your requirement</a>
       </div>
-      <p class="sos">Under attack? <a href="tel:+971558817003">Call {site.phones[0]}</a>, 24/7.</p>
+      <p class="sos">Facing a cyber incident? <a href="tel:+971558817003">Call {site.phones[0]}</a>, 24/7.</p>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="cv"><canvas data-hero></canvas></div>
@@ -26,7 +27,8 @@ import { site } from '../data/site';
 <style>
   .hero { padding: clamp(110px, 12vw, 150px) 0 clamp(40px, 5vw, 72px); background: var(--paper); overflow: hidden; }
   .grid-h { display: grid; grid-template-columns: 1.08fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
-  .display { font-size: clamp(3rem, 7.2vw, 7.4rem); line-height: 0.9; letter-spacing: -0.045em; }
+  .kicker { margin-bottom: 18px; }
+  .display { font-size: clamp(2.7rem, 5.6vw, 5.6rem); line-height: 0.93; letter-spacing: -0.04em; }
   .lead { margin-top: clamp(22px, 3vw, 34px); }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
   .sos { margin-top: 26px; font-size: 0.95rem; color: var(--muted); }

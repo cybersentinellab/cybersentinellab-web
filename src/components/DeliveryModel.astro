@@ -1,0 +1,30 @@
+---
+// How CSL delivers: requirements → assessment → partner coordination → local delivery.
+const steps = [
+  { t: 'Understand your requirements', p: 'We start with your business, your risks and what you need to achieve.' },
+  { t: 'Assess and recommend', p: 'We evaluate options and recommend the solutions that fit, not the ones we happen to sell.' },
+  { t: 'Coordinate specialists', p: 'Our own team delivers where we specialise. Where a partner is better placed, we bring them in and manage them for you.' },
+  { t: 'Deliver locally and follow through', p: 'Local engagement, one point of contact and support long after go-live.' },
+];
+---
+<ol role="list" class="dm">
+  {steps.map((s, i) => (
+    <li><span class="n" aria-hidden="true">{i + 1}</span><h3>{s.t}</h3><p>{s.p}</p></li>
+  ))}
+</ol>
+<style>
+  .dm { display: grid; grid-template-columns: repeat(4, 1fr); counter-reset: d; }
+  .dm li { position: relative; padding: 0 24px 0 0; }
+  .dm li::before { content: ''; position: absolute; top: 19px; left: 44px; right: 0; height: 2px; background: var(--line-2); }
+  .dm li:last-child::before { display: none; }
+  .n { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--green-ink); color: #fff; font-weight: 700; }
+  .dm h3 { font-stretch: 112%; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin: 18px 0 8px; }
+  .dm p { color: var(--ink-2); font-size: 0.97rem; }
+  @media (max-width: 900px) {
+    .dm { grid-template-columns: 1fr; gap: 0; }
+    .dm li { display: grid; grid-template-columns: 40px 1fr; column-gap: 18px; padding: 0 0 26px; }
+    .dm li::before { top: 44px; bottom: 0; left: 19px; right: auto; width: 2px; height: auto; }
+    .n { grid-row: span 2; }
+    .dm h3 { margin: 8px 0 6px; }
+  }
+</style>

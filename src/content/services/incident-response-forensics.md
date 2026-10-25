@@ -1,8 +1,7 @@
 ---
 slug: incident-response-forensics
 title: Incident Response & Forensics
-titleAccent: Forensics
-order: 10
+order: 7
 icon: pulse
 summary: 24/7 rapid response to contain, investigate and recover from cyber incidents — with clear root-cause answers.
 intro: When a cyberattack occurs, every second counts. Our incident response and digital forensics team helps you detect, contain and recover from breaches, identifies the root cause, preserves evidence and recommends how to prevent a repeat.
@@ -47,4 +46,6 @@ faqs:
 seoTitle: Incident Response & Forensics in Dubai & UAE
 metaDescription: 24/7 rapid response to contain, investigate and recover from cyber incidents — with clear root-cause answers.
 phase: respond
+area: cybersecurity-digital-risk
+problem: When an attack hits, every hour of confusion adds cost. Without a plan and the right experts, organisations lose time, evidence and trust.
 ---

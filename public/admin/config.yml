@@ -283,6 +283,17 @@ collections:
     name: industry
     widget: string
     required: false
+  - label: Related solutions
+    name: services
+    widget: relation
+    collection: services
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+    multiple: true
+    required: false
   - label: Body
     name: body
     widget: markdown
@@ -320,10 +331,6 @@ collections:
     name: slug
     widget: string
     hint: Changing this changes the page URL
-  - label: Italic accent (last words of the title)
-    name: titleAccent
-    widget: string
-    required: false
   - label: Order
     name: order
     widget: number
@@ -352,18 +359,53 @@ collections:
     - server
     - globe
     - bank
+    - building
+    - heart
+    - plane
+    - store
     default: shield
-  - label: Phase (triangle colour)
+  - label: Solution area
+    name: area
+    widget: select
+    options:
+    - cybersecurity-digital-risk
+    - fraud-risk-compliance
+    - payments-reconciliation
+    - smart-infrastructure-automation
+    - cloud-solutions
+    - it-services-software-development
+  - label: Cyber approach step (cybersecurity only)
     name: phase
     widget: select
-    options: [assess, protect, respond, technology]
-    default: protect
+    options:
+    - assess
+    - protect
+    - respond
+    - technology
+    default: technology
+    hint: Use assess / protect / respond for cybersecurity services; technology for all others.
   - label: Summary (cards)
     name: summary
     widget: text
   - label: Intro (page header)
     name: intro
     widget: text
+  - label: The challenge (business problem)
+    name: problem
+    widget: text
+    required: false
+  - label: How it is delivered
+    name: delivery
+    widget: select
+    options:
+    - direct
+    - partner
+    - both
+    required: false
+  - label: Delivery partners (names)
+    name: partners
+    widget: list
+    required: false
   - label: Tags
     name: tags
     widget: list
@@ -484,6 +526,100 @@ collections:
     widget: datetime
     format: YYYY-MM-DD
     time_format: false
+    required: false
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: jobs
+  label: Careers (jobs)
+  folder: src/content/jobs
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Job title
+    name: title
+    widget: string
+  - label: Slug
+    name: slug
+    widget: string
+  - label: Location
+    name: location
+    widget: string
+    default: Dubai, UAE
+  - label: Type
+    name: type
+    widget: select
+    options:
+    - Full-time
+    - Part-time
+    - Contract
+    - Internship
+    default: Full-time
+  - label: Summary
+    name: summary
+    widget: text
+  - label: Posted
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    time_format: false
+  - label: Closing date
+    name: closes
+    widget: datetime
+    format: YYYY-MM-DD
+    time_format: false
+    required: false
+  - label: Details
+    name: body
+    widget: markdown
+    required: false
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: false
+    required: false
+- name: events
+  label: Events & webinars
+  folder: src/content/events
+  create: true
+  slug: '{{fields.slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Title
+    name: title
+    widget: string
+  - label: Slug
+    name: slug
+    widget: string
+  - label: Starts
+    name: start
+    widget: datetime
+  - label: Ends
+    name: end
+    widget: datetime
+    required: false
+  - label: Location
+    name: location
+    widget: string
+  - label: Format
+    name: format
+    widget: select
+    options:
+    - In person
+    - Online
+    - Hybrid
+    default: In person
+  - label: Summary
+    name: summary
+    widget: text
+  - label: Registration link
+    name: registerUrl
+    widget: string
     required: false
   - label: Hide from site (draft)
     name: draft

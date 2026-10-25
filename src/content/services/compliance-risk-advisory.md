@@ -1,8 +1,7 @@
 ---
 slug: compliance-risk-advisory
 title: Compliance & Risk Advisory
-titleAccent: Risk Advisory
-order: 3
+order: 8
 icon: file
 summary: Governance, risk and compliance programmes that go beyond checklists — UAE IA, ISO 27001, NIST, PCI DSS, GDPR and more.
 intro: Navigating today's regulations can be overwhelming. Our compliance experts go beyond checkbox exercises, designing security programmes that reduce risk, streamline compliance and translate regulations into practical steps that deliver business value.
@@ -51,5 +50,7 @@ faqs:
   a: No. Compliance shows you meet a defined standard; security is about actually reducing risk. A good GRC programme achieves both, so certification reflects real protection.
 seoTitle: Compliance & Risk Advisory in Dubai & UAE
 metaDescription: UAE IA, ISO 27001, NIST CSF, PCI DSS and GDPR compliance, enterprise risk assessments and business impact analysis from Cyber Sentinel Lab.
-phase: assess
+phase: technology
+area: fraud-risk-compliance
+problem: Regulations such as UAE IA, ISO 27001, PCI DSS and GDPR are demanding, and checkbox compliance leaves real risks unaddressed.
 ---

@@ -5,22 +5,23 @@ import Hero from '../components/Hero.astro';
 import LogoWall from '../components/LogoWall.astro';
 import PostCard from '../components/PostCard.astro';
 import CtaBand from '../components/CtaBand.astro';
-import Icon from '../components/Icon.astro';
+import AreaCards from '../components/AreaCards.astro';
+import DeliveryModel from '../components/DeliveryModel.astro';
+import IndustryTabs from '../components/IndustryTabs.astro';
 import { clients, partners } from '../data/logos';
-import { industries } from '../data/industries';
 import { offices, site } from '../data/site';
 import { getPosts } from '../lib/posts';
 
 const posts = (await getPosts()).slice(0, 3);
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const by = (p: string) => services.filter((s) => s.data.phase === p);
+const cyber = services.filter((s) => s.data.area === 'cybersecurity-digital-risk');
 const phases = [
-  { key: 'assess', title: 'Assess first', text: 'We learn how your business works and test it the way an attacker would, so you know exactly where you are exposed.' },
-  { key: 'protect', title: 'Protect proactively', text: 'We put the right controls, tools and training in place to close those gaps and keep them closed.' },
+  { key: 'assess', title: 'Assess first', text: 'We test your organisation the way an attacker would, so you know exactly where you are exposed.' },
+  { key: 'protect', title: 'Protect proactively', text: 'We put the right controls, monitoring and training in place to close the gaps and keep them closed.' },
   { key: 'respond', title: 'Respond effectively', text: 'When something happens, our team contains it, finds the cause and gets you running again. Day or night.' },
 ] as const;
 ---
-<Base title={`${site.name} | Your Shield in the Digital World`} description="Cyber Sentinel Lab is a Dubai cybersecurity company providing penetration testing, compliance, threat intelligence, incident response, cloud and technology services across the UAE, GCC and Europe.">
+<Base title={`CSL Cyber Sentinel Lab | ${site.descriptor}`} description="CSL (Cyber Sentinel Lab) is a Dubai cybersecurity and business technology solutions partner: cybersecurity, fraud and compliance, payments and reconciliation, smart infrastructure, cloud and IT services across the UAE, GCC and Europe.">
   <Hero />
 
   <section class="clients" aria-labelledby="clients-h">
@@ -30,62 +31,64 @@ const phases = [
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap intro">
-      <p class="statement">Our specialists bring more than 25 years of combined experience protecting airports, seaports, universities, hospitals and government departments. We work with you from first assessment to full recovery, as one team.</p>
-      <a class="lnk" href="/about">About Cyber Sentinel Lab</a>
+  <section class="section" aria-labelledby="sol-h">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 id="sol-h" class="h2">Solutions that protect and simplify</h2>
+        <p class="lead">Cybersecurity is our core. Around it, we bring together specialist solutions for fraud and compliance, payments, smart infrastructure, cloud and everyday IT.</p>
+      </div>
+      <AreaCards />
     </div>
   </section>
 
-  <section class="section tight" aria-labelledby="how-h">
+  <section class="section band-white" aria-labelledby="core-h">
     <div class="wrap">
-      <h2 id="how-h" class="h2 how-h">How we protect you</h2>
-      <p class="lead how-l">Our approach follows the three sides of our logo. Every service we offer has its place in it.</p>
+      <div class="shead split">
+        <h2 id="core-h" class="h2">Cybersecurity is where we started</h2>
+        <p class="lead">Our specialists bring more than 25 years of combined experience protecting airports, seaports, universities, hospitals and government departments. Our approach follows the three sides of our logo.</p>
+      </div>
       <ol role="list" class="phases">
         {phases.map((p) => (
-          <li class={`phase p-${p.key}`}>
+          <li class="phase">
             <div class="p-top"><i class={`ph ph-${p.key}`} aria-hidden="true"></i><h3 class="h3">{p.title}</h3></div>
             <p class="p-t">{p.text}</p>
             <ul role="list" class="svc">
-              {by(p.key).map((s) => <li><a href={`/services/${s.id}`}>{s.data.title}</a></li>)}
+              {cyber.filter((s) => s.data.phase === p.key).map((s) => <li><a href={`/services/${s.id}`}>{s.data.title}</a></li>)}
             </ul>
           </li>
         ))}
       </ol>
-      <div class="tech">
-        <div>
-          <h3 class="h3">Technology that runs your business</h3>
-          <p>Infrastructure, software, licensing and fintech solutions, built and supported by the same security-minded team.</p>
-        </div>
-        <ul role="list" class="svc">
-          {by('technology').map((s) => <li><a href={`/services/${s.id}`}>{s.data.title}</a></li>)}
-        </ul>
-      </div>
     </div>
   </section>
 
-  <section class="section band-white" aria-labelledby="ind-h">
+  <section class="section" aria-labelledby="dm-h">
     <div class="wrap">
       <div class="shead split">
-        <h2 id="ind-h" class="h2">Sectors we protect</h2>
-        <p class="lead">Each sector has its own threats, regulations and stakes. We shape our work around yours.</p>
+        <h2 id="dm-h" class="h2">One partner, the right expertise</h2>
+        <p class="lead">Some solutions we deliver with our own team. Others we deliver with specialist partners. Either way, you deal with CSL, and we always tell you who does what.</p>
       </div>
-      <ul role="list" class="inds">
-        {industries.map((i) => (
-          <li><a href={`/industries/${i.slug}`}><Icon name={i.icon} size={22} /><span>{i.title}</span></a></li>
-        ))}
-      </ul>
+      <DeliveryModel />
+    </div>
+  </section>
+
+  <section class="section tight" aria-labelledby="ind-h">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 id="ind-h" class="h2">Built for your sector</h2>
+        <p class="lead">Practical solutions for the sectors we know best. <a class="lnk" href="/industries">See all industries</a></p>
+      </div>
+      <IndustryTabs />
     </div>
   </section>
 
   <section class="section" aria-labelledby="part-h">
     <div class="wrap">
       <div class="shead split">
-        <h2 id="part-h" class="h2">Built on the technology leaders trust</h2>
-        <p class="lead">We work with leading security and cloud vendors, and recommend what fits your environment rather than what we happen to sell.</p>
+        <h2 id="part-h" class="h2">Technology partners</h2>
+        <p class="lead">We work with leading security, cloud and technology vendors, and recommend what fits your environment.</p>
       </div>
       <LogoWall logos={partners.slice(0, 14)} />
-      <p class="after"><a class="lnk" href="/about#partners">See all our technology partners</a></p>
+      <p class="after"><a class="lnk" href="/partners">How we work with partners</a></p>
     </div>
   </section>
 
@@ -116,47 +119,31 @@ const phases = [
     </section>
   )}
 
-  <CtaBand />
+  <CtaBand title="Tell us what you need." text="Share your requirement and we will come back with a clear recommendation: what to do, who should deliver it, and where to start." button="Discuss your requirement" />
 </Base>
 
 <style>
   .clients { background: var(--surface); border-block: 1px solid var(--line); padding: 34px 0 30px; }
   .c-h { font-size: 0.98rem; font-weight: 500; color: var(--muted); margin-bottom: 20px; }
 
-  .intro { display: grid; gap: 28px; justify-items: start; }
-  .statement { font-stretch: 112%; font-weight: 500; font-size: clamp(1.6rem, 3.1vw, 2.7rem); line-height: 1.18; letter-spacing: -0.025em; max-width: 30ch; color: var(--ink); }
-  .intro .lnk { font-weight: 600; font-size: 1.05rem; }
-
-  .how-h { max-width: 14ch; }
-  .how-l { margin: 18px 0 clamp(36px, 5vw, 60px); }
-  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 2px solid var(--ink); }
-  .phase { padding: 30px 30px 34px 0; display: flex; flex-direction: column; gap: 16px; }
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); }
+  .phase { padding: 30px 30px 10px 0; display: flex; flex-direction: column; gap: 16px; }
   .phase + .phase { padding-left: 30px; border-left: 1px solid var(--line); }
   .p-top { display: flex; gap: 12px; align-items: center; }
   .p-top .ph { width: 22px; height: 22px; }
   .p-t { color: var(--ink-2); }
-  .svc { display: grid; gap: 0; padding-top: 6px; }
+  .svc { display: grid; padding-top: 6px; }
   .svc a { display: block; padding: 12px 0; border-top: 1px solid var(--line); font-weight: 600; }
   .svc a:hover { color: var(--green-ink); text-decoration: underline; text-underline-offset: 4px; }
-  .tech { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; padding: clamp(26px, 3vw, 40px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
-  .tech p { color: var(--ink-2); margin-top: 12px; max-width: 46ch; }
-  .tech .svc { margin-top: 0; padding-top: 0; }
   @media (max-width: 900px) {
     .phases { grid-template-columns: 1fr; }
     .phase, .phase + .phase { padding: 26px 0; border-left: 0; border-bottom: 1px solid var(--line); }
-    .tech { grid-template-columns: 1fr; gap: 20px; }
   }
-
-  .inds { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 40px; border-top: 2px solid var(--ink); }
-  .inds a { display: flex; align-items: center; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); font-stretch: 115%; font-weight: 700; font-size: clamp(1.1rem, 1.7vw, 1.4rem); letter-spacing: -0.02em; }
-  .inds a :global(svg) { color: var(--green); flex: none; }
-  .inds a:hover span { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-  @media (max-width: 760px) { .inds { grid-template-columns: 1fr; } }
 
   .after { margin-top: 22px; font-weight: 600; }
 
   .reach { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
-  .offices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 2px solid var(--ink); }
+  .offices { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); }
   .offices li { padding: 22px 20px 0 0; display: grid; gap: 6px; }
   .offices h3 { font-stretch: 115%; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
   .offices a { color: var(--green-ink); font-weight: 500; font-size: 0.95rem; word-break: break-word; }

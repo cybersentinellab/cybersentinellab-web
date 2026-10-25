@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import LogoWall from '../components/LogoWall.astro';
+import DeliveryModel from '../components/DeliveryModel.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { partners } from '../data/logos';
+const crumbs = [{ name: 'Partners', href: '/partners' }];
+---
+<Base title="Partners & Ecosystem" description="CSL works with leading security, cloud and technology vendors and specialist delivery partners across Europe, the GCC and the UAE, coordinating every engagement end to end." crumbs={crumbs}>
+  <PageHero title="Partners & ecosystem" lead="We combine our own specialists with leading technology vendors and specialist delivery partners. You get the right expertise for each requirement, with CSL as your single point of contact." crumbs={crumbs} />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 class="h2">How we work with partners</h2>
+        <p class="lead">We deliver directly where we specialise. Where a partner is better placed, we bring them in, manage the work and stay accountable to you.</p>
+      </div>
+      <DeliveryModel />
+    </div>
+  </section>
+
+  <section class="section band-white">
+    <div class="wrap two">
+      <div class="col"><h2 class="h3">Delivered directly by CSL</h2><p>Our core cybersecurity work: assessments and penetration testing, threat intelligence, security awareness, incident response and advisory, delivered by our own team.</p></div>
+      <div class="col"><h2 class="h3">Delivered with partners</h2><p>Specialist platforms and solutions, for example onboarding and fraud checks, payment reconciliation, parking and ticketing, and licensed software, delivered with partners and coordinated by CSL.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 class="h2">Technology partners</h2>
+        <p class="lead">We work with leading vendors across security, cloud and IT, and recommend what fits your environment.</p>
+      </div>
+      <LogoWall logos={partners} />
+    </div>
+  </section>
+
+  <CtaBand title="Become a CSL partner" text="Technology vendors and specialist providers who want to reach organisations in the UAE, the GCC and Europe: we would like to hear from you." button="Talk to us about partnering" />
+</Base>
+<style>
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 72px); }
+  .col { display: grid; gap: 12px; padding-top: 22px; border-top: 2px solid var(--ink); }
+  .col p { color: var(--ink-2); }
+  .note { margin-top: 24px; color: var(--muted); font-size: 0.92rem; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+</style>

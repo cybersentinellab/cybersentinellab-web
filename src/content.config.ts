@@ -24,7 +24,7 @@ const news = defineCollection({ loader: md('news'), schema: editorial });
 const caseStudies = defineCollection({
   loader: md('case-studies'),
   schema: ({ image }) =>
-    editorial({ image }).extend({ client: z.string().optional(), industry: z.string().optional() }),
+    editorial({ image }).extend({ client: z.string().optional(), industry: z.string().optional(), services: z.array(z.string()).default([]) }),
 });
 
 const services = defineCollection({
@@ -35,7 +35,11 @@ const services = defineCollection({
       titleAccent: z.string().optional(), // word(s) shown in italic serif
       order: z.number().default(99),
       icon: z.string().default('shield'),
-      phase: z.enum(['assess', 'protect', 'respond', 'technology']).default('protect'),
+      phase: z.enum(['assess', 'protect', 'respond', 'technology']).default('technology'),
+      area: z.enum(['cybersecurity-digital-risk', 'fraud-risk-compliance', 'payments-reconciliation', 'smart-infrastructure-automation', 'cloud-solutions', 'it-services-software-development']),
+      problem: z.string().optional(),
+      delivery: z.enum(['direct', 'partner', 'both']).optional(),
+      partners: z.array(z.string()).default([]),
       summary: z.string(),
       intro: z.string(),
       date: z.coerce.date().optional(),
@@ -78,4 +82,31 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { blog, articles, news, caseStudies, services, team, testimonials };
+const jobs = defineCollection({
+  loader: md('jobs'),
+  schema: z.object({
+    title: z.string(),
+    location: z.string().default('Dubai, UAE'),
+    type: z.string().default('Full-time'),
+    summary: z.string(),
+    date: z.coerce.date(),
+    closes: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+const events = defineCollection({
+  loader: md('events'),
+  schema: z.object({
+    title: z.string(),
+    start: z.coerce.date(),
+    end: z.coerce.date().optional(),
+    location: z.string(),
+    format: z.enum(['In person', 'Online', 'Hybrid']).default('In person'),
+    summary: z.string(),
+    registerUrl: z.string().url().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, articles, news, caseStudies, services, team, testimonials, jobs, events };

@@ -1,8 +1,7 @@
 ---
 slug: zero-trust-identity-security
 title: Zero Trust Identity Security
-titleAccent: Identity Security
-order: 6
+order: 5
 icon: key
 summary: Never trust by default — continuous verification of every user, device and application.
 intro: In a distributed work environment, perimeter security is no longer enough. Our Zero Trust framework continuously verifies every user, device and application — from privileged access management to adaptive authentication and identity governance.
@@ -47,4 +46,6 @@ faqs:
 seoTitle: Zero Trust Identity Security in Dubai & UAE
 metaDescription: Never trust by default — continuous verification of every user, device and application.
 phase: protect
+area: cybersecurity-digital-risk
+problem: With people working from anywhere and systems in the cloud, the old network perimeter is gone. Stolen or misused credentials are now the most common way in.
 ---

@@ -1,0 +1,53 @@
+---
+// The six solution areas. Cybersecurity (the core) is shown first and larger.
+import { getCollection } from 'astro:content';
+import { areas } from '../data/areas';
+import Icon from './Icon.astro';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<ul role="list" class="areas">
+  {areas.map((a, i) => {
+    const list = services.filter((s) => s.data.area === a.slug);
+    return (
+      <li class:list={['area', { core: i === 0 }]}>
+        <a href={`/solutions/${a.slug}`}>
+          <span class="ic"><Icon name={a.icon} size={i === 0 ? 30 : 24} /></span>
+          {i === 0 && <span class="badge">Our core specialism</span>}
+          <h3>{a.title}</h3>
+          <p>{a.short}</p>
+          <span class="count">{list.length} {list.length === 1 ? 'solution' : 'solutions'}</span>
+        </a>
+      </li>
+    );
+  })}
+  <li class="area ask">
+    <a href="/contact">
+      <h3>Not sure which area fits?</h3>
+      <p>Tell us what you need to achieve. We will point you to the right solution, and the right people to deliver it.</p>
+      <span class="count">Discuss your requirement</span>
+    </a>
+  </li>
+</ul>
+<style>
+  .areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .area a { display: flex; flex-direction: column; gap: 12px; height: 100%; padding: clamp(22px, 2.6vw, 32px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); transition: border-color 0.2s; }
+  .area a:hover { border-color: var(--ink); }
+  .area a:hover h3 { color: var(--green-ink); }
+  .ic { color: var(--green); }
+  h3 { font-stretch: 115%; font-size: clamp(1.25rem, 1.8vw, 1.5rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
+  p { color: var(--ink-2); font-size: 0.98rem; flex: 1; }
+  .count { font-size: 0.88rem; font-weight: 600; color: var(--green-ink); }
+  .core { grid-row: span 3; }
+  .ask a { background: var(--green-wash); border-color: var(--green-wash); }
+  .ask a:hover { border-color: var(--green); }
+  .core a { background: var(--ink); border-color: var(--ink); color: #fff; justify-content: flex-end; }
+  .core a:hover { border-color: var(--green); }
+  .core h3 { color: #fff; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.02; }
+  .core a:hover h3 { color: #fff; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  .core p { color: rgba(255, 255, 255, 0.8); flex: 0; font-size: 1.05rem; }
+  .core .ic { color: var(--assess); margin-bottom: auto; }
+  .core .count { color: var(--assess); }
+  .badge { align-self: flex-start; font-size: 0.82rem; font-weight: 600; padding: 3px 10px; border-radius: var(--r-sm); background: rgba(255, 255, 255, 0.12); color: #fff; }
+  @media (max-width: 960px) { .areas { grid-template-columns: 1fr 1fr; } .core { grid-column: 1 / -1; grid-row: auto; } .core a { min-height: 260px; } .ask { grid-column: 1 / -1; } }
+  @media (max-width: 600px) { .areas { grid-template-columns: 1fr; } }
+</style>

@@ -1,8 +1,7 @@
 ---
 slug: security-awareness-training
 title: Security Training & Awareness
-titleAccent: Awareness
-order: 9
+order: 6
 icon: users
 summary: Build a cyber-aware culture where every employee becomes the first line of defence.
 intro: Our Security Training & Awareness Program educates teams on modern threats and practical defence. It goes beyond theory, equipping people with the skills to recognise, report and contain cyber risks.
@@ -46,4 +45,6 @@ faqs:
 seoTitle: Security Training & Awareness in Dubai & UAE
 metaDescription: Build a cyber-aware culture where every employee becomes the first line of defence.
 phase: protect
+area: cybersecurity-digital-risk
+problem: 'Most attacks start with a person: a convincing email, a fake invoice, a reused password. Technology alone cannot stop them.'
 ---

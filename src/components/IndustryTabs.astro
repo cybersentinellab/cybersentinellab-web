@@ -1,0 +1,67 @@
+---
+// Tabs for the lead industries. Works without JS (all panels visible, stacked).
+import { getCollection } from 'astro:content';
+import { industries } from '../data/industries';
+import Icon from './Icon.astro';
+const services = await getCollection('services');
+const lead = industries.filter((i) => i.lead);
+---
+<div class="tabs" data-tabs>
+  <div class="tl" role="tablist" aria-label="Industries">
+    {lead.map((i, n) => (
+      <button role="tab" id={`t-${i.slug}`} aria-controls={`p-${i.slug}`} aria-selected={n === 0 ? 'true' : 'false'} tabindex={n === 0 ? 0 : -1}>
+        <Icon name={i.icon} size={20} />{i.title}
+      </button>
+    ))}
+  </div>
+  {lead.map((i, n) => (
+    <div class="panel" role="tabpanel" id={`p-${i.slug}`} aria-labelledby={`t-${i.slug}`} hidden={n !== 0}>
+      <div>
+        <h3>{i.title}</h3>
+        <p>{i.summary}</p>
+        <a class="lnk" href={`/industries/${i.slug}`}>Explore solutions for {i.title}</a>
+      </div>
+      <ul role="list">
+        {i.services.map((sl) => services.find((s) => s.id === sl)).filter(Boolean).map((s) => (
+          <li><a href={`/services/${s!.id}`}>{s!.data.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+<style>
+  .tl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  [role='tab'] { display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border: 1.5px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface); cursor: pointer; font-weight: 600; color: var(--ink-2); }
+  [role='tab'] :global(svg) { color: var(--green); }
+  [role='tab'][aria-selected='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  [role='tab'][aria-selected='true'] :global(svg) { color: var(--assess); }
+  .panel[hidden] { display: none; }
+  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 60px); padding: clamp(24px, 3vw, 40px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .panel h3 { font-stretch: 120%; font-size: clamp(1.5rem, 2.6vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 14px; }
+  .panel p { color: var(--ink-2); margin-bottom: 18px; }
+  .lnk { font-weight: 600; }
+  .panel ul { border-top: 2px solid var(--ink); align-self: start; }
+  .panel li a { display: block; padding: 12px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .panel li a:hover { color: var(--green-ink); text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 800px) { .panel { grid-template-columns: 1fr; } }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const select = (t: HTMLButtonElement) => {
+      tabs.forEach((x) => {
+        const on = x === t;
+        x.setAttribute('aria-selected', String(on));
+        x.tabIndex = on ? 0 : -1;
+        (root.querySelector('#' + x.getAttribute('aria-controls')) as HTMLElement).hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; select(n); n.focus(); }
+      });
+    });
+  });
+</script>

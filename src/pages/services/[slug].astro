@@ -8,6 +8,9 @@ import Icon from '../../components/Icon.astro';
 import ServiceRows from '../../components/ServiceRows.astro';
 import { serviceSchema, faqSchema } from '../../data/schema';
 import { industries } from '../../data/industries';
+import { areaBySlug } from '../../data/areas';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const all = await getCollection('services');
@@ -16,22 +19,35 @@ export async function getStaticPaths() {
 const { s, all } = Astro.props;
 const d = s.data;
 const { Content } = await render(s);
-const related = all.filter((x) => x.id !== s.id && x.data.phase === d.phase).slice(0, 3).map((x) => x.id);
-const relatedIds = related.length >= 2 ? related : all.filter((x) => x.id !== s.id).sort((a, b) => Math.abs(a.data.order - d.order) - Math.abs(b.data.order - d.order)).slice(0, 3).map((x) => x.id);
+const area = areaBySlug(d.area);
+const sameArea = all.filter((x) => x.id !== s.id && x.data.area === d.area).sort((a, b) => a.data.order - b.data.order).map((x) => x.id);
+const relatedIds = sameArea.length >= 2 ? sameArea.slice(0, 4) : [...sameArea, ...all.filter((x) => x.id !== s.id && x.data.area !== d.area).sort((a, b) => Math.abs(a.data.order - d.order) - Math.abs(b.data.order - d.order)).map((x) => x.id)].slice(0, 3);
 const inds = industries.filter((i) => i.services.includes(s.id));
-const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: `/services/${s.id}` }];
+const cases = (await getPosts(['caseStudies'])).filter((p) => (p.data as any).services?.includes(s.id));
+const deliveryText = { direct: 'Delivered directly by the CSL team.', partner: 'Delivered with a specialist CSL partner, coordinated end to end by CSL.', both: 'Delivered by the CSL team together with specialist partners, coordinated by CSL.' } as const;
+const crumbs = [{ name: 'Solutions', href: '/solutions' }, { name: area.title, href: `/solutions/${area.slug}` }, { name: d.title, href: `/services/${s.id}` }];
 ---
 <Base title={d.seoTitle ?? d.title} description={d.metaDescription ?? d.summary} crumbs={crumbs} schema={[serviceSchema({ title: d.title, summary: d.summary, slug: s.id }), faqSchema(d.faqs)]}>
-  <PageHero title={d.title} lead={d.intro} crumbs={crumbs} phase={d.phase}>
+  <PageHero title={d.title} lead={d.intro} crumbs={crumbs} phase={d.area === 'cybersecurity-digital-risk' ? d.phase : undefined}>
+    {d.delivery && <p class="dlv">{deliveryText[d.delivery]}{d.partners.length > 0 && <> Partners: {d.partners.join(', ')}.</>}</p>}
     <div class="ctas">
-      <a class="btn btn-primary" href={`/contact?service=${s.id}`}>Book a consultation</a>
+      <a class="btn btn-primary" href={`/contact?service=${s.id}`}>Discuss your requirement</a>
       <a class="btn btn-ghost" href="#faq-h">Read the FAQ</a>
     </div>
   </PageHero>
 
+  {d.problem && (
+    <section class="section prob-s">
+      <div class="wrap cover">
+        <h2 class="h2">The challenge</h2>
+        <p class="prob">{d.problem}</p>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="wrap cover">
-      <h2 class="h2">What's included</h2>
+      <h2 class="h2">How CSL helps</h2>
       <ul role="list" class="feat">
         {d.features.map((f) => (
           <li><h3>{f.title}</h3><p>{f.text}</p></li>
@@ -56,7 +72,7 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
   {d.outcomes.length > 0 && (
     <section class="section band-white">
       <div class="wrap out">
-        <h2 class="h2">What you get</h2>
+        <h2 class="h2">The benefits</h2>
         <ul role="list">{d.outcomes.map((o) => <li><Icon name="check" size={22} />{o}</li>)}</ul>
       </div>
     </section>
@@ -65,6 +81,10 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
   <div class="wrap prose-wrap"><div class="prose"><Content /></div></div>
 
   <div class="faq-wrap"><Faq faqs={d.faqs} /></div>
+
+  {cases.length > 0 && (
+    <section class="section tight"><div class="wrap"><h2 class="h2 sh">Case studies</h2><div class="grid g3">{cases.map((c) => <PostCard post={c} />)}</div></div></section>
+  )}
 
   {inds.length > 0 && (
     <section class="section tight">
@@ -77,7 +97,7 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
 
   <section class="section tight">
     <div class="wrap">
-      <h2 class="h2 sh">Related services</h2>
+      <h2 class="h2 sh">More in {area.title}</h2>
       <ServiceRows only={relatedIds} />
     </div>
   </section>
@@ -86,6 +106,9 @@ const crumbs = [{ name: 'Services', href: '/services' }, { name: d.title, href: 
 </Base>
 
 <style>
+  .dlv { margin-top: 18px; font-weight: 600; color: var(--green-ink); }
+  .prob-s { padding-bottom: 0; }
+  .prob { font-stretch: 108%; font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 500; line-height: 1.35; letter-spacing: -0.01em; max-width: 46ch; }
   .ctas { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
   .cover { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
   .feat { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }

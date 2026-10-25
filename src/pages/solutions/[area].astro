@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceRows from '../../components/ServiceRows.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import DeliveryModel from '../../components/DeliveryModel.astro';
+import PostCard from '../../components/PostCard.astro';
+import Icon from '../../components/Icon.astro';
+import { areas, type Area } from '../../data/areas';
+import { industries } from '../../data/industries';
+import { getPosts } from '../../lib/posts';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { area: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: Area };
+const services = (await getCollection('services')).filter((s) => s.data.area === a.slug).sort((x, y) => x.data.order - y.data.order);
+const ids = services.map((s) => s.id);
+const inds = industries.filter((i) => i.services.some((s) => ids.includes(s)));
+const cases = (await getPosts(['caseStudies'])).filter((p) => (p.data as any).services?.some((s: string) => ids.includes(s)));
+const others = areas.filter((x) => x.slug !== a.slug);
+const crumbs = [{ name: 'Solutions', href: '/solutions' }, { name: a.title, href: `/solutions/${a.slug}` }];
+---
+<Base title={a.title} description={`${a.short} ${a.solution}`.slice(0, 158)} crumbs={crumbs}>
+  <PageHero title={a.title} lead={a.short} crumbs={crumbs}>
+    <div class="ctas"><a class="btn btn-primary" href="/contact">Discuss your requirement</a></div>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap psb">
+      <div class="col problem"><h2 class="h3">The problem</h2><p>{a.problem}</p></div>
+      <div class="col"><h2 class="h3">How CSL helps</h2><p>{a.solution}</p></div>
+      <div class="col"><h2 class="h3">What you gain</h2><ul role="list">{a.benefits.map((b) => <li><Icon name="check" size={20} />{b}</li>)}</ul></div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      <h2 class="h2 sh">Solutions in this area</h2>
+      <ServiceRows only={ids} />
+    </div>
+  </section>
+
+  {cases.length > 0 && (
+    <section class="section tight"><div class="wrap"><h2 class="h2 sh">Case studies</h2><div class="grid g3">{cases.map((c) => <PostCard post={c} />)}</div></div></section>
+  )}
+
+  <section class="section band-white">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 class="h2">How we deliver</h2>
+        <p class="lead">Directly where we specialise, with partners where they are better placed. You deal with CSL throughout, and we tell you who does what.</p>
+      </div>
+      <DeliveryModel />
+    </div>
+  </section>
+
+  {inds.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h3 sh">Sectors where this matters most</h2>
+        <ul role="list" class="chips">{inds.map((i) => <li><a href={`/industries/${i.slug}`}><Icon name={i.icon} size={18} />{i.title}</a></li>)}</ul>
+        <h2 class="h3 sh other">Other solution areas</h2>
+        <ul role="list" class="chips">{others.map((o) => <li><a href={`/solutions/${o.slug}`}><Icon name={o.icon} size={18} />{o.title}</a></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <CtaBand title="Tell us what you need." text={`Share your ${a.title.toLowerCase()} requirement and we will recommend the right approach, and who should deliver it.`} button="Discuss your requirement" />
+</Base>
+<style>
+  .ctas { margin-top: 30px; }
+  .psb { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(24px, 3vw, 44px); }
+  .col { padding-top: 22px; border-top: 2px solid var(--ink); display: grid; gap: 12px; align-content: start; }
+  .col p { color: var(--ink-2); }
+  .problem p { color: var(--ink); font-weight: 500; }
+  .col ul { display: grid; gap: 12px; }
+  .col li { display: flex; gap: 10px; font-weight: 600; }
+  .col li :global(svg) { color: var(--green); flex: none; margin-top: 2px; }
+  @media (max-width: 900px) { .psb { grid-template-columns: 1fr; row-gap: 28px; } }
+  .sh { margin-bottom: clamp(22px, 3.5vw, 40px); }
+  .other { margin-top: 48px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips a { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border: 1.5px solid var(--ink); border-radius: var(--r-sm); font-weight: 600; }
+  .chips a:hover { background: var(--ink); color: #fff; }
+  .chips :global(svg) { color: var(--green); }
+  .chips a:hover :global(svg) { color: #fff; }
+</style>

@@ -14,12 +14,12 @@ const path = Astro.url.pathname;
           <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
         ))}
         <li class="m-extra">
-          <a href="/contact" class="btn btn-primary">Book a consultation</a>
+          <a href="/contact" class="btn btn-primary">Discuss your requirement</a>
           <a href="tel:+971558817003" class="tel">Incident? Call {site.phones[0]}</a>
         </li>
       </ul>
     </nav>
-    <a href="/contact" class="btn btn-primary cta">Book a consultation</a>
+    <a href="/contact" class="btn btn-primary cta">Discuss your requirement</a>
     <button class="burger" aria-controls="menu" aria-expanded="false" aria-label="Open menu">
       <Icon name="menu" class="i-open" /><Icon name="close" class="i-close" />
     </button>
@@ -32,14 +32,14 @@ const path = Astro.url.pathname;
   .bar { display: flex; align-items: center; gap: 32px; height: 76px; }
   .logo img { height: 34px; width: auto; }
   nav { margin-left: auto; }
-  .links { display: flex; gap: 30px; font-size: 0.98rem; font-weight: 500; color: var(--ink-2); list-style: none; }
+  .links { display: flex; gap: 26px; font-size: 0.98rem; font-weight: 500; color: var(--ink-2); list-style: none; }
   .links a:not(.btn):hover { color: var(--ink); }
   .links a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; text-decoration-color: var(--green); }
   .cta { padding: 11px 18px; }
   .m-extra, .burger { display: none; }
   .burger { background: none; border: 1.5px solid var(--ink); border-radius: var(--r-sm); width: 44px; height: 44px; place-items: center; cursor: pointer; color: var(--ink); }
   .burger :global(.i-close) { display: none; }
-  @media (max-width: 980px) {
+  @media (max-width: 1140px) {
     .bar { height: 66px; }
     .logo img { height: 28px; }
     .cta { display: none; }

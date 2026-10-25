@@ -1,14 +1,24 @@
 ---
 import { getCollection } from 'astro:content';
-import { site, offices, nav } from '../data/site';
+import { site, offices } from '../data/site';
+import { areas } from '../data/areas';
 import Icon from './Icon.astro';
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const events = (await getCollection('events')).filter((e) => !e.data.draft);
+const company = [
+  { label: 'About CSL', href: '/about' },
+  { label: 'Partners', href: '/partners' },
+  { label: 'Industries', href: '/industries' },
+  { label: 'Insights', href: '/insights' },
+  ...(events.length ? [{ label: 'Events', href: '/events' }] : []),
+  { label: 'Careers', href: '/careers' },
+  { label: 'Contact', href: '/contact' },
+];
 const year = new Date().getFullYear();
 ---
 <footer class="ftr">
   <div class="wrap">
     <div class="urgent">
-      <p class="u-t">Dealing with an incident right now?</p>
+      <p class="u-t">Dealing with a cyber incident right now?</p>
       <div class="u-a">
         <a class="btn btn-ink" href="tel:+971558817003"><Icon name="phone" size={18} /> {site.phones[0]}</a>
         <a class="btn btn-ghost" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a>
@@ -17,16 +27,16 @@ const year = new Date().getFullYear();
     <div class="top">
       <div class="brand">
         <img src="/images/logo-color.svg" alt="Cyber Sentinel Lab" width="230" height="40" loading="lazy" />
-        <p>Your shield in the digital world. Cybersecurity, compliance and technology services for organisations across the UAE, the GCC and Europe.</p>
-        <a class="li" href={site.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={18} /> Follow us on LinkedIn</a>
+        <p class="desc"><strong>{site.descriptor}</strong><br />Your shield in the digital world, for organisations across the UAE, the GCC and Europe.</p>
+        <a class="li" href={site.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={18} /> Follow CSL on LinkedIn</a>
+      </div>
+      <div class="col">
+        <h2>Solutions</h2>
+        <ul role="list">{areas.map((a) => <li><a href={`/solutions/${a.slug}`}>{a.title}</a></li>)}</ul>
       </div>
       <div class="col">
         <h2>Company</h2>
-        <ul role="list">{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
-      </div>
-      <div class="col svc">
-        <h2>Services</h2>
-        <ul role="list">{services.map((s) => <li><a href={`/services/${s.id}`}>{s.data.title}</a></li>)}</ul>
+        <ul role="list">{company.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
       </div>
       <div class="col">
         <h2>Offices</h2>
@@ -38,7 +48,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="bottom">
-      <p>© {year} {site.legalName}</p>
+      <p>© {year} {site.legalName}. All rights reserved.</p>
       <p class="legal"><a href="/privacy-policy">Privacy policy</a><a href="/terms">Terms of use</a></p>
     </div>
   </div>
@@ -49,9 +59,10 @@ const year = new Date().getFullYear();
   .urgent { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 40px 0; border-bottom: 1px solid var(--line); }
   .u-t { font-stretch: 125%; font-weight: 700; letter-spacing: -0.03em; font-size: clamp(1.4rem, 2.6vw, 2.1rem); line-height: 1.1; }
   .u-a { display: flex; flex-wrap: wrap; gap: 12px; }
-  .top { display: grid; grid-template-columns: 1.5fr 0.7fr 1.4fr 1.3fr; gap: 48px; padding-top: 56px; }
+  .top { display: grid; grid-template-columns: 1.5fr 1.2fr 0.8fr 1.3fr; gap: 44px; padding-top: 56px; }
   .brand img { height: 40px; width: auto; }
-  .brand p { color: var(--muted); margin: 22px 0; max-width: 38ch; font-size: 0.97rem; }
+  .desc { color: var(--muted); margin: 22px 0; max-width: 38ch; font-size: 0.97rem; }
+  .desc strong { color: var(--ink); font-weight: 600; }
   .li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--green-ink); }
   .li:hover { text-decoration: underline; text-underline-offset: 3px; }
   h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 18px; color: var(--ink); }

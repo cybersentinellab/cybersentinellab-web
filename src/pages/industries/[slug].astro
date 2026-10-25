@@ -13,7 +13,7 @@ const { i } = Astro.props as { i: Industry };
 const crumbs = [{ name: 'Industries', href: '/industries' }, { name: i.title, href: `/industries/${i.slug}` }];
 const others = industries.filter((x) => x.slug !== i.slug);
 ---
-<Base title={`Cybersecurity for ${i.title}`} description={i.summary} crumbs={crumbs}>
+<Base title={`Solutions for ${i.title}`} description={i.summary} crumbs={crumbs}>
   <PageHero title={i.title} lead={i.summary} crumbs={crumbs}>
     <div class="ctas"><a class="btn btn-primary" href="/contact">Discuss your requirements</a></div>
   </PageHero>
@@ -27,7 +27,7 @@ const others = industries.filter((x) => x.slug !== i.slug);
   </section>
   <section class="section tight">
     <div class="wrap">
-      <h2 class="h2 sh">How we help</h2>
+      <h2 class="h2 sh">How CSL helps</h2>
       <ServiceRows only={i.services} />
     </div>
   </section>

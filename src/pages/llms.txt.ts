@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { site, offices } from '../data/site';
 import { industries } from '../data/industries';
+import { areas } from '../data/areas';
 import { getPosts, postUrl } from '../lib/posts';
 
 export async function GET() {
@@ -18,18 +19,28 @@ export async function GET() {
     `- Offices: ${offices.map((o) => o.region).join(', ')}`,
     '- Regions served: UAE, GCC and Europe',
     '- 25+ years of combined expertise; 30+ client references',
-    '- Approach: Assess First, Protect Proactively, Respond Effectively',
+    '- Cybersecurity approach: Assess First, Protect Proactively, Respond Effectively',
+    '- Lead industries: healthcare, hospitality and retail, financial services, infrastructure and utilities',
     `- Contact: ${site.email}, ${site.phones.join(' / ')} (WhatsApp available), ${u('/contact')}`,
     `- LinkedIn: ${site.linkedin}`,
     '',
-    '## Services',
-    ...services.map((s) => `- [${s.data.title}](${u(`/services/${s.id}`)}): ${s.data.summary}`),
+    `Positioning: ${site.descriptor}. Cybersecurity is CSL's core specialism; other solutions are delivered directly or through specialist partners, coordinated by CSL.`,
+    '',
+    '## Solution areas',
+    ...areas.flatMap((a) => [
+      `### [${a.title}](${u(`/solutions/${a.slug}`)})`,
+      a.short,
+      ...services.filter((s) => s.data.area === a.slug).map((s) => `- [${s.data.title}](${u(`/services/${s.id}`)}): ${s.data.summary}`),
+      '',
+    ]),
     '',
     '## Industries',
     ...industries.map((i) => `- [${i.title}](${u(`/industries/${i.slug}`)}): ${i.summary}`),
     '',
     '## Company',
-    `- [About Cyber Sentinel Lab](${u('/about')}): mission, vision, approach, technology partners and client references`,
+    `- [About CSL](${u('/about')}): mission, vision, delivery model, technology partners and client references`,
+    `- [Partners](${u('/partners')}): how CSL works with technology vendors and delivery partners`,
+    `- [Careers](${u('/careers')})`,
     `- [Contact](${u('/contact')}): offices in Dubai, Denmark and India`,
     '',
     ...(posts.length ? ['## Insights', ...posts.map((p) => `- [${p.data.title}](${u(postUrl(p))}): ${p.data.excerpt}`), ''] : []),

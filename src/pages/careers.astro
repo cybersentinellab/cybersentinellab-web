@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+const jobs = (await getCollection('jobs')).filter((j) => !j.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const crumbs = [{ name: 'Careers', href: '/careers' }];
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title="Careers" description="Careers at Cyber Sentinel Lab: work with cybersecurity and technology specialists in Dubai, Denmark and India." crumbs={crumbs}>
+  <PageHero title="Careers at CSL" lead="We are a growing team of cybersecurity and technology specialists across Dubai, Denmark and India. If you want to protect organisations that matter, we would like to hear from you." crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap">
+      <h2 class="h2 sh">Open positions</h2>
+      {jobs.length ? (
+        <ul role="list" class="jobs">
+          {jobs.map((j) => (
+            <li>
+              <div><h3>{j.data.title}</h3><p class="meta">{j.data.location}, {j.data.type}{j.data.closes && <>, apply by {fmt(j.data.closes)}</>}</p><p>{j.data.summary}</p></div>
+              <a class="btn btn-ghost" href={`mailto:${site.email}?subject=${encodeURIComponent('Application: ' + j.data.title)}`}>Apply by email</a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="empty">
+          <p>There are no open positions right now. We are always keen to meet talented security and technology professionals.</p>
+          <a class="btn btn-primary" href={`mailto:${site.email}?subject=${encodeURIComponent('Career interest')}`}>Send us your CV</a>
+        </div>
+      )}
+      <p class="small">By sending your CV you agree that we may keep it for future roles. See our <a class="lnk" href="/privacy-policy">privacy policy</a>.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .sh { margin-bottom: 28px; }
+  .jobs { border-top: 2px solid var(--ink); }
+  .jobs li { display: flex; justify-content: space-between; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .jobs h3 { font-stretch: 115%; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 0.92rem; margin: 4px 0 8px; }
+  .jobs p:not(.meta) { color: var(--ink-2); max-width: 62ch; }
+  .empty { display: grid; gap: 20px; justify-items: start; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); }
+  .empty p { font-size: 1.1rem; max-width: 56ch; }
+  .small { margin-top: 18px; font-size: 0.9rem; color: var(--muted); }
+  @media (max-width: 700px) { .jobs li { flex-direction: column; align-items: flex-start; } }
+</style>

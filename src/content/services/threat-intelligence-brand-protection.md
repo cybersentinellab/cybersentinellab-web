@@ -1,8 +1,7 @@
 ---
 slug: threat-intelligence-brand-protection
 title: Threat Intelligence & Brand Protection
-titleAccent: Brand Protection
-order: 4
+order: 3
 icon: eye
 summary: Monitoring across the dark web, domains and social platforms to stop phishing, fake accounts and data leaks early.
 intro: Your brand is your identity. We monitor for phishing, fake accounts, data leaks and brand misuse across the dark web, domains and social platforms — and act before they harm your reputation or deceive your customers.
@@ -46,4 +45,6 @@ faqs:
 seoTitle: Threat Intelligence & Brand Protection in Dubai & UAE
 metaDescription: Monitoring across the dark web, domains and social platforms to stop phishing, fake accounts and data leaks early.
 phase: protect
+area: cybersecurity-digital-risk
+problem: Fake websites, cloned social accounts and leaked credentials let criminals use your name to deceive customers and staff, often before you notice.
 ---

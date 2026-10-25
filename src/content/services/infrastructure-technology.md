@@ -1,6 +1,5 @@
 ---
 title: Infrastructure & Technology Services
-titleAccent: Technology Services
 icon: server
 summary: Secure IT infrastructure, networks, integration and the hardware behind it — from design to monitoring and support.
 intro: We design, build and support the infrastructure your business runs on. From network architecture and system integration to hardware, point-of-sale devices and AI-enabled CCTV, every component is planned with security in mind.
@@ -22,6 +21,8 @@ features:
   text: Camera systems with AI video analytics, secured on their own network segment.
 - title: Monitoring & support
   text: Infrastructure monitoring and ongoing support from our team.
+- title: OT & IoT security
+  text: Cameras, terminals, access points and other connected devices discovered, segmented and monitored.
 steps:
 - title: Assess
   text: Review your current estate and requirements.
@@ -44,9 +45,13 @@ faqs:
   a: Yes. We manage hybrid environments, so cloud and on-premises systems are monitored and supported as one estate.
 - q: Why involve a security company in infrastructure projects?
   a: Infrastructure that is designed securely from the start is cheaper and safer than adding protection later. Our security specialists review every design before it is built.
+- q: Do you secure operational and IoT devices?
+  a: Yes. Cameras, POS terminals, access points and other connected devices are discovered, placed on separate network segments and monitored, so they cannot become a way into your systems.
 seoTitle: Infrastructure & Technology Services in Dubai & UAE
 metaDescription: IT infrastructure design, network security, system integration, hardware, POS devices and CCTV AI solutions from Cyber Sentinel Lab.
 slug: infrastructure-technology
 phase: technology
-order: 11
+order: 14
+area: smart-infrastructure-automation
+problem: Infrastructure that grows piece by piece becomes hard to manage, expensive to run and full of security gaps, especially as cameras, terminals and other devices join the network.
 ---

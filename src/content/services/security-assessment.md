@@ -1,7 +1,6 @@
 ---
 slug: security-assessment
 title: Security Assessment & Vulnerability Management
-titleAccent: Vulnerability Management
 order: 2
 icon: search
 summary: A clear picture of your risk across infrastructure, applications and processes — and a plan to reduce it.
@@ -46,4 +45,6 @@ faqs:
 seoTitle: Security Assessment & Vulnerability Management in Dubai & UAE
 metaDescription: A clear picture of your risk across infrastructure, applications and processes — and a plan to reduce it.
 phase: assess
+area: cybersecurity-digital-risk
+problem: Most organisations do not have a clear, current picture of where they are exposed, so security budgets go to the wrong places.
 ---

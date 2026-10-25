@@ -1,7 +1,6 @@
 ---
 slug: penetration-testing
 title: Penetration Testing
-titleAccent: Testing
 order: 1
 icon: target
 summary: Real-world attack simulation across web, mobile, network and cloud — finding weaknesses before attackers do.
@@ -49,4 +48,6 @@ faqs:
 seoTitle: Penetration Testing in Dubai & UAE
 metaDescription: Real-world attack simulation across web, mobile, network and cloud — finding weaknesses before attackers do.
 phase: assess
+area: cybersecurity-digital-risk
+problem: You cannot fix weaknesses you have not found. Attackers probe your applications, networks and cloud every day, looking for the one gap you missed.
 ---

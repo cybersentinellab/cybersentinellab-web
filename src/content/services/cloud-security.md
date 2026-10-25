@@ -1,8 +1,7 @@
 ---
 slug: cloud-security
-title: Cloud Security & Solutions
-titleAccent: Solutions
-order: 8
+title: Cloud Architecture, Migration & Security
+order: 15
 icon: cloud
 summary: Secure, scalable cloud — from architecture and migration to DevOps and compliance on AWS, Azure and Microsoft 365.
 intro: We help organisations use the cloud with confidence. From readiness assessment and migration to ongoing security management, we build cloud environments that are secure, scalable and future-ready.
@@ -45,7 +44,9 @@ faqs:
   a: We plan migrations in stages with testing and rollback options, keeping downtime to a minimum and often scheduling cut-overs outside business hours.
 - q: What is cloud security posture management?
   a: It is the continuous checking of your cloud settings against best practices and compliance rules, so risky misconfigurations are found and fixed quickly.
-seoTitle: Cloud Security & Solutions in Dubai & UAE
+seoTitle: Cloud Architecture, Migration & Security in Dubai & UAE
 metaDescription: Secure, scalable cloud — from architecture and migration to DevOps and compliance on AWS, Azure and Microsoft 365.
-phase: protect
+phase: technology
+area: cloud-solutions
+problem: Rushed migrations and misconfigured cloud settings are a leading cause of data exposure, outages and unexpected costs.
 ---

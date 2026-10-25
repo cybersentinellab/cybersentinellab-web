@@ -6,7 +6,8 @@ import LogoWall from '../components/LogoWall.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
 import { clients, partners } from '../data/logos';
-import { offices } from '../data/site';
+import { offices, site } from '../data/site';
+import DeliveryModel from '../components/DeliveryModel.astro';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
 const crumbs = [{ name: 'About', href: '/about' }];
@@ -17,7 +18,9 @@ const approach = [
 ];
 ---
 <Base title="About Us" description="Cyber Sentinel Lab is a Dubai-headquartered cybersecurity firm with 25+ years of combined expertise, offices in the UAE, Denmark and India, and strategic technology partnerships across Europe, the GCC and the UAE." crumbs={crumbs}>
-  <PageHero title="About Cyber Sentinel Lab" lead="We protect businesses and governments from evolving cyber threats with penetration testing, threat intelligence, compliance and incident response, so their digital assets stay secure, resilient and ready for what comes next." crumbs={crumbs} />
+  <PageHero title="About CSL" lead="Cyber Sentinel Lab (CSL) is a cybersecurity and business technology solutions partner. Cybersecurity is our core strength; around it we bring together specialist solutions and partners that help organisations protect their business, improve control and simplify operations." crumbs={crumbs}>
+    <p class="desc">{site.legalName}, Dubai, UAE</p>
+  </PageHero>
 
   <section class="section">
     <div class="wrap mv">
@@ -56,13 +59,24 @@ const approach = [
     </div>
   </section>
 
-  <section class="section tight" id="partners">
+  <section class="section band-white" id="delivery">
+    <div class="wrap">
+      <div class="shead split">
+        <h2 class="h2">Our delivery model</h2>
+        <p class="lead">We understand your requirements, identify the right solutions, bring together specialist partners where needed and coordinate delivery with local engagement and follow-through. We are always clear about what CSL delivers directly and what is delivered through partners.</p>
+      </div>
+      <DeliveryModel />
+    </div>
+  </section>
+
+  <section class="section" id="partners">
     <div class="wrap">
       <div class="shead split">
         <h2 class="h2">Strategic partnerships</h2>
         <p class="lead">We collaborate with leading technology providers and trusted organisations across Europe, the GCC and the UAE, bringing global expertise with a local presence.</p>
       </div>
       <LogoWall logos={partners} />
+      <p class="more"><a class="lnk" href="/partners">How we work with partners</a></p>
     </div>
   </section>
 
@@ -113,6 +127,8 @@ const approach = [
 </Base>
 
 <style>
+  .desc { margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+  .more { margin-top: 20px; font-weight: 600; }
   .mv { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); }
   .mv > div { display: grid; gap: 16px; align-content: start; padding-top: 20px; border-top: 2px solid var(--ink); }
   .big { font-stretch: 110%; font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }

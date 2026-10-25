@@ -1,6 +1,5 @@
 ---
 title: Software Development & Brand Development
-titleAccent: Brand Development
 icon: code
 summary: Custom and branded software, websites and mobile apps — built securely from the first line of code.
 intro: We build web and mobile applications, business systems and branded digital experiences. Security is designed in from the start, so what we deliver is ready for real-world use.
@@ -47,5 +46,7 @@ seoTitle: Software & Brand Development in Dubai & UAE
 metaDescription: Custom and branded web and mobile apps, websites, ERP, CRM and business process apps, built securely by Cyber Sentinel Lab.
 slug: software-development
 phase: technology
-order: 12
+order: 18
+area: it-services-software-development
+problem: Off-the-shelf tools rarely fit how your business really works, and software built without security in mind becomes a liability after launch.
 ---
