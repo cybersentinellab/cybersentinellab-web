@@ -35,32 +35,37 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
   }
 
   // Microsoft Graph app-only token
-  const tok = await fetch(`https://login.microsoftonline.com/${env.MS_TENANT_ID}/oauth2/v2.0/token`, {
+  const t = (v?: string) => (v || '').trim();
+  const tok = await fetch(`https://login.microsoftonline.com/${t(env.MS_TENANT_ID)}/oauth2/v2.0/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ client_id: env.MS_CLIENT_ID, client_secret: env.MS_CLIENT_SECRET, scope: 'https://graph.microsoft.com/.default', grant_type: 'client_credentials' }),
+    body: new URLSearchParams({ client_id: t(env.MS_CLIENT_ID), client_secret: t(env.MS_CLIENT_SECRET), scope: 'https://graph.microsoft.com/.default', grant_type: 'client_credentials' }),
   });
-  const { access_token } = (await tok.json()) as { access_token?: string };
-  if (!access_token) return json({ error: 'Our mail service is unavailable right now.' }, 502);
+  const tj = (await tok.json().catch(() => ({}))) as { access_token?: string; error_codes?: number[] };
+  if (!tj.access_token) {
+    const ref = tj.error_codes?.[0] ? ` (ref ${tj.error_codes[0]})` : ' (ref token)';
+    return json({ error: `Our mail service is unavailable right now${ref}.` }, 502);
+  }
+  const access_token = tj.access_token;
 
   const rows = [['Name', name], ['Email', email], ['Company', company], ['Phone', phone], ['Service', service]]
     .filter(([, v]) => v).map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#666">${k}</td><td>${esc(v)}</td></tr>`).join('');
   const html = `<h2 style="font-family:Arial">New website enquiry</h2><table style="font-family:Arial;font-size:14px">${rows}</table>
     <p style="font-family:Arial;font-size:14px;white-space:pre-wrap;border-top:1px solid #ddd;padding-top:12px">${esc(message)}</p>`;
 
-  const send = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(env.MAIL_FROM)}/sendMail`, {
+  const send = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(t(env.MAIL_FROM))}/sendMail`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${access_token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       message: {
         subject: `Website enquiry: ${name}${company ? ` (${company})` : ''}`,
         body: { contentType: 'HTML', content: html },
-        toRecipients: [{ emailAddress: { address: env.MAIL_TO || env.MAIL_FROM } }],
+        toRecipients: [{ emailAddress: { address: t(env.MAIL_TO) || t(env.MAIL_FROM) } }],
         replyTo: [{ emailAddress: { address: email, name } }],
       },
       saveToSentItems: false,
     }),
   });
-  if (!send.ok) return json({ error: 'We could not send your message.' }, 502);
+  if (!send.ok) return json({ error: `We could not send your message (ref ${send.status}).` }, 502);
   return json({ ok: true });
 };
