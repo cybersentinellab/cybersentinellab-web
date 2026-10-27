@@ -81,3 +81,13 @@ Previous (v1) status: All 11 phases built. Waiting for CSL: Cloudflare Pages set
 
 ## Notes
 - Contact form email: Cloudflare Email Routing would take over MX and break M365, so the form will send through Microsoft Graph (M365 app registration, Mail.Send). Setup in README.
+
+## Launch — 27 Oct 2026 ✅
+- v3 live at https://cybersentinellab.com (Pages project `cybersentinellab-web-v2`, production branch `main`). www → root redirect rule.
+- Test copies: v1 Worker builds from branch `v1` (https://cybersentinellab-web.cybersentinellab.workers.dev); v2 at https://314ee49b.cybersentinellab-web-v2.pages.dev; branch `v3` kept.
+- DNS already on Cloudflare (M365 records intact).
+- Contact form: Turnstile + M365 Graph (sends from info@, delivers to reachus@). Public email changed to reachus@cybersentinellab.com.
+- CMS: GitHub OAuth app "CSL Website CMS" (callback /api/callback); /admin login works. Editors = repo collaborators with Write.
+- Search Console verified (domain property), sitemap submitted. Web Analytics enabled.
+- Reminders: M365 client secret expires in 24 months. Optional: restrict M365 app to one mailbox (README §4.5), branch protection on main.
+- Later (from user): delivery/partner details, certifications, case studies, testimonials, leadership profiles (team entries have draft: true until ready).
