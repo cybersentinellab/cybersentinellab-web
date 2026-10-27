@@ -33,8 +33,8 @@ In **Workers & Pages → cybersentinellab-web-v2 → Settings → Variables and 
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | CMS sign-in | Step 3 |
 | `TURNSTILE_SECRET` + `PUBLIC_TURNSTILE_SITE_KEY` | Contact-form spam check | Step 5 |
 | `MS_TENANT_ID` / `MS_CLIENT_ID` / `MS_CLIENT_SECRET` | Sending form emails through Microsoft 365 | Step 4 |
-| `MAIL_FROM` | M365 mailbox the form sends from, e.g. `info@cybersentinellab.com` | — |
-| `MAIL_TO` | (Optional) Where enquiries arrive. Defaults to `MAIL_FROM` | — |
+| `MAIL_FROM` | M365 mailbox the form sends from, e.g. `reachus@cybersentinellab.com` | — |
+| `MAIL_TO` | (Optional) Where enquiries arrive. Defaults to `reachus@cybersentinellab.com` | — |
 | `PUBLIC_CF_BEACON` | Web Analytics token | Step 6 |
 
 ## 3. Content manager (CMS) sign-in
@@ -78,7 +78,7 @@ Cloudflare's own email sending would require moving your MX records away from Mi
 4. Go to **API permissions → Add → Microsoft Graph → Application permissions → Mail.Send → Add**, then **Grant admin consent**.
 5. *(Recommended)* Limit the app so it can only send as one mailbox. As an Exchange admin in PowerShell:
    ```powershell
-   New-ApplicationAccessPolicy -AppId <MS_CLIENT_ID> -PolicyScopeGroupId info@cybersentinellab.com -AccessRight RestrictAccess -Description "Website form"
+   New-ApplicationAccessPolicy -AppId <MS_CLIENT_ID> -PolicyScopeGroupId reachus@cybersentinellab.com -AccessRight RestrictAccess -Description "Website form"
    ```
 6. Set `MAIL_FROM` to that mailbox. Submit a test enquiry on `/contact`.
 

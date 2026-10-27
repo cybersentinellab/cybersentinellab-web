@@ -116,7 +116,7 @@ const contactSchema = {
       if (!r.ok) throw new Error(j.error || 'Something went wrong.');
       f.reset(); st.classList.add('ok'); st.textContent = 'Message sent. Our team will reply to you by email shortly.';
     } catch (err) {
-      st.classList.add('err'); st.textContent = `${(err as Error).message} You can also email info@cybersentinellab.com or message us on WhatsApp.`;
+      st.classList.add('err'); st.textContent = `${(err as Error).message} You can also email reachus@cybersentinellab.com or message us on WhatsApp.`;
     } finally {
       btn.disabled = false;
       (window as any).turnstile?.reset();

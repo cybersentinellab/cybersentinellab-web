@@ -11,7 +11,7 @@ Cyber Sentinel Lab LLC FZ ("Cyber Sentinel Lab", "we", "us") respects your priva
 
 ## Who we are
 
-Cyber Sentinel Lab LLC FZ, Meydan Road, Nad Al Sheba, Dubai, United Arab Emirates. Contact: [info@cybersentinellab.com](mailto:info@cybersentinellab.com).
+Cyber Sentinel Lab LLC FZ, Meydan Road, Nad Al Sheba, Dubai, United Arab Emirates. Contact: [reachus@cybersentinellab.com](mailto:reachus@cybersentinellab.com).
 
 ## What we collect
 
@@ -41,7 +41,7 @@ We keep enquiry data for as long as needed to respond and maintain business reco
 
 ## Your rights
 
-You can ask to access, correct or delete your personal data, or withdraw your consent, by emailing [info@cybersentinellab.com](mailto:info@cybersentinellab.com).
+You can ask to access, correct or delete your personal data, or withdraw your consent, by emailing [reachus@cybersentinellab.com](mailto:reachus@cybersentinellab.com).
 
 ## Security
 

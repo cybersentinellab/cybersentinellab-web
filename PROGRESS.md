@@ -34,7 +34,7 @@ Previous (v1) status: All 11 phases built. Waiting for CSL: Cloudflare Pages set
 
 ## Decisions (from CSL, 20 Oct 2026)
 - Hosting: Cloudflare Pages; DNS moves from GoDaddy to Cloudflare; M365 email records preserved
-- Form: Pages Function + Turnstile + honeypot → info@cybersentinellab.com
+- Form: Pages Function + Turnstile + honeypot → reachus@cybersentinellab.com
 - WhatsApp: +971 55 881 7003
 - Analytics: Cloudflare Web Analytics
 - CMS: Decap, editorial workflow, GitHub PR emails as notifications

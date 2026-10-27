@@ -4,8 +4,8 @@
 interface Env {
   TURNSTILE_SECRET?: string;
   MS_TENANT_ID: string; MS_CLIENT_ID: string; MS_CLIENT_SECRET: string;
-  MAIL_FROM: string; // M365 mailbox that sends, e.g. website@cybersentinellab.com or info@cybersentinellab.com
-  MAIL_TO?: string;  // defaults to MAIL_FROM
+  MAIL_FROM: string; // M365 mailbox that sends, e.g. website@cybersentinellab.com or reachus@cybersentinellab.com
+  MAIL_TO?: string;  // defaults to reachus@cybersentinellab.com
 }
 
 const json = (body: object, status = 200) =>
@@ -60,7 +60,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       message: {
         subject: `Website enquiry: ${name}${company ? ` (${company})` : ''}`,
         body: { contentType: 'HTML', content: html },
-        toRecipients: [{ emailAddress: { address: t(env.MAIL_TO) || t(env.MAIL_FROM) } }],
+        toRecipients: [{ emailAddress: { address: t(env.MAIL_TO) || 'reachus@cybersentinellab.com' } }],
         replyTo: [{ emailAddress: { address: email, name } }],
       },
       saveToSentItems: false,

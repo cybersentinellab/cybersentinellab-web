@@ -39,4 +39,4 @@ These terms are governed by the laws of the Emirate of Dubai and the federal law
 
 ## Contact
 
-[info@cybersentinellab.com](mailto:info@cybersentinellab.com)
+[reachus@cybersentinellab.com](mailto:reachus@cybersentinellab.com)
