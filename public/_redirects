@@ -6,3 +6,4 @@
 /industries/banking-finance                 /industries/financial-services                 301
 /industries/retail-hospitality              /industries/hospitality-retail                 301
 /industries/energy-critical-infrastructure  /industries/infrastructure-utilities           301
+/job_opening/*  /careers  301
