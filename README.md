@@ -66,7 +66,7 @@ The CMS lives at **`/admin`**, and editors sign in with their own GitHub account
   - Under the bypass list, allow only the admin.
 - The admin publishes by clicking **Publish** in `/admin`, or **Merge** on the pull request. The site rebuilds in about 2 minutes.
 
-The three starter blog posts are marked **"Hide from site (draft)"**. To publish one, open it in `/admin`, untick that box and publish.
+To hide a post without deleting it, tick **"Hide from site (draft)"** in `/admin` and publish.
 
 ## 4. Contact form email (Microsoft 365)
 
