@@ -17,8 +17,8 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 
         <ul role="list" class="jobs">
           {jobs.map((j) => (
             <li>
-              <div><h3>{j.data.title}</h3><p class="meta">{j.data.location}, {j.data.type}{j.data.closes && <>, apply by {fmt(j.data.closes)}</>}</p><p>{j.data.summary}</p></div>
-              <a class="btn btn-ghost" href={`mailto:${site.email}?subject=${encodeURIComponent('Application: ' + j.data.title)}`}>Apply by email</a>
+              <div><h3><a href={`/careers/${j.id}`}>{j.data.title}</a></h3><p class="meta">{j.data.location}, {j.data.type}{j.data.closes && <>, apply by {fmt(j.data.closes)}</>}</p><p>{j.data.summary}</p></div>
+              <a class="btn btn-ghost" href={`/careers/${j.id}`}>View role</a>
             </li>
           ))}
         </ul>
@@ -37,6 +37,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 
   .sh { margin-bottom: 28px; }
   .jobs { border-top: 2px solid var(--ink); }
   .jobs li { display: flex; justify-content: space-between; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .jobs h3 a:hover { color: var(--green-ink); text-decoration: underline; text-underline-offset: 4px; }
   .jobs h3 { font-stretch: 115%; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
   .meta { color: var(--muted); font-size: 0.92rem; margin: 4px 0 8px; }
   .jobs p:not(.meta) { color: var(--ink-2); max-width: 62ch; }

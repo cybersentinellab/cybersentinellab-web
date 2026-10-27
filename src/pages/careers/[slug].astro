@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const jobs = (await getCollection('jobs')).filter((j) => !j.data.draft);
+  return jobs.map((j) => ({ params: { slug: j.id }, props: { j } }));
+}
+const { j } = Astro.props;
+const d = j.data;
+const { Content } = await render(j);
+const crumbs = [{ name: 'Careers', href: '/careers' }, { name: d.title, href: `/careers/${j.id}` }];
+const apply = `mailto:${site.email}?subject=${encodeURIComponent('Application: ' + d.title)}`;
+const posting = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: d.title,
+  description: d.summary,
+  datePosted: d.date.toISOString().slice(0, 10),
+  ...(d.closes && { validThrough: d.closes.toISOString().slice(0, 10) }),
+  employmentType: d.type.toUpperCase().replace(/[^A-Z]/g, '_'),
+  hiringOrganization: { '@type': 'Organization', name: site.name, sameAs: site.url, logo: `${site.url}/images/logo-color.svg` },
+  jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' } },
+  directApply: false,
+};
+---
+<Base title={`${d.title} – Careers`} description={d.summary} crumbs={crumbs} schema={[posting]}>
+  <PageHero title={d.title} lead={d.summary} crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap grid-j">
+      <article class="prose"><Content /></article>
+      <aside class="card side">
+        <dl>
+          <dt>Location</dt><dd>{d.location}</dd>
+          <dt>Employment type</dt><dd>{d.type}</dd>
+        </dl>
+        <a class="btn btn-primary" href={apply}>Apply by email</a>
+        <a class="lnk" href="/careers">All open positions</a>
+      </aside>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .grid-j { display: grid; grid-template-columns: 1fr 320px; gap: 56px; align-items: start; }
+  .side { position: sticky; top: 100px; display: grid; gap: 18px; }
+  dl { display: grid; gap: 4px; }
+  dt { font-size: 0.85rem; color: var(--muted); }
+  dd { font-weight: 600; margin-bottom: 10px; }
+  @media (max-width: 900px) { .grid-j { grid-template-columns: 1fr; } .side { position: static; } }
+</style>
