@@ -45,4 +45,5 @@ phase: technology
 order: 17
 area: it-services-software-development
 problem: Licences bought in a hurry, backups nobody tests and passwords reused across systems waste money and leave the business exposed.
+delivery: direct
 ---

@@ -49,4 +49,5 @@ metaDescription: Vehicle parking, access control and ticketing solutions with in
 slug: mobility-solutions
 area: smart-infrastructure-automation
 order: 13
+delivery: direct
 ---

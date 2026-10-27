@@ -53,4 +53,5 @@ metaDescription: UAE IA, ISO 27001, NIST CSF, PCI DSS and GDPR compliance, enter
 phase: technology
 area: fraud-risk-compliance
 problem: Regulations such as UAE IA, ISO 27001, PCI DSS and GDPR are demanding, and checkbox compliance leaves real risks unaddressed.
+delivery: direct
 ---

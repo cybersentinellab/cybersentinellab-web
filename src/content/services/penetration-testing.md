@@ -50,4 +50,5 @@ metaDescription: Real-world attack simulation across web, mobile, network and cl
 phase: assess
 area: cybersecurity-digital-risk
 problem: You cannot fix weaknesses you have not found. Attackers probe your applications, networks and cloud every day, looking for the one gap you missed.
+delivery: direct
 ---

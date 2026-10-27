@@ -48,4 +48,5 @@ metaDescription: Real-time detection and response for threats across endpoints a
 phase: protect
 area: cybersecurity-digital-risk
 problem: Modern attackers use stolen credentials and legitimate tools that traditional antivirus misses, and they move quietly through networks for weeks.
+delivery: direct
 ---

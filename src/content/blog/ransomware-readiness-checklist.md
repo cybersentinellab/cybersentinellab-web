@@ -5,7 +5,7 @@ date: 2026-10-18
 author: Cyber Sentinel Lab
 excerpt: Ransomware is a business continuity problem, not only an IT problem. Use these ten questions to test how prepared your organisation really is.
 tags: [Incident response, Ransomware]
-draft: true
+draft: false
 ---
 
 Ransomware attacks encrypt systems, steal data and halt operations — sometimes for weeks. The organisations that recover fastest are rarely the ones with the biggest budgets. They are the ones that prepared.

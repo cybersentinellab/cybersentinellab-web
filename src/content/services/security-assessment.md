@@ -47,4 +47,5 @@ metaDescription: A clear picture of your risk across infrastructure, application
 phase: assess
 area: cybersecurity-digital-risk
 problem: Most organisations do not have a clear, current picture of where they are exposed, so security budgets go to the wrong places.
+delivery: direct
 ---

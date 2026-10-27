@@ -54,4 +54,5 @@ phase: technology
 order: 14
 area: smart-infrastructure-automation
 problem: Infrastructure that grows piece by piece becomes hard to manage, expensive to run and full of security gaps, especially as cameras, terminals and other devices join the network.
+delivery: direct
 ---

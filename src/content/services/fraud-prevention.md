@@ -48,4 +48,5 @@ metaDescription: Real-time transaction and behaviour monitoring, account-takeove
 slug: fraud-prevention
 area: fraud-risk-compliance
 order: 10
+delivery: direct
 ---

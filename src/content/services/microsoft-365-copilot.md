@@ -49,4 +49,5 @@ metaDescription: Microsoft 365 Copilot licensing, secure configuration and roll-
 slug: microsoft-365-copilot
 area: cloud-solutions
 order: 16
+delivery: direct
 ---

@@ -9,7 +9,7 @@ import { clients, partners } from '../data/logos';
 import { offices, site } from '../data/site';
 import DeliveryModel from '../components/DeliveryModel.astro';
 
-const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const team = (await getCollection('team')).filter((m) => !m.data.draft).sort((a, b) => a.data.order - b.data.order);
 const crumbs = [{ name: 'About', href: '/about' }];
 const approach = [
   { k: 'assess', t: 'Assess first', p: 'We begin by understanding your business, systems and potential risks. In-depth assessments and penetration testing find vulnerabilities before attackers can exploit them.' },

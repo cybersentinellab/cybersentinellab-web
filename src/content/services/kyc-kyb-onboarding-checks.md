@@ -42,11 +42,12 @@ faqs:
   a: Banks, exchange houses, payment and fintech companies, and any business with anti-money-laundering obligations or high fraud exposure.
 - q: Can checks be automated?
   a: Yes. Most identity, document and screening checks can be automated, with only higher-risk cases sent for manual review.
-- q: Is onboarding delivered directly or through a partner?
-  a: Cyber Sentinel Lab works with specialist platform partners for onboarding checks and coordinates the selection, set-up and integration for you.
+- q: Does CSL deliver this directly?
+  a: Yes. Cyber Sentinel Lab delivers it directly, including solution selection, set-up, integration and ongoing support.
 seoTitle: KYC & KYB Onboarding Checks in Dubai & UAE
 metaDescription: 'Customer and business onboarding checks: identity verification, document checks, company verification, sanctions and PEP screening, from Cyber Sentinel Lab.'
 slug: kyc-kyb-onboarding-checks
 area: fraud-risk-compliance
 order: 9
+delivery: direct
 ---

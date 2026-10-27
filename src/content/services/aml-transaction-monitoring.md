@@ -41,11 +41,12 @@ faqs:
   a: Banks, exchange houses, payment service providers and other regulated financial institutions and designated businesses must monitor transactions and report suspicious activity.
 - q: Do you support goAML reporting?
   a: We support the processes and records that feed regulatory reporting to UAE authorities, including goAML.
-- q: Is this delivered directly or through a partner?
-  a: Cyber Sentinel Lab works with specialist AML platform partners and coordinates selection, set-up, integration and ongoing support.
+- q: Does CSL deliver this directly?
+  a: Yes. Cyber Sentinel Lab delivers it directly, including solution selection, set-up, integration and ongoing support.
 seoTitle: AML Transaction Monitoring in Dubai & UAE
 metaDescription: AML transaction monitoring, suspicious activity alerts, sanctions screening and goAML reporting support for regulated businesses, from Cyber Sentinel Lab.
 slug: aml-transaction-monitoring
 area: fraud-risk-compliance
 order: 11
+delivery: direct
 ---

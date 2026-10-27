@@ -49,4 +49,5 @@ phase: technology
 order: 18
 area: it-services-software-development
 problem: Off-the-shelf tools rarely fit how your business really works, and software built without security in mind becomes a liability after launch.
+delivery: direct
 ---

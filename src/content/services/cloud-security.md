@@ -49,4 +49,5 @@ metaDescription: Secure, scalable cloud — from architecture and migration to D
 phase: technology
 area: cloud-solutions
 problem: Rushed migrations and misconfigured cloud settings are a leading cause of data exposure, outages and unexpected costs.
+delivery: direct
 ---

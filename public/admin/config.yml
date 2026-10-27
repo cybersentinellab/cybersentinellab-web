@@ -496,6 +496,12 @@ collections:
     name: body
     widget: markdown
     required: false
+  - label: Hide from site (draft)
+    name: draft
+    widget: boolean
+    default: true
+    required: false
+    hint: Switch off to show this person on the About page.
 - name: testimonials
   label: Testimonials
   folder: src/content/testimonials

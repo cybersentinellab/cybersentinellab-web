@@ -48,4 +48,5 @@ metaDescription: Automated payment tracking, settlement and cash reconciliation 
 slug: payment-reconciliation
 area: payments-reconciliation
 order: 12
+delivery: direct
 ---

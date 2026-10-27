@@ -47,4 +47,5 @@ metaDescription: Build a cyber-aware culture where every employee becomes the fi
 phase: protect
 area: cybersecurity-digital-risk
 problem: 'Most attacks start with a person: a convincing email, a fake invoice, a reused password. Technology alone cannot stop them.'
+delivery: direct
 ---

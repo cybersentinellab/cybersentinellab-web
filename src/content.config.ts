@@ -67,6 +67,7 @@ const team = defineCollection({
       linkedin: z.string().url().optional(),
       excerpt: z.string().optional(),
       date: z.coerce.date().optional(),
+      draft: z.boolean().default(true), // hidden until switched off in the CMS
     }),
 });
 

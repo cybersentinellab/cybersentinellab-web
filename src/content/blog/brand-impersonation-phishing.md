@@ -5,7 +5,7 @@ date: 2026-10-15
 author: Cyber Sentinel Lab
 excerpt: Criminals copy trusted brands to deceive customers and staff. Learn the common tactics and the practical steps that stop them early.
 tags: [Threat intelligence, Brand protection, Phishing]
-draft: true
+draft: false
 ---
 
 Your brand is one of your most valuable assets — and attackers know it. By impersonating a trusted organisation, criminals can trick customers into handing over payment details, persuade employees to share passwords, or damage a reputation that took years to build.

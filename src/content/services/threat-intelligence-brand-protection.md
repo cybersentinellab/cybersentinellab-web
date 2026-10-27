@@ -47,4 +47,5 @@ metaDescription: Monitoring across the dark web, domains and social platforms to
 phase: protect
 area: cybersecurity-digital-risk
 problem: Fake websites, cloned social accounts and leaked credentials let criminals use your name to deceive customers and staff, often before you notice.
+delivery: direct
 ---

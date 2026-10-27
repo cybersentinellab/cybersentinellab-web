@@ -48,4 +48,5 @@ metaDescription: Never trust by default — continuous verification of every use
 phase: protect
 area: cybersecurity-digital-risk
 problem: With people working from anywhere and systems in the cloud, the old network perimeter is gone. Stolen or misused credentials are now the most common way in.
+delivery: direct
 ---
